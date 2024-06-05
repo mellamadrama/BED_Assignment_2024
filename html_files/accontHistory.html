@@ -23,15 +23,53 @@
         </ul>
     </header>
 
-<!-- side nav -->
-    <center>
-    <div class="list-group" style="margin-top: 10vh; margin-right: 50vw;">
-        <div class="card" style="width: 18rem;">
-            <!-- account profile pic -->
-            <img src="..." class="card-img-top" alt="...">
-          </div>
-            <a href="account.html" class="list-group-item list-group-item-action">Profile</a>
-            <a href="accontHistory.html" class="list-group-item list-group-item-action active" aria-current="true">History</a>
-            <a href="user_admin.html" class="list-group-item list-group-item-action">Log Out</a>
-      </div>
-    </center>
+    <div class="row row-cols-1 row-cols-md-4" style="margin-top: 10vh;">
+        <!-- side nav -->
+        <center>
+            <div class="list-group col">
+                <div class="card">
+                    <!-- account profile pic -->
+                    <img src="..." class="card-img-top" alt="...">
+                  </div>
+                    <a href="account.html" class="list-group-item list-group-item-action">Profile</a>
+                    <a href="accontHistory.html" class="list-group-item list-group-item-action active" aria-current="true">History</a>
+                    <a href="user_admin.html" class="list-group-item list-group-item-action">Log Out</a>
+              </div>
+            </center>
+            
+        <!-- main body -->
+        <div class="col">
+            <div class="card" style="width: 50vw;"">
+                <div class="card-header font-bold">
+                  History
+                </div>
+                <div class="card-body">
+                    <h5 class="font-bold">Eco Tracker</h5>
+                    <div class="card" style="width: 18rem; margin-top: 1vh;">
+                        <div class="card-body">
+                          <h5 class="card-title font-bold">My Tracker</h5>
+                          <p class="card-text">Info:</p>
+                          <p class="card-text">Amount:</p>
+                          <p class="card-text">Date:</p>
+                          <a href="#" class="btn btn-primary">View</a>
+                        </div>
+                      </div>
+                </div>
+                <div class="card-body">
+                    <h5 class="font-bold">Sustainable Shopping</h5>
+                    <div class="card" style="width: 18rem; margin-top: 1vh;">
+                        <div class="card-body">
+                            <h5 class="card-title font-bold">Location</h5>
+                            <p class="card-text">Name of place:</p>
+                            <p class="card-text">Location of place:</p>
+                            <a href="#" class="btn btn-primary">View</a>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+        <!-- This is the JavaScript-->
+        <script src="/js_files/account.js" type="module"></script>
+    </body>
+    </html>
