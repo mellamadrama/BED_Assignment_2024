@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Leaderboard</title>
+    <link rel="stylesheet" href="styles/leaderboard.css">
+    <link rel="stylesheet" href="styles/top-nav.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body class="bg-[#f3e1c9] h-screen items-center">
+    <header class="bg-[#baab76] text-center py-4 shadow-md">
+        <h1 class="text-3xl font-bold text-[#493d2c] pb-4 border-b-2 border-black">SustainableMe</h1>
+        <div class="flex justify-around mt-6">
+            <div class="nav-item"><a href="#" class="hover:underline">Eco Tracker</a></div>
+            <div class="nav-item"><a href="#" class="hover:underline">Sustainable Shopping</a></div>
+            <div class="nav-item"><a href="#" class="font-semibold hover:underline">Weekly Challenge</a></div>
+            <div class="nav-item"><a href="#" class="hover:underline">Account</a></div>
+        </div>
+    </header>
+
+    <div class="text-center mt-12">
+        <div class="flex flex-wrap justify-center p-4">
+            <a href="weeklychallenge.html" class="text-2xl ml-20">&#8592;</a>
+            <h1 class="flex-grow text-4xl text-brown-800 mb-6 font-semibold mr-28">Weekly Leaderboard</h1> <!-- Reduced margin here -->
+        </div>
+    </div>
+
+    <div class="leaderboard-container flex justify-center items-center mt-6"> <!-- Reduced margin here -->
+        <div class="leaderboard w-full max-w-5xl bg-white shadow-md rounded-lg overflow-hidden my-10 mx-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-[#a3deb5]">
+                    <tr>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rank</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Username</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Points</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    <tr class="bg-[#e6f7ec]">
+                        <td id="rank-1" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">1</td>
+                        <td id="rank-1-user" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Player 1</td>
+                        <td id="rank-1-points" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">1000</td>
+                    </tr>
+                    <tr>
+                        <td id="rank-2" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">2</td>
+                        <td id="rank-2-user" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Player 2</td>
+                        <td id="rank-2-points" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">900</td>
+                    </tr>
+                    <tr class="bg-[#e6f7ec]">
+                        <td id="rank-3" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">3</td>
+                        <td id="rank-3-user" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Player 3</td>
+                        <td id="rank-3-points" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">900</td>
+                    </tr>
+                    <tr>
+                        <td id="rank-4" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">4</td>
+                        <td id="rank-4-user" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Player 4</td>
+                        <td id="rank-4-points" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">900</td>
+                    </tr>
+                    <tr class="bg-[#e6f7ec]">
+                        <td id="rank-5" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">5</td>
+                        <td id="rank-5-user" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Player 5</td>
+                        <td id="rank-5-points" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">900</td>
+                    </tr>
+                    <tr>
+                        <td id="rank-6" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">6</td>
+                        <td id="rank-6-user" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Player 6</td>
+                        <td id="rank-6-points" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">900</td>
+                    </tr>
+                    <tr class="bg-[#e6f7ec]">
+                        <td id="rank-7" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">7</td>
+                        <td id="rank-7-user" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Player 7</td>
+                        <td id="rank-7-points" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">900</td>
+                    </tr>
+                    <tr>
+                        <td id="rank-8" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">8</td>
+                        <td id="rank-8-user" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Player 8</td>
+                        <td id="rank-8-points" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">900</td>
+                    </tr>
+                    <tr class="bg-[#e6f7ec]">
+                        <td id="rank-9" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">9</td>
+                        <td id="rank-9-user" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Player 9</td>
+                        <td id="rank-9-points" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">900</td>
+                    </tr>
+                    <tr>
+                        <td id="rank-10" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">10</td>
+                        <td id="rank-10-user" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Player 10</td>
+                        <td id="rank-10-points" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">900</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
