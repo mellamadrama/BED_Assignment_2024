@@ -151,26 +151,44 @@ CREATE Table WeeklyChallenge (
  ChallengeID varchar(10),
  ChallengeDesc varchar(200) NOT NULL UNIQUE,
  Points varchar(20) NOT NULL,
- ChallengeStatus char(1) NOT NULL CHECK (ChallengeStatus IN ('Y','N')),
  CONSTRAINT PK_WeeklyChallenge PRIMARY KEY (ChallengeID),
 );
 
-INSERT INTO WeeklyChallenge(ChallengeID, ChallengeDesc, Points, ChallengeStatus) 
+INSERT INTO WeeklyChallenge(ChallengeID, ChallengeDesc, Points) 
 VALUES
-    ('C000000001', 'Plant a Tree in Your Backyard', 100, 'Y'),
-    ('C000000002', 'Recycle All Your Plastic Waste for a Month', 75, 'N'),
-    ('C000000003', 'Commute by Bike for a Week', 60, 'Y'),
-    ('C000000004', 'Reduce Your Daily Shower Time by 2 Minutes', 30, 'Y'),
-    ('C000000005', 'Bring a Recyclable Bag for Shopping', 40, 'N'),
-    ('C000000006', 'Join a Local Park Clean-Up Event', 90, 'Y'),
-    ('C000000007', 'Start a Compost Bin at Home', 70, 'N'),
-    ('C000000008', 'Replace One Light Bulb with LED Bulbs', 60, 'Y'),
-    ('C000000009', 'Have a Meat-Free Day Once a Week', 85, 'N'),
-    ('C000000010', 'Switch to a Green Energy Plan', 95, 'Y'),
-    ('C000000011', 'Avoid Using Single-Use Plastics for a Week', 65, 'Y'),
-    ('C000000012', 'Shop at a Local Farmers Market', 55, 'N'),
-    ('C000000013', 'Grow Your Own Herbs', 75, 'Y'),
-    ('C000000014', 'Host a Recycling Drive in Your Community', 100, 'Y');
+    ('C000000001', 'Plant a Tree in Your Backyard', 100),
+    ('C000000002', 'Recycle All Your Plastic Waste for a Month', 75),
+    ('C000000003', 'Commute by Bike for a Week', 60),
+    ('C000000004', 'Reduce Your Daily Shower Time by 2 Minutes', 30),
+    ('C000000005', 'Bring a Recyclable Bag for Shopping', 40),
+    ('C000000006', 'Join a Local Park Clean-Up Event', 90),
+    ('C000000007', 'Start a Compost Bin at Home', 70),
+    ('C000000008', 'Replace One Light Bulb with LED Bulbs', 60),
+    ('C000000009', 'Have a Meat-Free Day Once a Week', 85),
+    ('C000000010', 'Switch to a Green Energy Plan', 95),
+    ('C000000011', 'Avoid Using Single-Use Plastics for a Week', 65),
+    ('C000000012', 'Shop at a Local Farmers Market', 55),
+    ('C000000013', 'Grow Your Own Herbs', 75),
+    ('C000000014', 'Host a Recycling Drive in Your Community', 100);
+
+CREATE TABLE UserWeeklyChallenges (
+   userChallengeId INT PRIMARY KEY,
+   userId CHAR(10),
+   ChallengeID VARCHAR(10),
+   challengeCompleted CHAR(1) DEFAULT 'N' CHECK (challengeCompleted IN ('Y', 'N')),
+   CONSTRAINT FK_UserWeeklyChallenges_UserId FOREIGN KEY (userId) REFERENCES UserAcc(userId),
+   CONSTRAINT FK_UserWeeklyChallenges_ChallengeID FOREIGN KEY (ChallengeID) REFERENCES WeeklyChallenge(ChallengeID)
+);
+
+INSERT INTO UserWeeklyChallenges (userChallengeId, userId, ChallengeID)
+SELECT 
+    ROW_NUMBER() OVER (ORDER BY ua.userId, wc.ChallengeID) AS userChallengeId,
+    ua.userId,
+    wc.ChallengeID
+FROM
+    UserAcc ua
+CROSS JOIN
+    WeeklyChallenge wc;
 
 CREATE TABLE MonthlyPoints (
     userId char(10),
@@ -178,7 +196,6 @@ CREATE TABLE MonthlyPoints (
     CONSTRAINT PK_MonthlyPoints PRIMARY KEY (userId),
     CONSTRAINT FK_MonthlyPoints_userId FOREIGN KEY (userId) REFERENCES Account(accId)
 );
-
 
 INSERT INTO MonthlyPoints(userId, userMonthlyPoints) 
 VALUES
