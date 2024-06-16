@@ -182,8 +182,12 @@ CREATE TABLE MonthlyPoints (
 
 INSERT INTO MonthlyPoints(userId, userMonthlyPoints) 
 VALUES
- ('ACC0000001', 1200),
- ('ACC0000002', 1100);
+  ('Acc0000002', 1200),
+  ('Acc0000003', 1000),
+  ('Acc0000005', 1500),
+  ('Acc0000006', 1205),
+  ('Acc0000008', 1005),
+  ('Acc0000009', 750);
 
 
 CREATE TABLE WeeklyPoints (
@@ -196,8 +200,12 @@ CREATE TABLE WeeklyPoints (
 
 INSERT INTO WeeklyPoints(userId, userWeeklyPoints) 
 VALUES
- ('ACC0000001', 230),
- ('ACC0000002', 250); 
+  ('Acc0000002', 120),
+  ('Acc0000003', 100),
+  ('Acc0000005', 150),
+  ('Acc0000006', 125),
+  ('Acc0000008', 105),
+  ('Acc0000009', 75);
 
 CREATE TABLE LocationReq (
     locationReqId char(10),
