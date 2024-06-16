@@ -19,7 +19,7 @@ VALUES
   ('Acc0000007', 'emmanuelstone', 'Emmanuel', 'Stone', 'emmanuelstone@email.com', 'test789123'),
   ('Acc0000008', 'hervinsie', 'Hervin', 'Sie', 'hervinsie@email.com', 'test789123'),
   ('Acc0000009', 'rithikajames', 'Rithika', 'James', 'rithikajames@email.com', 'test789123'),
-  ('Acc0000010', 'isabelletan', 'Isabelle', 'Tan', 'isabelletan@email.com', 'test789123'),;
+  ('Acc0000010', 'isabelletan', 'Isabelle', 'Tan', 'isabelletan@email.com', 'test789123');
 
 CREATE TABLE Admin (
   adminId char(10),
