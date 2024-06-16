@@ -231,15 +231,15 @@ CREATE TABLE LocationReq (
     status char(1) NOT NULL CHECK (status IN ('Y', 'N')),
     websiteLink VARCHAR(250),
     userId char(10),
-    adminId char(10)
+    adminId char(10),
     CONSTRAINT PK_LocationReq PRIMARY KEY (locationReqId)
 );
 
 INSERT INTO LocationReq (locationReqId, locationReqName, locationReqAddress, status, websiteLink, userId, adminId)
 VALUES 
-(1, 'Location 1', '123 Main St', 'Y', 'https://example.com/location1', 'Acc0000001', 'Acc0000002'),
-(2, 'Location 2', '456 Main St', 'Y', 'https://example.com/location1', 'Acc0000001', 'Acc0000002'),
-(3, 'Location 3', '789 Main St', 'Y', 'https://example.com/location1', 'Acc0000001', 'Acc0000002'),
-(4, 'Location 4', '012 Main St', 'Y', 'https://example.com/location1', 'Acc0000001', 'Acc0000002'),
-(5, 'Location 5', '345 Main St', 'Y', 'https://example.com/location1', 'Acc0000001', 'Acc0000002'),
-(6, 'Location 6', '678 Main St', 'Y', 'https://example.com/location1', 'Acc0000001', 'Acc0000002');
+(1, 'The Green Collective SG', '02-18, Funan Mall, 107 North Bridge Rd, 179105', 'Y', 'https://www.thegreencollective.sg/', 'Acc0000006', 'Acc0000004'),
+(2, 'Scoop Wholefoods Jem', '50 Jurong Gateway Rd, #01-12/13, Singapore 608549', 'Y', 'https://scoopwholefoodsshop.com/', 'Acc0000003', 'Acc0000004'),
+(3, 'OliveAnkara', '79 Chay Yan St, #01-02 Opposite Plain Vanilla, Singapore 160079', 'Y', 'https://oliveankara.com/', 'Acc0000008', 'Acc0000007'),
+(4, 'Unpackt', '20 Mandai Lake Rd, #02-09 Mandai Wildlife WEST, Singapore 729825', 'Y', 'https://unpackt.com.sg/', 'Acc0000009', 'Acc0000010'),
+(5, 'H&M', '345 Main St', 'N', NULL, 'Acc0000002', 'Acc0000001'),
+(6, 'Shein', '678 Main St', 'N', NULL, 'Acc0000005', 'Acc0000001');
