@@ -29,25 +29,65 @@ class Categories {
         );
     }
 
-    //create
-    static async createWeek(newWeek) {
+    static async getAllWeeks() {
+        const connection = await sql.connect(dbConfig);
+
+        const sqlQuery = `SELECT * FROM CatWeek`;
+
+        const request = connection.request();
+        const result = await request.query(sqlQuery);
+
+        connection.close();
+
+        return result.recordset.map(
+          (row) => new Week(row.weekName, row.catId, row.userId)
+        );
+    }
+
+    static async getWeekByUserCatId(catid, userid) {
         const connection = await sql.connect(dbConfig);
     
-        const sqlQuery = `INSERT INTO CatWeek (weekName, catId, dataId, userId) VALUES (@title, @author); SELECT SCOPE_IDENTITY() AS id;`; // Retrieve ID of inserted record
+        const sqlQuery = `SELECT * FROM CatWeek WHERE catId = @catId AND userId = @userId`;
     
         const request = connection.request();
-        request.input("title", newBookData.title);
-        request.input("author", newBookData.author);
-    
+        request.input("catId", catid);
+        request.input("userId", userid);
         const result = await request.query(sqlQuery);
     
         connection.close();
     
-        // Retrieve the newly created book using its ID
-        return this.getBookById(result.recordset[0].id);
+        return result.recordset[0]
+          ? new Week(
+              result.recordset[0].weekName,
+              result.recordset[0].catId,
+              result.recordset[0].userId
+            )
+          : null;
+    }
+
+    //create
+    static async createWeek(newWeekData) {
+        const connection = await sql.connect(dbConfig);
+    
+        const sqlQuery1 = `SELECT * FROM CatWeek WHERE catId = @catId AND userId = @userId`;
+        const sqlQuery2 = `INSERT INTO CatWeek (weekName, catId, userId) VALUES (@weekName, @catId, @userId);`;
+    
+        const request = connection.request();
+        request.input("weekName", newWeekData.weekName);
+        request.input("catId", catid);
+        request.input("userId", userid);
+    
+        const result1 = await request.query(sqlQuery1);
+        const result2 = await request.query(sqlQuery2);
+    
+        connection.close();
+    
+        return this.getWeekByUserCatId(result2.recordset[0].weekName);
     }
 
     //update
     
     //delete
 }
+
+module.exports = Categories;
