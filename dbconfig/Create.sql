@@ -64,6 +64,40 @@ VALUES
   ('3', 'Plastic Waste'),
   ('4', 'Recyclables');
 
+CREATE TABLE CatWeek (
+  weekName VARCHAR(100) NOT NULL,
+  catId char(1) NOT NULL,
+  userId char(10) NOT NULL,
+  CONSTRAINT PK_CatWeek PRIMARY KEY (weekName, catId, userId),
+  CONSTRAINT FK_CatWeek_catId
+  FOREIGN KEY (catId) REFERENCES Category(catId),
+  CONSTRAINT FK_CatWeek_dataId
+  FOREIGN KEY (userId) REFERENCES Account(accId),
+);
+
+INSERT INTO CatWeek(weekName, catId, userId)
+VALUES
+  ('Week 1', '1', 'Acc0000002'),
+  ('Week 1', '2', 'Acc0000002'),
+  ('Week 1', '3', 'Acc0000002'),
+  ('Week 1', '4', 'Acc0000002'),
+  ('Week 1', '1', 'Acc0000003'),
+  ('Week 1', '2', 'Acc0000003'),
+  ('Week 1', '4', 'Acc0000003'),
+  ('Week 1', '3', 'Acc0000005'),
+  ('Week 1', '2', 'Acc0000005'),
+  ('Week 1', '1', 'Acc0000005'),
+  ('Week 1', '1', 'Acc0000006'),
+  ('Week 1', '2', 'Acc0000006'),
+  ('Week 1', '4', 'Acc0000006'),
+  ('Week 1', '1', 'Acc0000008'),
+  ('Week 1', '2', 'Acc0000008'),
+  ('Week 1', '3', 'Acc0000008'),
+  ('Week 1', '4', 'Acc0000008'),
+  ('Week 1', '1', 'Acc0000009'),
+  ('Week 1', '2', 'Acc0000009'),
+  ('Week 1', '4', 'Acc0000009');
+
 CREATE TABLE CatDataInput (
   dataId char(10),
   catId char(1),
@@ -72,13 +106,9 @@ CREATE TABLE CatDataInput (
   info VARCHAR(200) NOT NULL,
   amount VARCHAR(200) NOT NULL,
   dateInput smalldatetime NOT NULL,
-  CONSTRAINT PK_CatData PRIMARY KEY (catId, dataId, weekName),
-  CONSTRAINT FK_CatDataInput_catId
-  FOREIGN KEY (catId) REFERENCES Category(catId),
-  CONSTRAINT FK_CatDataInput_userId
-  FOREIGN KEY (weekName) REFERENCES CatWeek(weekName),
-  CONSTRAINT FK_CatDataInput_weekName
-  FOREIGN KEY (userId) REFERENCES Account(accId),
+  CONSTRAINT PK_CatData PRIMARY KEY (dataId),
+  CONSTRAINT FK_CatDataInput_CatWeek
+  FOREIGN KEY (weekName, catId, userId) REFERENCES CatWeek(weekName, catId, userId),
 );
 
 INSERT INTO CatDataInput(userId, catId, dataId, weekName, info, amount, dateInput)
@@ -107,47 +137,6 @@ VALUES
     ('Acc0000009', '2', 'CD00000022', 'Week 1', 'Drovw to work', '20 minutes', '2024-06-15'),
     ('Acc0000009', '1', 'CD00000023', 'Week 1', 'rotten food', '3kg', '2024-06-15'),
     ('Acc0000009', '4', 'CD00000024', 'Week 1', 'Used metal straw', '1', '2024-06-15');
- 
-CREATE TABLE CatWeek (
-  weekName VARCHAR(100) NOT NULL,
-  catId char(1) NOT NULL,
-  dataId char(10) NOT NULL,
-  userId char(10) NOT NULL,
-  CONSTRAINT PK_CatWeek PRIMARY KEY (weekName, catId, dataId, userId),
-  CONSTRAINT FK_CatWeek_catId
-  FOREIGN KEY (catId) REFERENCES Category(catId),
-  CONSTRAINT FK_CatWeek_dataId
-  FOREIGN KEY (dataId) REFERENCES CatDataInput(dataId),
-  CONSTRAINT FK_CatWeek_userId
-  FOREIGN KEY (userId) REFERENCES Account(accId),
-);
-
-INSERT INTO CatWeek(weekName, catId, dataId, userId)
-VALUES
-  ('Week 1', '1', 'CD00000013', 'Acc0000002'),
-  ('Week 1', '2', 'CD00000014', 'Acc0000002'),
-  ('Week 1', '3', 'CD00000015', 'Acc0000002'),
-  ('Week 1', '4', 'CD00000016', 'Acc0000002'),
-  ('Week 1', '1', 'CD00000001', 'Acc0000003'),
-  ('Week 1', '2', 'CD00000002', 'Acc0000003'),
-  ('Week 1', '4', 'CD00000003', 'Acc0000003'),
-  ('Week 1', '4', 'CD00000004', 'Acc0000003'),
-  ('Week 1', '3', 'CD00000009', 'Acc0000005'),
-  ('Week 1', '2', 'CD00000010', 'Acc0000005'),
-  ('Week 1', '1', 'CD00000011', 'Acc0000005'),
-  ('Week 1', '2', 'CD00000012', 'Acc0000005'),
-  ('Week 1', '1', 'CD00000005', 'Acc0000006'),
-  ('Week 1', '2', 'CD00000006', 'Acc0000006'),
-  ('Week 1', '4', 'CD00000007', 'Acc0000006'),
-  ('Week 1', '4', 'CD00000008', 'Acc0000006'),
-  ('Week 1', '1', 'CD00000017', 'Acc0000008'),
-  ('Week 1', '2', 'CD00000018', 'Acc0000008'),
-  ('Week 1', '3', 'CD00000019', 'Acc0000008'),
-  ('Week 1', '4', 'CD00000020', 'Acc0000008'),
-  ('Week 1', '1', 'CD00000021', 'Acc0000009'),
-  ('Week 1', '2', 'CD00000022', 'Acc0000009'),
-  ('Week 1', '1', 'CD00000023', 'Acc0000009'),
-  ('Week 1', '4', 'CD00000024', 'Acc0000009');
    
 CREATE Table WeeklyChallenge (
  userId char(10),
