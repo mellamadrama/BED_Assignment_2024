@@ -67,44 +67,47 @@ VALUES
 CREATE TABLE CatDataInput (
   dataId char(10),
   catId char(1),
+  weekName VARCHAR(100),
   userId char(10),
   info VARCHAR(200) NOT NULL,
   amount VARCHAR(200) NOT NULL,
   dateInput smalldatetime NOT NULL,
-  CONSTRAINT PK_CatData PRIMARY KEY (dataId),
+  CONSTRAINT PK_CatData PRIMARY KEY (catId, dataId, weekName),
   CONSTRAINT FK_CatDataInput_catId
   FOREIGN KEY (catId) REFERENCES Category(catId),
   CONSTRAINT FK_CatDataInput_userId
+  FOREIGN KEY (weekName) REFERENCES CatWeek(weekName),
+  CONSTRAINT FK_CatDataInput_weekName
   FOREIGN KEY (userId) REFERENCES Account(accId),
 );
 
-INSERT INTO CatDataInput(userId, catId, dataId, info, amount, dateInput)
+INSERT INTO CatDataInput(userId, catId, dataId, weekName, info, amount, dateInput)
 VALUES
-    ('Acc0000003', '1', 'CD00000001', 'Leftover rice', '1 cup', '2024-06-14'),
-    ('Acc0000003', '2', 'CD00000002', 'Took public transport', '30 minutes', '2024-06-14'),
-    ('Acc0000003', '4', 'CD00000003', 'Used reusable water bottle', '1', '2024-06-14'),
-    ('Acc0000003', '4', 'CD00000004', 'Recycled paper', '5 sheets', '2024-06-14'),
-    ('Acc0000006', '1', 'CD00000005', 'Expired vegetables', '1 kg', '2024-06-15'),
-    ('Acc0000006', '2', 'CD00000006', 'Walked to work', '20 minutes', '2024-06-15'),
-    ('Acc0000006', '4', 'CD00000007', 'Brought own shopping bag', '3', '2024-06-15'),
-    ('Acc0000006', '4', 'CD00000008', 'Used metal straw', '1', '2024-06-15'),
-    ('Acc0000005', '3', 'CD00000009', 'Food packaging waste', '2 kg', '2024-06-16'),
-    ('Acc0000005', '2', 'CD00000010', 'Cycled to school', '15 minutes', '2024-06-16'),
-    ('Acc0000005', '1', 'CD00000011', 'unfinished lunch', 'half a packet of salad', '2024-06-16'),
-    ('Acc0000005', '2', 'CD00000012', 'Drove to mbs', '30 minutes', '2024-06-16'),
-    ('Acc0000002', '1', 'CD00000013', 'Unfinished toast', 'Half a slice', '2024-06-13'),
-    ('Acc0000002', '2', 'CD00000014', 'Drove my car', '2 hour', '2024-06-13'),
-    ('Acc0000002', '3', 'CD00000015', 'Used plastic cups', '2', '2024-06-13'),
-    ('Acc0000002', '4', 'CD00000016', 'Reused plastic bag', '1', '2024-06-13'),
-    ('Acc0000008', '3', 'CD00000017', 'used plastic straw', '1', '2024-06-14'),
-    ('Acc0000008', '2', 'CD00000018', 'Took public transport', '50 minutes', '2024-06-14'),
-    ('Acc0000008', '4', 'CD00000019', 'Used reusable bag', '1', '2024-06-14'),
-    ('Acc0000008', '3', 'CD00000020', 'used plastic container', '5  packets', '2024-06-14'),
-    ('Acc0000009', '1', 'CD00000021', 'Expired fruits', '1 kg', '2024-06-15'),
-    ('Acc0000009', '2', 'CD00000022', 'Drovw to work', '20 minutes', '2024-06-15'),
-    ('Acc0000009', '1', 'CD00000023', 'rotten food', '3kg', '2024-06-15'),
-    ('Acc0000009', '4', 'CD00000024', 'Used metal straw', '1', '2024-06-15');
-
+    ('Acc0000003', '1', 'CD00000001', 'Week 1', 'Leftover rice', '1 cup', '2024-06-14'),
+    ('Acc0000003', '2', 'CD00000002', 'Week 1', 'Took public transport', '30 minutes', '2024-06-14'),
+    ('Acc0000003', '4', 'CD00000003', 'Week 1', 'Used reusable water bottle', '1', '2024-06-14'),
+    ('Acc0000003', '4', 'CD00000004', 'Week 1', 'Recycled paper', '5 sheets', '2024-06-14'),
+    ('Acc0000006', '1', 'CD00000005', 'Week 1', 'Expired vegetables', '1 kg', '2024-06-15'),
+    ('Acc0000006', '2', 'CD00000006', 'Week 1', 'Walked to work', '20 minutes', '2024-06-15'),
+    ('Acc0000006', '4', 'CD00000007', 'Week 1', 'Brought own shopping bag', '3', '2024-06-15'),
+    ('Acc0000006', '4', 'CD00000008', 'Week 1', 'Used metal straw', '1', '2024-06-15'),
+    ('Acc0000005', '3', 'CD00000009', 'Week 1', 'Food packaging waste', '2 kg', '2024-06-16'),
+    ('Acc0000005', '2', 'CD00000010', 'Week 1', 'Cycled to school', '15 minutes', '2024-06-16'),
+    ('Acc0000005', '1', 'CD00000011', 'Week 1', 'unfinished lunch', 'half a packet of salad', '2024-06-16'),
+    ('Acc0000005', '2', 'CD00000012', 'Week 1', 'Drove to mbs', '30 minutes', '2024-06-16'),
+    ('Acc0000002', '1', 'CD00000013', 'Week 1', 'Unfinished toast', 'Half a slice', '2024-06-13'),
+    ('Acc0000002', '2', 'CD00000014', 'Week 1', 'Drove my car', '2 hour', '2024-06-13'),
+    ('Acc0000002', '3', 'CD00000015', 'Week 1', 'Used plastic cups', '2', '2024-06-13'),
+    ('Acc0000002', '4', 'CD00000016', 'Week 1', 'Reused plastic bag', '1', '2024-06-13'),
+    ('Acc0000008', '3', 'CD00000017', 'Week 1', 'used plastic straw', '1', '2024-06-14'),
+    ('Acc0000008', '2', 'CD00000018', 'Week 1', 'Took public transport', '50 minutes', '2024-06-14'),
+    ('Acc0000008', '4', 'CD00000019', 'Week 1', 'Used reusable bag', '1', '2024-06-14'),
+    ('Acc0000008', '3', 'CD00000020', 'Week 1', 'used plastic container', '5  packets', '2024-06-14'),
+    ('Acc0000009', '1', 'CD00000021', 'Week 1', 'Expired fruits', '1 kg', '2024-06-15'),
+    ('Acc0000009', '2', 'CD00000022', 'Week 1', 'Drovw to work', '20 minutes', '2024-06-15'),
+    ('Acc0000009', '1', 'CD00000023', 'Week 1', 'rotten food', '3kg', '2024-06-15'),
+    ('Acc0000009', '4', 'CD00000024', 'Week 1', 'Used metal straw', '1', '2024-06-15');
+ 
 CREATE TABLE CatWeek (
   weekName VARCHAR(100) NOT NULL,
   catId char(1) NOT NULL,
