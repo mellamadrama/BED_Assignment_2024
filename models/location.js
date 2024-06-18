@@ -48,6 +48,27 @@ class Location {
                 result.recordset[0].userId,
                 result.recordset[0].adminId
             )
-            : null; // Handle book not found
+            : null; // Handle location not found
+    }
+
+    static async createLocation(newLocationReqData) {
+        const connection = await sql.connect(dbConfig);
+
+        const sqlQuery = `INSERT INTO LocationReq (locationReqName, locationReqAddress, status, websiteLink, userId, adminId) VALUES (@locationReqName, @locationReqAddress, @status, @websiteLink, @userId, @adminId); SELECT SCOPE_IDENTITY() AS locationReqId;`; // Parameterized query
+        
+        const request = connection.request();
+        request.input("locationReqName", newLocationReqData.name);
+        request.input("locationReqAddress", newLocationReqData.address);
+        request.input("status", newLocationReqData.status);
+        request.input("websiteLink", newLocationReqData.websiteLink);
+        request.input("userId", newLocationReqData.userId);
+        request.input("adminId", newLocationReqData.adminId);
+    
+        const result = await request.query(sqlQuery);
+    
+        connection.close();
+    
+        // Retrieve the newly created location using its ID
+        return this.getLocationById(result.recordset[0].id);
     }
 }
