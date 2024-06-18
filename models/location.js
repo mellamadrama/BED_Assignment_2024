@@ -71,4 +71,41 @@ class Location {
         // Retrieve the newly created location using its ID
         return this.getLocationById(result.recordset[0].id);
     }
+
+    static async updateLocation(id, newLocationReqData) {
+        const connection = await sql.connect(dbConfig);
+    
+        const sqlQuery = `UPDATE LocationReq SET locationReqName = @locationReqName, locationReqAddress = @locationReqAddress, status = @status, websiteLink = @websiteLink, userId = @userId, adminId = @adminId WHERE locationReqId = @locationReqId`; // Parameterized query
+    
+        const request = connection.request();
+        request.input("locationReqId", id);
+        request.input("locationReqName", newBookData.name || null); // Handle optional fields
+        request.input("locationReqAddress", newLocationReqData.address || null);
+        request.input("status", newLocationReqData.status || null);
+        request.input("websiteLink", newLocationReqData.websiteLink || null);
+        request.input("userId", newLocationReqData.userId || null);
+        request.input("adminId", newLocationReqData.adminId || null);
+    
+        await request.query(sqlQuery);
+    
+        connection.close();
+
+        return this.getLocationById(id); //returning the updated location data
+    }
+
+    static async deleteLocation(id) {
+        const connection = await sql.connect(dbConfig);
+    
+        const sqlQuery = `DELETE FROM LocationReq WHERE locationReqId = @locationReqId`; // Parameterized query
+    
+        const request = connection.request();
+        request.input("locationReqId", id);
+        const result = await request.query(sqlQuery);
+    
+        connection.close();
+    
+        return result.rowsAffected > 0; // Indicate success based on affected rows
+    }
 }
+
+module.exports = Location;
