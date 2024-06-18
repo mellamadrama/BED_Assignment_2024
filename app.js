@@ -19,6 +19,11 @@ app.get("/categories", categoryController.getAllCategories);
 app.get("/weeks", categoryController.getAllWeeks);
 app.get("/week/:userid/:catid", categoryController.getWeekByUserCatId);
 app.post("/week", categoryController.createWeek);
+app.put("/week/:userid/:catid/:weekName", categoryController.updateWeekName);
+app.get("/catdatainput", categoryController.getAllCatDataInput);
+app.get("/catdatainput/:userId/:catId/:dataId/:weekName", categoryController.getCatDataInputByIds);
+app.post("/catdatainput", categoryController.createCatDataInput);
+app.put("/catdatainput/:userId/:catId/:dataId/:weekNam", categoryController.updateCatDataInput);
 
 app.listen(port, async () => {
     try {
