@@ -6,11 +6,11 @@ class Categories {
         this.catId = catId;
         this.catName = catName;
         this.dataId = dataId;
-        this.userId = userId
+        this.userId = userId;
         this.info = info;
         this.amount = amount;
         this.dateInput = dateInput;
-        this.weekName = weekName
+        this.weekName = weekName;
     }
 
     //get(read)
