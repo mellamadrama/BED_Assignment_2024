@@ -134,7 +134,7 @@ VALUES
     ('Acc0000008', '4', 'CD00000019', 'Week 1', 'Used reusable bag', '1', '2024-06-14'),
     ('Acc0000008', '3', 'CD00000020', 'Week 1', 'used plastic container', '5  packets', '2024-06-14'),
     ('Acc0000009', '1', 'CD00000021', 'Week 1', 'Expired fruits', '1 kg', '2024-06-15'),
-    ('Acc0000009', '2', 'CD00000022', 'Week 1', 'Drovw to work', '20 minutes', '2024-06-15'),
+    ('Acc0000009', '2', 'CD00000022', 'Week 1', 'Drove to work', '20 minutes', '2024-06-15'),
     ('Acc0000009', '1', 'CD00000023', 'Week 1', 'rotten food', '3kg', '2024-06-15'),
     ('Acc0000009', '4', 'CD00000024', 'Week 1', 'Used metal straw', '1', '2024-06-15');
    
