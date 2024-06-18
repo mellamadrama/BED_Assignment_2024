@@ -69,20 +69,25 @@ class Categories {
     static async createWeek(newWeekData) {
         const connection = await sql.connect(dbConfig);
     
-        const sqlQuery1 = `SELECT * FROM CatWeek WHERE catId = @catId AND userId = @userId`;
-        const sqlQuery2 = `INSERT INTO CatWeek (weekName, catId, userId) VALUES (@weekName, @catId, @userId);`;
+        const sqlQueryCheck = `SELECT * FROM CatWeek WHERE catId = @catId AND userId = @userId`;
+        const sqlQueryInsert = `INSERT INTO CatWeek (weekName, catId, userId) VALUES (@weekName, @catId, @userId);`;
     
         const request = connection.request();
         request.input("weekName", newWeekData.weekName);
-        request.input("catId", catid);
-        request.input("userId", userid);
+        request.input("catId", newWeekData.catid);
+        request.input("userId", newWeekData.userid);
     
-        const result1 = await request.query(sqlQuery1);
-        const result2 = await request.query(sqlQuery2);
+        const resultCheck = await request.query(sqlQueryCheck);
+        const resultInsert = await request.query(sqlQueryInsert);
     
         connection.close();
-    
-        return this.getWeekByUserCatId(result2.recordset[0].weekName);
+
+        if (resultCheck.recordset.length > 0) {
+            return null; // Week already exists
+        }
+        return this.getWeekByUserCatId(
+            resultInsert.recordset[0].weekName,
+        );
     }
 
     //update
@@ -90,4 +95,4 @@ class Categories {
     //delete
 }
 
-module.exports = Categories;
+module.exports = Category;

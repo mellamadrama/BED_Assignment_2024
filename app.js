@@ -1,5 +1,5 @@
 const express = require("express");
-const categoriescontroller = require("./controllers/categoriescontroller");
+const categoryController = require("./controllers/categoryController");
 const sql = require("mssql");
 const dbConfig = require("./dbConfig");
 const bodyParser = require("body-parser");
@@ -15,9 +15,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(staticMiddleware);
 
 //categories
-app.get("/categories", categoriescontroller.getAllCategories);
-app.get("/weeks", categoriescontroller.getAllWeeks);
-app.get("/week/:userid/:catid", categoriescontroller.getWeekByUserCatId);
+app.get("/categories", categoryController.getAllCategories);
+app.get("/weeks", categoryController.getAllWeeks);
+app.get("/week/:userid/:catid", categoryController.getWeekByUserCatId);
+app.post("/week", categoryController.createWeek);
 
 app.listen(port, async () => {
     try {
