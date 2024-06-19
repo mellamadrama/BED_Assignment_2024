@@ -1,5 +1,6 @@
 const express = require("express");
 const categoryController = require("./controllers/categoryController");
+const locationController = require("./controllers/locationController");
 const sql = require("mssql");
 const dbConfig = require("./dbConfig");
 const bodyParser = require("body-parser");
@@ -24,6 +25,13 @@ app.get("/catdatainput", categoryController.getAllCatDataInput);
 app.get("/catdatainput/:userId/:catId/:dataId/:weekName", categoryController.getCatDataInputByIds);
 app.post("/catdatainput", categoryController.createCatDataInput);
 app.put("/catdatainput/:userId/:catId/:dataId/:weekNam", categoryController.updateCatDataInput);
+
+//locations
+app.get("/locations", locationController.getAllLocations); //get all locations
+app.get("/locations/:locationReqId", locationController.getLocationById); //get location by id
+app.post("/locations", locationController.createLocation); //create location
+app.put("/locations/:locationReqId", locationController.updateLocation); //update location
+app.delete("/locations/:locationReqId", locationController.deleteLocation); //delete location
 
 app.listen(port, async () => {
     try {
