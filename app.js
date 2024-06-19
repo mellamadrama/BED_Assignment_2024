@@ -24,6 +24,9 @@ app.get("/catdatainput", categoryController.getAllCatDataInput);
 app.get("/catdatainput/:userId/:catId/:dataId/:weekName", categoryController.getCatDataInputByIds);
 app.post("/catdatainput", categoryController.createCatDataInput);
 app.put("/catdatainput/:userId/:catId/:dataId/:weekNam", categoryController.updateCatDataInput);
+app.delete('/week/:weekName/:catId/:userId', categoryController.deleteWeek);
+app.delete('/catdatainput/:dataId/:catId/:weekName/:userId', categoryController.deleteCatDataInput);
+
 
 app.listen(port, async () => {
     try {

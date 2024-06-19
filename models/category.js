@@ -222,6 +222,40 @@ class Categories {
     }
     
     //delete
+    static async deleteWeek(weekName, catId, userId) {
+        const connection = await sql.connect(dbConfig);
+    
+        const sqlQuery = `DELETE FROM CatWeek 
+                            WHERE weekName = @weekName AND catId = @catId AND userId = @userId`;
+    
+        const request = connection.request();
+        request.input("weekName", weekName);
+        request.input("catId", catId);
+        request.input("userId", userId);
+        const result = await request.query(sqlQuery);
+    
+        connection.close();
+    
+        return result.rowsAffected > 0;
+    }
+
+    static async deleteCatDataInput(dataId, catId, weekName, userId) {
+        const connection = await sql.connect(dbConfig);
+    
+        const sqlQuery = `DELETE FROM CatDataInput 
+                            WHERE dataId = @dataId AND catId = @catId AND weekName = @weekName AND userId = @userId`;
+    
+        const request = connection.request();
+        request.input("dataId", dataId);
+        request.input("catId", catId);
+        request.input("weekName", weekName);
+        request.input("userId", userId);
+        const result = await request.query(sqlQuery);
+    
+        connection.close();
+    
+        return result.rowsAffected > 0;
+    }
 }
 
 module.exports = Category;

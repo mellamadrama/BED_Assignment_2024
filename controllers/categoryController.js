@@ -138,6 +138,47 @@ const updateCatDataInput = async (req, res) => {
   }
 };
 
+const deleteWeek = async (req, res) => {
+  const catId = req.params;
+  const userId = req.params;
+  const weekName = req.params;
+
+  try {
+    const success = await Category.deleteWeek(weekName, catId, userId);
+    if (!success) {
+      return res.status(404).send("Week not found");
+    }
+    else {
+      res.status(200).send("Week deleted successfully");
+    }
+    res.status(204).send();
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error deleting week");
+  }
+};
+
+const deleteCatDataInput = async (req, res) => {
+  const catId = req.params;
+  const userId = req.params;
+  const dataId = req.params;
+  const weekName = req.params;
+
+  try {
+    const success = await Category.deleteCatDataInput(dataId, catId, weekName, userId);
+    if (!success) {
+      return res.status(404).send("Data not found");
+    }
+    else {
+      res.status(200).send("Data deleted successfully");
+    }
+    res.status(204).send();
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error deleting data");
+  }
+};
+
 module.exports = {
     getAllCategories,
     getAllWeeks,
@@ -148,4 +189,6 @@ module.exports = {
     getCatDataInputByIds,
     createCatDataInput,
     updateCatDataInput,
+    deleteWeek,
+    deleteCatDataInput,
   };
