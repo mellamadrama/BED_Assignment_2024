@@ -10,26 +10,19 @@ class Challenge {
         this.ChallengeCompleted = ChallengeCompleted
     }
 
-    static async getUserChallengesByID(uId, cId) {
+    static async getAllChallenges() {
         const connection = await sql.connect(dbConfig);
     
-        const sqlQuery = `SELECT * FROM UserWeeklyChallenges WHERE userId = @uId AND ChallengeID = @cId`; 
+        const sqlQuery = `SELECT * FROM WeeklyChallenges`; 
     
         const request = connection.request();
-        request.input("userId", uId);
         const result = await request.query(sqlQuery);
     
         connection.close();
     
-        return result.recordset[0]
-            ? new Challenge(
-                result.recordset[0].userId,
-                result.recordset[0].ChallengeID,
-                result.recordset[0].ChallengeDesc,
-                result.recordset[0].Points,
-                result.recordset[0].ChallengeCompleted
-            )
-            : null;
+        return result.recordset.map(
+            (row) => new Challenge(row.ChallengeID, row.ChallengeDesc, row.Points)
+        );
     }
   
     static async getAllChallengesByUserID(uId) {
@@ -134,7 +127,7 @@ class Challenge {
             const request = connection.request();
             request.input("userId", userId);
             request.input("ChallengeID", cId);
-            
+
             await request.query(sqlQuery);
         }
     
