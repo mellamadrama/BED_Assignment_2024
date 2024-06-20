@@ -151,7 +151,6 @@ VALUES
     ('Acc0000009', '4', 'CD00000024', 'Week 1', 'Used metal straw', '1', '2024-06-15');
    
 CREATE Table WeeklyChallenge (
- userId char(10),
  ChallengeID varchar(10),
  ChallengeDesc varchar(200) NOT NULL UNIQUE,
  Points varchar(20) NOT NULL,
