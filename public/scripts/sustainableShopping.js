@@ -13,7 +13,7 @@ async function fetchLocations() {
         const locationAddressElement = document.createElement("p");
         locationAddressElement.textContent = `Address: ${location.locationReqAddress}`;
 
-        //add more elements
+        //add more elements (test)
 
         locationItem.appendChild(locationNameElement);
         locationItem.appendChild(locationAddressElement);
