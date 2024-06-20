@@ -1,3 +1,15 @@
+DROP TABLE LocationReq;
+DROP TABLE WeeklyPoints;
+DROP TABLE MonthlyPoints;
+DROP TABLE UserWeeklyChallenges;
+DROP TABLE WeeklyChallenge;
+DROP TABLE CatWeek;
+DROP TABLE CatDataInput;
+DROP TABLE Category;
+DROP TABLE UserAcc;
+DROP TABLE Admin;
+DROP TABLE Account;
+
 CREATE TABLE Account (
   accId char(10),
   username VARCHAR(100) NOT NULL,

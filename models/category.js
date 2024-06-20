@@ -258,4 +258,4 @@ class Categories {
     }
 }
 
-module.exports = Category;
+module.exports = Categories;

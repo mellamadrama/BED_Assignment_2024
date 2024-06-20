@@ -4,7 +4,8 @@ const locationController = require("./controllers/locationController");
 const sql = require("mssql");
 const dbConfig = require("./dbConfig");
 const bodyParser = require("body-parser");
-const validateCategory = require('./middlewares/validateCategory')
+const validateCategory = require('./middlewares/validateCategory');
+const validateLocation = require('./middlewares/validateLocation');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -32,8 +33,8 @@ app.delete('/catdatainput/:dataId/:catId/:weekName/:userId', categoryController.
 //locations
 app.get("/locations", locationController.getAllLocations); //get all locations
 app.get("/locations/:locationReqId", locationController.getLocationById); //get location by id
-app.post("/locations", locationController.createLocation); //create location
-app.put("/locations/:locationReqId", locationController.updateLocation); //update location
+app.post("/locations", validateLocation, locationController.createLocation); //create location
+app.put("/locations/:locationReqId", validateLocation, locationController.updateLocation); //update location
 app.delete("/locations/:locationReqId", locationController.deleteLocation); //delete location
 
 app.listen(port, async () => {
