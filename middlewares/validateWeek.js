@@ -1,9 +1,10 @@
 const Joi = require("joi");
 
-const validateCategory = (req, res, next) => {
+const validateWeek = (req, res, next) => {
     const schema = Joi.object({
       catId: Joi.int().lenght(1).required(),
-      catName: Joi.string().min(1).max(50).required(),
+      userId: Joi.string().lenght(10).required(),
+      weekName: Joi.string().min(1).max(100).required(),
     });
   
     const validation = schema.validate(req.body, { abortEarly: false }); 
@@ -17,4 +18,4 @@ const validateCategory = (req, res, next) => {
     next(); 
   };
 
-module.exports = validateCategory;
+module.exports = validateWeek;

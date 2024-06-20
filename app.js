@@ -1,10 +1,13 @@
 const express = require("express");
 const categoryController = require("./controllers/categoryController");
+const weekController = require("./controllers/weekController");
+const dataInputController = require("./controllers/dataInputController");
 const locationController = require("./controllers/locationController");
 const sql = require("mssql");
 const dbConfig = require("./dbConfig");
 const bodyParser = require("body-parser");
-const validateCategory = require('./middlewares/validateCategory');
+const validateWeek = require('./middlewares/validateWeek');
+const validateDataInput = require('./middlewares/validateDataInput');
 const validateLocation = require('./middlewares/validateLocation');
 
 const app = express();
@@ -18,16 +21,20 @@ app.use(staticMiddleware);
 
 //categories
 app.get("/categories", categoryController.getAllCategories);
-app.get("/weeks", categoryController.getAllWeeks);
-app.get("/week/:userid/:catid", categoryController.getWeekByUserCatId);
-app.post("/week", categoryController.createWeek);
-app.put("/week/:userid/:catid/:weekName", categoryController.updateWeekName);
-app.get("/catdatainput", categoryController.getAllCatDataInput);
-app.get("/catdatainput/:userId/:catId/:dataId/:weekName", categoryController.getCatDataInputByIds);
-app.post("/catdatainput", categoryController.createCatDataInput);
-app.put("/catdatainput/:userId/:catId/:dataId/:weekNam", categoryController.updateCatDataInput);
-app.delete('/week/:weekName/:catId/:userId', categoryController.deleteWeek);
-app.delete('/catdatainput/:dataId/:catId/:weekName/:userId', categoryController.deleteCatDataInput);
+
+//weeks
+app.get("/weeks", weekController.getAllWeeks);
+app.get("/weeks/:userid/:catid", weekController.getWeekByUserCatId);
+app.post("/weeks", validateWeek, weekController.createWeek);
+app.put("/weeks/:userid/:catid/:weekName", validateWeek, weekController.updateWeekName);
+app.delete('/weeks/:weekName/:catId/:userId', weekController.deleteWeek);
+
+//datainput
+app.get("/datainput", dataInputController.getAllCatDataInput);
+app.get("/datainput/:userId/:catId/:dataId/:weekName", dataInputController.getCatDataInputByIds);
+app.post("/datainput", validateDataInput, dataInputController.createCatDataInput);
+app.put("/datainput/:userId/:catId/:dataId/:weekNam", validateDataInput, dataInputController.updateCatDataInput);
+app.delete('/datainput/:dataId/:catId/:weekName/:userId', dataInputController.deleteCatDataInput);
 
 
 //locations

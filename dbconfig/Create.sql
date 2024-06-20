@@ -117,7 +117,7 @@ CREATE TABLE CatDataInput (
   userId char(10),
   info VARCHAR(200) NOT NULL,
   amount VARCHAR(200) NOT NULL,
-  dateInput smalldatetime NOT NULL,
+  dateInput VARCHAR(100) NOT NULL,
   CONSTRAINT PK_CatData PRIMARY KEY (dataId),
   CONSTRAINT FK_CatDataInput_CatWeek
   FOREIGN KEY (weekName, catId, userId) REFERENCES CatWeek(weekName, catId, userId),

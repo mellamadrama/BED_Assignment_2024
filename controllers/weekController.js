@@ -1,0 +1,90 @@
+const Week = require("../models/week");
+
+const getAllWeeks = async (req, res) => {
+    try {
+      const weeks = await Week.getAllWeeks();
+      res.json(weeks);
+    } catch (error) { 
+      console.error(error);
+      res.status(500).send("Error retrieving weeks");
+    }
+  };
+
+const getWeekByUserCatId = async (req, res) => {
+    const catId = req.params.catId;
+    const userId = req.params.userId;
+    try {
+      const week = await Week.getWeekByUserCatId(catId, userId);
+      if (!week) {
+        return res.status(404).send("Week not found");
+      }
+      res.json(week);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Error retrieving week");
+    }
+};
+
+const createWeek = async (req, res) => {
+    const newWeekData = {
+        weekName: req.body.weekName,
+        catId: req.body.catId,
+        userId: req.body.userId
+    };
+    try {
+        const createdWeek = await Week.createWeek(newWeekData);
+        if (!createdWeek) {
+            return res.status(409).send("Week already exists");
+        }
+        res.status(201).json(createdWeek);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error creating week");
+    }
+};
+
+const updateWeekName = async (req, res) => {
+  const catId = req.params.catid;
+  const userId = req.params.userid;
+  const weekName = req.params.weekName;
+  const newWeekName = req.body;
+
+  try {
+    const updatedWeekName = await Week.updateWeekName(catId, userId, weekName, newWeekName);
+    if (!updateWeekName) {
+      return res.status(404).send("Week not found");
+    }
+    res.json(updatedWeekName);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error updating week name");
+  }
+};
+
+const deleteWeek = async (req, res) => {
+    const catId = req.params;
+    const userId = req.params;
+    const weekName = req.params;
+  
+    try {
+      const success = await Week.deleteWeek(weekName, catId, userId);
+      if (!success) {
+        return res.status(404).send("Week not found");
+      }
+      else {
+        res.status(200).send("Week deleted successfully");
+      }
+      res.status(204).send();
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Error deleting week");
+    }
+};
+
+module.exports = {
+    getAllWeeks,
+    getWeekByUserCatId,
+    createWeek,
+    updateWeekName,
+    deleteWeek,
+  };

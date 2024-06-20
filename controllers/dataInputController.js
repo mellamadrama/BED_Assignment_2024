@@ -1,0 +1,97 @@
+const DataInput = require("../models/dataInput");
+
+const getAllCatDataInput = async (req, res) => {
+    try {
+      const catDataInputs = await DataInput.getAllCatDataInput();
+      res.json(catDataInputs);
+    } catch (error) { 
+      console.error(error);
+      res.status(500).send("Error retrieving catDataInput");
+    }
+  };
+  
+  const getCatDataInputByIds = async (req, res) => {
+    const catId = req.params.catId;
+    const userId = req.params.userId;
+    const dataId = req.params.dataId;
+    const weekName = req.params.weekName;
+    try {
+      const catDataInput = await DataInput.getCatDataInputByIds(userId, catId, dataId, weekName);
+      if (!catDataInput) {
+        return res.status(404).send("Data not found");
+      }
+      res.json(catDataInput);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Error retrieving Data");
+    }
+  };
+  
+  const createCatDataInput = async (req, res) => {
+    const newCatDataInput = {
+        weekName: req.body,
+        catId: req.body,
+        userId: req.body,
+        info: req.body,
+        amount: req.body,
+        dateInput: req.body
+    };
+    try {
+        const createdCatDataInput = await DataInput.createCatDataInput(newCatDataInput);
+        if (!createdCatDataInput) {
+            return res.status(409).send("Data already exists");
+        }
+        res.status(201).json(createdCatDataInput);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error creating data");
+    }
+  };
+  
+  const updateCatDataInput = async (req, res) => {
+    const catId = req.params;
+    const userId = req.params;
+    const dataId = req.params;
+    const weekName = req.params;
+    const updatedData = req.body;
+  
+    try {
+      const updatedCatDataInput = await DataInput.updateCatDataInput(dataId, catId, weekName, userId, updatedData);
+      if (!updatedCatDataInput) {
+        return res.status(404).send("Data not found");
+      }
+      res.json(updatedCatDataInput);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Error updating data info, amount and date");
+    }
+  };
+  
+  const deleteCatDataInput = async (req, res) => {
+    const catId = req.params;
+    const userId = req.params;
+    const dataId = req.params;
+    const weekName = req.params;
+  
+    try {
+      const success = await DataInput.deleteCatDataInput(dataId, catId, weekName, userId);
+      if (!success) {
+        return res.status(404).send("Data not found");
+      }
+      else {
+        res.status(200).send("Data deleted successfully");
+      }
+      res.status(204).send();
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Error deleting data");
+    }
+};
+
+module.exports = {
+    getAllCatDataInput,
+    getCatDataInputByIds,
+    createCatDataInput,
+    updateCatDataInput,
+    deleteCatDataInput,
+};
