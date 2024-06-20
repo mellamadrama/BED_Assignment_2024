@@ -3,9 +3,9 @@ const dbConfig = require("../dbConfig");
 
 class Weeks {
     constructor(catId, userId, weekName) {
+        this.weekName = weekName;
         this.catId = catId;
         this.userId = userId;
-        this.weekName = weekName;
     }
 
     //get(read)
@@ -41,7 +41,7 @@ class Weeks {
             result.recordset[0].weekName,
             result.recordset[0].catId,
             result.recordset[0].userId
-            )
+        )
         : null;
     }
 
@@ -58,7 +58,6 @@ class Weeks {
         request.input("userId", newWeekData.userid);
     
         const resultCheck = await request.query(sqlQueryCheck);
-        const resultInsert = await request.query(sqlQueryInsert);
     
         connection.close();
 
@@ -66,7 +65,6 @@ class Weeks {
             return null; // Week already exists
         }
         return this.getWeekByUserCatId(
-            resultInsert.recordset[0].weekName,
             resultInsert.recordset[0].catId,
             resultInsert.recordset[0].userId
         );
@@ -76,13 +74,13 @@ class Weeks {
     static async updateWeekName(catid, userid, weekName, newWeekName) {
         const connection = await sql.connect(dbConfig);
     
-        const sqlQuery = `UPDATE CatWeek SET weekName = @weekName WHERE catId = @catid AND userId = @userId AND weekName = @weekName`;
+        const sqlQuery = `UPDATE CatWeek SET weekName = @newWeekName WHERE catId = @catid AND userId = @userId AND weekName = @weekName`;
     
         const request = connection.request();
         request.input("catId", catid);
         request.input("userId", userid);
         request.input("weekName", weekName);
-        request.input("weekName", newWeekName.weekName || null);
+        request.input("newWeekName", newWeekName.weekName || null);
     
         await request.query(sqlQuery);
     
