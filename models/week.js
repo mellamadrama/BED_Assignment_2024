@@ -2,7 +2,7 @@ const sql = require("mssql");
 const dbConfig = require("../dbConfig");
 
 class Weeks {
-    constructor(catId, userId, weekName) {
+    constructor(weekName, catId, userId) {
         this.weekName = weekName;
         this.catId = catId;
         this.userId = userId;
