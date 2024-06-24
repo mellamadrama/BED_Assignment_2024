@@ -27,7 +27,7 @@ const getAllCatDataInput = async (req, res) => {
     }
   };
   
-  const createCatDataInput = async (req, res) => {
+  const createDataInput = async (req, res) => {
     const newCatDataInput = {
         weekName: req.body,
         catId: req.body,
@@ -37,7 +37,7 @@ const getAllCatDataInput = async (req, res) => {
         dateInput: req.body
     };
     try {
-        const createdCatDataInput = await DataInput.createCatDataInput(newCatDataInput);
+        const createdCatDataInput = await DataInput.createDataInput(newCatDataInput);
         if (!createdCatDataInput) {
             return res.status(409).send("Data already exists");
         }
@@ -91,7 +91,7 @@ const getAllCatDataInput = async (req, res) => {
 module.exports = {
     getAllCatDataInput,
     getCatDataInputByIds,
-    createCatDataInput,
+    createDataInput,
     updateCatDataInput,
     deleteCatDataInput,
 };

@@ -44,13 +44,13 @@ const createWeek = async (req, res) => {
 };
 
 const updateWeekName = async (req, res) => {
-  const catId = req.params.catid;
-  const userId = req.params.userid;
-  const weekName = req.params.weekName;
-  const newWeekName = req.body;
+  const weekName = req.body.weekName;
+  const catId = req.body.catId;
+  const userId = req.body.userId;
+  const newWeekName = req.body.newWeekName;
 
   try {
-    const updatedWeekName = await Week.updateWeekName(catId, userId, weekName, newWeekName);
+    const updatedWeekName = await Week.updateWeekName(weekName, catId, userId, newWeekName);
     if (!updateWeekName) {
       return res.status(404).send("Week not found");
     }
@@ -62,9 +62,9 @@ const updateWeekName = async (req, res) => {
 };
 
 const deleteWeek = async (req, res) => {
-    const catId = req.params;
-    const userId = req.params;
-    const weekName = req.params;
+    const weekName = req.params.weekName;
+    const catId = req.params.catId;
+    const userId = req.params.userId;
   
     try {
       const success = await Week.deleteWeek(weekName, catId, userId);

@@ -35,14 +35,7 @@ class Weeks {
         const result = await request.query(sqlQuery);
 
         connection.close();
-
-        return result.recordset[0]
-        ? new Weeks(
-            result.recordset[0].weekName,
-            result.recordset[0].catId,
-            result.recordset[0].userId
-        )
-        : null;
+        return result.recordset.map(((row) => new Weeks(row.weekName, row.catId, row.userId)));
     }
 
     //create
@@ -72,16 +65,16 @@ class Weeks {
     }
 
     //update
-    static async updateWeekName(catId, userId, weekName, newWeekName) {
+    static async updateWeekName(weekName, catId, userId, newWeekName) {
         const connection = await sql.connect(dbConfig);
     
         const sqlQuery = `UPDATE CatWeek SET weekName = @newWeekName WHERE catId = @catId AND userId = @userId AND weekName = @weekName`;
     
         const request = connection.request();
+        request.input("weekName", weekName);
         request.input("catId", catId);
         request.input("userId", userId);
-        request.input("weekName", weekName);
-        request.input("newWeekName", newWeekName.weekName || null);
+        request.input("newWeekName", newWeekName);
     
         await request.query(sqlQuery);
     
@@ -94,13 +87,13 @@ class Weeks {
     static async deleteWeek(weekName, catId, userId) {
         const connection = await sql.connect(dbConfig);
     
-        const sqlQuery = `DELETE FROM CatWeek 
-                            WHERE weekName = @weekName AND catId = @catId AND userId = @userId`;
+        const sqlQuery = `DELETE FROM CatWeek WHERE weekName = @weekName AND catId = @catId AND userId = @userId`;
     
         const request = connection.request();
         request.input("weekName", weekName);
         request.input("catId", catId);
         request.input("userId", userId);
+        
         const result = await request.query(sqlQuery);
     
         connection.close();

@@ -6,7 +6,7 @@ const locationController = require("./controllers/locationController");
 const sql = require("mssql");
 const dbConfig = require("./dbConfig");
 const bodyParser = require("body-parser");
-const validateWeek = require('./middlewares/validateWeek');
+const { validateWeek, validateUpdateWeekName } = require('./middlewares/validateWeek');
 const validateDataInput = require('./middlewares/validateDataInput');
 const validateLocation = require('./middlewares/validateLocation');
 
@@ -27,13 +27,13 @@ app.get('/categories/:catId', categoryController.getCategoryById);
 app.get("/weeks", weekController.getAllWeeks);
 app.get("/weeks/:catId/:userId", weekController.getWeekByUserCatId);
 app.post("/weeks", validateWeek, weekController.createWeek);
-app.put("/weeks/:weekName/:catId/:userId", validateWeek, weekController.updateWeekName);
+app.put("/weeks/:weekName/:catId/:userId", validateUpdateWeekName, weekController.updateWeekName);
 app.delete('/weeks/:weekName/:catId/:userId', weekController.deleteWeek);
 
 //datainput
 app.get("/datainput", dataInputController.getAllCatDataInput);
 app.get("/datainput/:dataId/:catId/:weekName/:userId", dataInputController.getCatDataInputByIds);
-app.post("/datainput", validateDataInput, dataInputController.createCatDataInput);
+app.post("/datainput", validateDataInput, dataInputController.createDataInput);
 app.put("/datainput/:dataId/:catId/:weekName/:userId", validateDataInput, dataInputController.updateCatDataInput);
 app.delete('/datainput/:dataId/:catId/:weekName/:userId', dataInputController.deleteCatDataInput);
 

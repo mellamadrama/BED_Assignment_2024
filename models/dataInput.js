@@ -42,17 +42,9 @@ class DataInputs {
     
         connection.close();
     
-        return result.recordset[0]
-          ? new DataInputs(
-              result.recordset[0].dataId,
-              result.recordset[0].catId,
-              result.recordset[0].weekName,
-              result.recordset[0].userId,
-              result.recordset[0].info,
-              result.recordset[0].amount,
-              result.recordset[0].dateInput
-            )
-          : null;
+        return result.recordset.map(
+            (row) => new DataInputs(row.userId, row.catId, row.dataId, row.weekName, row.info, row.amount, row.dateInput)
+          );
     }
 
     //create
@@ -60,10 +52,11 @@ class DataInputs {
         const connection = await sql.connect(dbConfig);
     
         const sqlQueryCheck = `SELECT * FROM CatDataInput WHERE dataId = @dataId`;
-        const sqlQueryInsert = `INSERT INTO CatDataInput (dataId, catId, weekName, userId, info, amount, dateInput) 
-                                VALUES (@dataId, @catId, @weekName, @userId, @info, @amount, @dateInput)`;
-        const request = connection.request();
-        const resultLastDataId = await request.query(sqlQueryLastDataId);
+    
+        const sqlQueryLastDataId = `SELECT TOP 1 dataId FROM CatDataInput ORDER BY dataId DESC`;
+        const requestLastDataId = connection.request();
+        const resultLastDataId = await requestLastDataId.query(sqlQueryLastDataId);
+
         let newDataId;
         if (resultLastDataId.recordset.length > 0) {
             const lastDataId = resultLastDataId.recordset[0].dataId;
@@ -72,9 +65,14 @@ class DataInputs {
         } else {
             newDataId = 'CD00000001';
         }
-        request.input("dataId", newDataId);
+
+        const sqlQueryInsert = `INSERT INTO CatDataInput (dataId, catId, weekName, userId, info, amount, dateInput) 
+                                VALUES (@dataId, @catId, @weekName, @userId, @info, @amount, @dateInput)`;
+        
+        const request = connection.request();
         request.input("userId", newCatDataInput.userId);
         request.input("catId", newCatDataInput.catId);
+        request.input("dataId", newDataId);
         request.input("weekName", newCatDataInput.weekName);
         request.input("info", newCatDataInput.info);
         request.input("amount", newCatDataInput.amount);

@@ -1,10 +1,9 @@
 const Joi = require("joi");
 
-const validateWeek = (req, res, next) => {
+const validateDataInput = (req, res, next) => {
     const schema = Joi.object({
       userId: Joi.string().length(10).required(),
       catId: Joi.string().length(1).required(),
-      dataId: Joi.string().length(10).required(),
       weekName: Joi.string().min(1).max(100).required(),
       info: Joi.string().min(1).max(200).required(),
       amount: Joi.string().min(1).max(200).required(),
@@ -22,4 +21,4 @@ const validateWeek = (req, res, next) => {
     next(); 
   };
 
-module.exports = validateWeek;
+module.exports = validateDataInput;
