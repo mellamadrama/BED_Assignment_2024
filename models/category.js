@@ -23,13 +23,13 @@ class Categories {
         );
     }
 
-    static async getCategoryByName(catName) {
+    static async getCategoryById(catId) {
         const connection = await sql.connect(dbConfig);
 
-        const sqlQuery = `SELECT * FROM Category WHERE catName = @catName`;
+        const sqlQuery = `SELECT * FROM Category WHERE catId = @catId`;
 
         const request = connection.request();
-        request.input("catName", catName);
+        request.input("catId", catId);
         const result = await request.query(sqlQuery);
 
         connection.close();
