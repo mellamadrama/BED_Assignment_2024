@@ -72,10 +72,10 @@ class Weeks {
     }
 
     //update
-    static async updateWeekName(catid, userid, weekName, newWeekName) {
+    static async updateWeekName(catId, userId, weekName, newWeekName) {
         const connection = await sql.connect(dbConfig);
     
-        const sqlQuery = `UPDATE CatWeek SET weekName = @newWeekName WHERE catId = @catid AND userId = @userId AND weekName = @weekName`;
+        const sqlQuery = `UPDATE CatWeek SET weekName = @newWeekName WHERE catId = @catId AND userId = @userId AND weekName = @weekName`;
     
         const request = connection.request();
         request.input("catId", catId);
