@@ -2,8 +2,8 @@ const Joi = require("joi");
 
 const validateWeek = (req, res, next) => {
     const schema = Joi.object({
-      catId: Joi.int().lenght(1).required(),
       userId: Joi.string().lenght(10).required(),
+      catId: Joi.int().lenght(1).required(),
       dataId: Joi.string().lenght(10).required(),
       weekName: Joi.string().min(1).max(100).required(),
       info: Joi.string().min(1).max(200).required(),

@@ -2,14 +2,14 @@ const sql = require("mssql");
 const dbConfig = require("../dbConfig");
 
 class DataInputs {
-    constructor(catId, dataId, userId, info, amount, dateInput, weekName) {
+    constructor(userId, catId, dataId, weekName, info, amount, dateInput) {
+        this.userId = userId;
         this.catId = catId;
         this.dataId = dataId;
-        this.userId = userId;
+        this.weekName = weekName;
         this.info = info;
         this.amount = amount;
         this.dateInput = dateInput;
-        this.weekName = weekName;
     }
 
     //get(read)
@@ -63,9 +63,9 @@ class DataInputs {
         const sqlQueryInsert = `INSERT INTO CatDataInput (dataId, catId, weekName, userId, info, amount, dateInput) 
                                 VALUES (@dataId, @catId, @weekName, @userId, @info, @amount, @dateInput)`;
         const request = connection.request();
+        request.input("userId", newCatDataInput.userId);
         request.input("catId", newCatDataInput.catId);
         request.input("weekName", newCatDataInput.weekName);
-        request.input("userId", newCatDataInput.userId);
         request.input("info", newCatDataInput.info);
         request.input("amount", newCatDataInput.amount);
         request.input("dateInput", newCatDataInput.dateInput);
@@ -91,10 +91,10 @@ class DataInputs {
         request.input("dataId", newDataId);
 
         return this.getCatDataInputByIds(
-            newDataId,
-            resultInsert.recordset[0].catId,
-            resultInsert.recordset[0].weekName,
             resultInsert.recordset[0].userId,
+            resultInsert.recordset[0].catId,
+            newDataId,
+            resultInsert.recordset[0].weekName,
             resultInsert.recordset[0].info,
             resultInsert.recordset[0].amount,
             resultInsert.recordset[0].dateInput
@@ -102,7 +102,7 @@ class DataInputs {
     }
 
     //update
-    static async updateCatDataInput(dataId, catId, weekName, userId, updatedData) {
+    static async updateCatDataInput(userId, catId, dataId, weekName, updatedData) {
         const connection = await sql.connect(dbConfig);
     
         const sqlQuery = `UPDATE CatDataInput 
@@ -110,10 +110,10 @@ class DataInputs {
                             WHERE dataId = @dataId AND catId = @catId AND weekName = @weekName AND userId = @userId`;
     
         const request = connection.request();
-        request.input("dataId", dataId);
-        request.input("catId", catId);
-        request.input("weekName", weekName);
         request.input("userId", userId);
+        request.input("catId", catId);
+        request.input("dataId", dataId);
+        request.input("weekName", weekName);
         request.input("info", updatedData.info);
         request.input("amount", updatedData.amount);
         request.input("dateInput", updatedData.dateInput);
@@ -126,17 +126,17 @@ class DataInputs {
     }
 
     //delete
-    static async deleteCatDataInput(dataId, catId, weekName, userId) {
+    static async deleteCatDataInput(userId, catId, dataId, weekName) {
         const connection = await sql.connect(dbConfig);
     
         const sqlQuery = `DELETE FROM CatDataInput 
                             WHERE dataId = @dataId AND catId = @catId AND weekName = @weekName AND userId = @userId`;
     
         const request = connection.request();
-        request.input("dataId", dataId);
-        request.input("catId", catId);
-        request.input("weekName", weekName);
         request.input("userId", userId);
+        request.input("catId", catId);
+        request.input("dataId", dataId);
+        request.input("weekName", weekName);
         const result = await request.query(sqlQuery);
     
         connection.close();
