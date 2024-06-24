@@ -19,8 +19,27 @@ class Categories {
         connection.close();
 
         return result.recordset.map(
-          (row) => new Category(row.catId, row.catName)
+          (row) => new Categories(row.catId, row.catName)
         );
+    }
+
+    static async getCategoryByName(catName) {
+        const connection = await sql.connect(dbConfig);
+
+        const sqlQuery = `SELECT * FROM Category WHERE catName = @catName`;
+
+        const request = connection.request();
+        request.input("catName", catName);
+        const result = await request.query(sqlQuery);
+
+        connection.close();
+
+        return result.recordset[0]
+        ? new Categories(
+            result.recordset[0].catId,
+            result.recordset[0].catName
+        )
+        : null;
     }
 }
 
