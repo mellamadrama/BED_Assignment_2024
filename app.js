@@ -21,7 +21,7 @@ app.use(staticMiddleware);
 
 //categories
 app.get("/categories", categoryController.getAllCategories);
-app.get('/categories/:catId', categoryController.getCategoryByName);
+app.get('/categories/:catId', categoryController.getCategoryById);
 
 //weeks
 app.get("/weeks", weekController.getAllWeeks);

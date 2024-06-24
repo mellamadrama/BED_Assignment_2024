@@ -10,10 +10,10 @@ const getAllCategories = async (req, res) => {
     }
 };
 
-const getCategoryByName = async (req, res) => {
+const getCategoryById = async (req, res) => {
   const catId = req.params.catId;
   try {
-      const category = await Category.getCategoryByName(catId);
+      const category = await Category.getCategoryById(catId);
       if (!category) {
           return res.status(404).send("Category not found");
       }
@@ -26,5 +26,5 @@ const getCategoryByName = async (req, res) => {
 
 module.exports = {
     getAllCategories,
-    getCategoryByName,
+    getCategoryById,
 };
