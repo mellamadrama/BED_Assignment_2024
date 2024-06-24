@@ -3,8 +3,8 @@ const Joi = require("joi");
 const validateWeek = (req, res, next) => {
     const schema = Joi.object({
       weekName: Joi.string().min(1).max(100).required(),
-      catId: Joi.int().lenght(1).required(),
-      userId: Joi.string().lenght(10).required(),
+      catId: Joi.string().length(1).required(),
+      userId: Joi.string().length(10).required(),
     });
   
     const validation = schema.validate(req.body, { abortEarly: false }); 

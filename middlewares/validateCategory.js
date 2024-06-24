@@ -2,7 +2,7 @@ const Joi = require("joi");
 
 const validateCategory = (req, res, next) => {
     const schema = Joi.object({
-      catId: Joi.int().lenght(1).required(),
+      catId: Joi.string().length(1).required(),
       catName: Joi.string().min(1).max(50).required(),
     });
   

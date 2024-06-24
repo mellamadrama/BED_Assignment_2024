@@ -49,15 +49,16 @@ class Weeks {
     static async createWeek(newWeekData) {
         const connection = await sql.connect(dbConfig);
     
-        const sqlQueryCheck = `SELECT * FROM CatWeek WHERE catId = @catId AND userId = @userId`;
+        const sqlQueryCheck = `SELECT * FROM CatWeek WHERE weekName = @weekName AND catId = @catId AND userId = @userId`;
         const sqlQueryInsert = `INSERT INTO CatWeek (weekName, catId, userId) VALUES (@weekName, @catId, @userId);`;
     
         const request = connection.request();
         request.input("weekName", newWeekData.weekName);
-        request.input("catId", newWeekData.catid);
-        request.input("userId", newWeekData.userid);
+        request.input("catId", newWeekData.catId);
+        request.input("userId", newWeekData.userId);
     
         const resultCheck = await request.query(sqlQueryCheck);
+        const resultInsert = await request.query(sqlQueryInsert);
     
         connection.close();
 
@@ -65,8 +66,8 @@ class Weeks {
             return null; // Week already exists
         }
         return this.getWeekByUserCatId(
-            resultInsert.recordset[0].catId,
-            resultInsert.recordset[0].userId
+            newWeekData.catId,
+            newWeekData.userId
         );
     }
 
@@ -77,8 +78,8 @@ class Weeks {
         const sqlQuery = `UPDATE CatWeek SET weekName = @newWeekName WHERE catId = @catid AND userId = @userId AND weekName = @weekName`;
     
         const request = connection.request();
-        request.input("catId", catid);
-        request.input("userId", userid);
+        request.input("catId", catId);
+        request.input("userId", userId);
         request.input("weekName", weekName);
         request.input("newWeekName", newWeekName.weekName || null);
     
@@ -86,7 +87,7 @@ class Weeks {
     
         connection.close();
     
-        return this.getWeekByUserCatId(catid, userid);
+        return this.getWeekByUserCatId(catId, userId);
     }
     
     //delete

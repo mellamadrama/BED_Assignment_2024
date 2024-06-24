@@ -25,9 +25,9 @@ app.get('/categories/:catId', categoryController.getCategoryById);
 
 //weeks
 app.get("/weeks", weekController.getAllWeeks);
-app.get("/weeks/:catid/:userid", weekController.getWeekByUserCatId);
+app.get("/weeks/:catId/:userId", weekController.getWeekByUserCatId);
 app.post("/weeks", validateWeek, weekController.createWeek);
-app.put("/weeks/:weekName/:catid/:userid", validateWeek, weekController.updateWeekName);
+app.put("/weeks/:weekName/:catId/:userId", validateWeek, weekController.updateWeekName);
 app.delete('/weeks/:weekName/:catId/:userId', weekController.deleteWeek);
 
 //datainput

@@ -59,10 +59,20 @@ class DataInputs {
     static async createDataInput(newCatDataInput) {
         const connection = await sql.connect(dbConfig);
     
-        const sqlQueryCheck = `SELECT * FROM CatDataInput WHERE userId = @userId AND catId = @catId AND weekName = @weekName`;
+        const sqlQueryCheck = `SELECT * FROM CatDataInput WHERE dataId = @dataId`;
         const sqlQueryInsert = `INSERT INTO CatDataInput (dataId, catId, weekName, userId, info, amount, dateInput) 
                                 VALUES (@dataId, @catId, @weekName, @userId, @info, @amount, @dateInput)`;
         const request = connection.request();
+        const resultLastDataId = await request.query(sqlQueryLastDataId);
+        let newDataId;
+        if (resultLastDataId.recordset.length > 0) {
+            const lastDataId = resultLastDataId.recordset[0].dataId;
+            const lastIdNumber = parseInt(lastDataId.slice(2));
+            newDataId = `CD${String(lastIdNumber + 1).padStart(8, '0')}`;
+        } else {
+            newDataId = 'CD00000001';
+        }
+        request.input("dataId", newDataId);
         request.input("userId", newCatDataInput.userId);
         request.input("catId", newCatDataInput.catId);
         request.input("weekName", newCatDataInput.weekName);
@@ -76,28 +86,17 @@ class DataInputs {
         connection.close();
 
         if (resultCheck.recordset.length === 0) {
-            throw new Error('No matching CatWeek entry found for the provided catId, weekName, and userId');
+            throw new Error('No matching CatWeek entry found for the provided dataId');
         }
-
-        const resultLastDataId = await request.query(sqlQueryLastDataId);
-        let newDataId;
-        if (resultLastDataId.recordset.length > 0) {
-            const lastDataId = resultLastDataId.recordset[0].dataId;
-            const lastIdNumber = parseInt(lastDataId.slice(2));
-            newDataId = `CD${String(lastIdNumber + 1).padStart(8, '0')}`;
-        } else {
-            newDataId = 'CD00000001';
-        }
-        request.input("dataId", newDataId);
 
         return this.getCatDataInputByIds(
-            resultInsert.recordset[0].userId,
-            resultInsert.recordset[0].catId,
+            newCatDataInput.userId,
+            newCatDataInput.catId,
             newDataId,
-            resultInsert.recordset[0].weekName,
-            resultInsert.recordset[0].info,
-            resultInsert.recordset[0].amount,
-            resultInsert.recordset[0].dateInput
+            newCatDataInput.weekName,
+            newCatDataInput.info,
+            newCatDataInput.amount,
+            newCatDataInput.dateInput
         );
     }
 
