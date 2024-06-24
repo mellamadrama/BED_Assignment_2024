@@ -25,16 +25,16 @@ app.get('/categories/:catId', categoryController.getCategoryById);
 
 //weeks
 app.get("/weeks", weekController.getAllWeeks);
-app.get("/weeks/:userid/:catid", weekController.getWeekByUserCatId);
+app.get("/weeks/:catid/:userid", weekController.getWeekByUserCatId);
 app.post("/weeks", validateWeek, weekController.createWeek);
-app.put("/weeks/:userid/:catid/:weekName", validateWeek, weekController.updateWeekName);
+app.put("/weeks/:weekName/:catid/:userid", validateWeek, weekController.updateWeekName);
 app.delete('/weeks/:weekName/:catId/:userId', weekController.deleteWeek);
 
 //datainput
 app.get("/datainput", dataInputController.getAllCatDataInput);
-app.get("/datainput/:userId/:catId/:dataId/:weekName", dataInputController.getCatDataInputByIds);
+app.get("/datainput/:dataId/:catId/:weekName/:userId", dataInputController.getCatDataInputByIds);
 app.post("/datainput", validateDataInput, dataInputController.createCatDataInput);
-app.put("/datainput/:userId/:catId/:dataId/:weekNam", validateDataInput, dataInputController.updateCatDataInput);
+app.put("/datainput/:dataId/:catId/:weekName/:userId", validateDataInput, dataInputController.updateCatDataInput);
 app.delete('/datainput/:dataId/:catId/:weekName/:userId', dataInputController.deleteCatDataInput);
 
 
