@@ -24,7 +24,7 @@ class DataInputs {
         connection.close();
 
         return result.recordset.map(
-          (row) => new Category(row.userId, row.catId, row.dataId, row.weekName, row.info, row.amount, row.dateInput)
+          (row) => new DataInputs(row.userId, row.catId, row.dataId, row.weekName, row.info, row.amount, row.dateInput)
         );
     }
 
@@ -43,7 +43,7 @@ class DataInputs {
         connection.close();
     
         return result.recordset[0]
-          ? new CatDataInput(
+          ? new DataInputs(
               result.recordset[0].dataId,
               result.recordset[0].catId,
               result.recordset[0].weekName,

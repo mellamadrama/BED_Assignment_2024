@@ -20,7 +20,7 @@ class Weeks {
         connection.close();
 
         return result.recordset.map(
-        (row) => new Week(row.weekName, row.catId, row.userId)
+        (row) => new Weeks(row.weekName, row.catId, row.userId)
         );
     }
 
@@ -37,7 +37,7 @@ class Weeks {
         connection.close();
 
         return result.recordset[0]
-        ? new Week(
+        ? new Weeks(
             result.recordset[0].weekName,
             result.recordset[0].catId,
             result.recordset[0].userId
