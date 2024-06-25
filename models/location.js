@@ -2,8 +2,8 @@ const sql = require("mssql");
 const dbConfig = require("../dbConfig");
 
 class Location {
-    constructor(id, name, address, status, websiteLink, userId, adminId) {
-        this.id = id;
+    constructor(locationReqId, name, address, status, websiteLink, userId, adminId) {
+        this.locationReqId = locationReqId;
         this.name = name;
         this.address = address;
         this.status = status;
@@ -15,7 +15,7 @@ class Location {
     static async getAllLocations() {
         const connection = await sql.connect(dbConfig);
 
-        const sqlQuery = `SELECT * FROM LocationReq`;
+        const sqlQuery = `SELECT * FROM LocationReq;`;
 
         const request = connection.request();
         const result = await request.query(sqlQuery);
@@ -23,24 +23,24 @@ class Location {
         connection.close();
 
         return result.recordset.map(
-            (row) => new Location(row.id, row.name, row.address, row.status, row.websiteLink, row.userId, row.adminId)
+            (row) => new Location(row.locationReqId, row.name, row.address, row.status, row.websiteLink, row.userId, row.adminId)
         ); //Convert rows to location objects
     }
 
     static async getLocationById(id) {
         const connection = await sql.connect(dbConfig);
     
-        const sqlQuery = `SELECT * FROM LocationReq WHERE id = @id`; // Parameterized query
+        const sqlQuery = `SELECT * FROM LocationReq WHERE locationReqId = @locationReqId;`; // Parameterized query
     
         const request = connection.request();
-        request.input("id", id);
+        request.input("locationReqId", id);
         const result = await request.query(sqlQuery);
     
         connection.close();
     
         return result.recordset[0]
             ? new Location(
-                result.recordset[0].id,
+                result.recordset[0].locationReqId,
                 result.recordset[0].name,
                 result.recordset[0].address,
                 result.recordset[0].status,
@@ -54,11 +54,11 @@ class Location {
     static async createLocation(newLocationReqData) {
         const connection = await sql.connect(dbConfig);
 
-        const sqlQuery = `INSERT INTO LocationReq (locationReqName, locationReqAddress, status, websiteLink, userId, adminId) VALUES (@locationReqName, @locationReqAddress, @status, @websiteLink, @userId, @adminId); SELECT SCOPE_IDENTITY() AS locationReqId;`; // Parameterized query
+        const sqlQuery = `INSERT INTO LocationReq (name, address, status, websiteLink, userId, adminId) VALUES (@name, @address, @status, @websiteLink, @userId, @adminId); SELECT SCOPE_IDENTITY() AS locationReqId;`; // Parameterized query
         
         const request = connection.request();
-        request.input("locationReqName", newLocationReqData.name);
-        request.input("locationReqAddress", newLocationReqData.address);
+        request.input("name", newLocationReqData.name);
+        request.input("address", newLocationReqData.address);
         request.input("status", newLocationReqData.status);
         request.input("websiteLink", newLocationReqData.websiteLink);
         request.input("userId", newLocationReqData.userId);
@@ -69,18 +69,18 @@ class Location {
         connection.close();
     
         // Retrieve the newly created location using its ID
-        return this.getLocationById(result.recordset[0].id);
+        return this.getLocationById(result.recordset[0].locationReqId);
     }
 
     static async updateLocation(id, newLocationReqData) {
         const connection = await sql.connect(dbConfig);
     
-        const sqlQuery = `UPDATE LocationReq SET locationReqName = @locationReqName, locationReqAddress = @locationReqAddress, status = @status, websiteLink = @websiteLink, userId = @userId, adminId = @adminId WHERE locationReqId = @locationReqId`; // Parameterized query
+        const sqlQuery = `UPDATE LocationReq SET name = @name, address = @address, status = @status, websiteLink = @websiteLink, userId = @userId, adminId = @adminId WHERE locationReqId = @locationReqId`; // Parameterized query
     
         const request = connection.request();
         request.input("locationReqId", id);
-        request.input("locationReqName", newBookData.name || null); // Handle optional fields
-        request.input("locationReqAddress", newLocationReqData.address || null);
+        request.input("name", newBookData.name || null); // Handle optional fields
+        request.input("address", newLocationReqData.address || null);
         request.input("status", newLocationReqData.status || null);
         request.input("websiteLink", newLocationReqData.websiteLink || null);
         request.input("userId", newLocationReqData.userId || null);
