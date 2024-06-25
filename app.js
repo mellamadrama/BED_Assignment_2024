@@ -1,4 +1,3 @@
-// app.js
 const express = require("express");
 const categoryController = require("./controllers/categoryController");
 const weekController = require("./controllers/weekController");
@@ -14,7 +13,7 @@ const validateLocation = require('./middlewares/validateLocation');
 const validateLogin = require('./middlewares/validateLogin');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5501;
 const staticMiddleware = express.static("public");
 
 app.use(bodyParser.json());
@@ -48,22 +47,22 @@ app.put("/updlocations/:locationReqId", validateLocation, locationController.upd
 app.delete("/dellocations/:locationReqId", locationController.deleteLocation);
 
 // login
-app.post("/login", validateLogin, loginController.loginUser);
+app.post("/login", loginController.loginUser);
 
 app.listen(port, async () => {
-    try {
+  try {
       await sql.connect(dbConfig);
       console.log("Database connection established successfully");
-    } catch (err) {
+  } catch (err) {
       console.error("Database connection error:", err);
-      process.exit(1); 
-    }
-    console.log(`Server listening on port ${port}`);
+      process.exit(1);
+  }
+  console.log(`Server listening on port ${port}`);
 });
-  
+
 process.on("SIGINT", async () => {
-    console.log("Server is gracefully shutting down");
-    await sql.close();
-    console.log("Database connection closed");
-    process.exit(0);
+  console.log("Server is gracefully shutting down");
+  await sql.close();
+  console.log("Database connection closed");
+  process.exit(0);
 });
