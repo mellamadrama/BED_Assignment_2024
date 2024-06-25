@@ -66,31 +66,6 @@ class Challenge {
         return this.getAllChallengesByUserId(uId); 
     }
     
-    static async resetWeeklyPoints() {
-        const connection = await sql.connect(dbConfig);
-    
-        const sqlQuery = `Update WeeklyPoints SET WeeklyPoints = 0`; 
-    
-        const request = connection.request();
-        const result = await request.query(sqlQuery);
-    
-        connection.close();
-    
-        return result.rowsAffected > 0; 
-    }
-
-    static async resetMonthlyPoints() {
-        const connection = await sql.connect(dbConfig);
-    
-        const sqlQuery = `Update MonthlyPoints SET MonthlyPoints = 0`; 
-    
-        const request = connection.request();
-        const result = await request.query(sqlQuery);
-    
-        connection.close();
-    
-        return result.rowsAffected > 0; 
-    }
 
     static async deleteChallenge(cId) {
         const connection = await sql.connect(dbConfig);
