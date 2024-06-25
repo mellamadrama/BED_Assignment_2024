@@ -29,6 +29,8 @@ const createLocation = async(req, res) => {
     try {
         const createdLocation = await Location.createLocation(newLocation);
         res.status(201).json(createdLocation);
+        const success = res.sendFile(__dirname + '/sustainableShopping.html');
+        res.redirect(success);
     } catch (error) {
         console.error(error);
         res.status(500).send("Error creating location");
@@ -45,6 +47,8 @@ const updateLocation = async(req, res) => {
             return res.status(404).send("Location not found");
         }
         res.json(updatedLocation);
+        const success = res.sendFile(__dirname + '/adminLocationRequest.html');
+        res.redirect(success);
     } catch (error) {
         console.error(error);
         res.status(500).send("Error updating location");
