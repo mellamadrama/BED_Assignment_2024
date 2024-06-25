@@ -1,18 +1,18 @@
-const wPoint = require("../models/weeklypoints");
+const WeeklyPoints = require("../models/weeklypoints");
 
 const getAllWeeklyPoints = async (req, res) => {
     try {
-        const points = await wPoint.getAllWeeklyPoints();
+        const points = await WeeklyPoints.getAllWeeklyPoints();
         res.json(points);
-    } catch(error) {
+    } catch (error) {
         console.error(error);
-        req.status(500).send("Error retrieving challenges");
+        res.status(500).send("Error retrieving challenges"); 
     }
 };
 
-const resetWeeklyPoints = async (res, req) => {
+const resetWeeklyPoints = async (req, res) => {
     try {
-        const reset = await wPoint.resetWeeklyPoints();
+        const reset = await WeeklyPoints.resetWeeklyPoints();
         if (!reset) {
             return res.status(404).send("Unable to reset weekly points");
         }
@@ -23,13 +23,13 @@ const resetWeeklyPoints = async (res, req) => {
     }
 };
 
-const getUserWeeklyPoints = async (res, req) => {
+const getUserWeeklyPoints = async (req, res) => {
     try {
-        const user = await wPoint.getUserWeeklyPoints();
+        const user = await WeeklyPoints.getUserWeeklyPoints();
         if (!user) {
             return res.status(404).send("Unable to get user");
         }
-        res.json(reset);
+        res.json(user); 
     } catch (error) {
         console.error(error);
         res.status(500).send("Error getting points");

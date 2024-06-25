@@ -1,18 +1,18 @@
-const mPoint = require("../models/monthlypoints");
+const MonthlyPoints = require("../models/monthlypoints");
 
 const getAllMonthlyPoints = async (req, res) => {
     try {
-        const points = await mPoint.getAllMonthlyPoints();
+        const points = await MonthlyPoints.getAllMonthlyPoints();
         res.json(points);
     } catch(error) {
         console.error(error);
-        req.status(500).send("Error retrieving challenges");
+        res.status(500).send("WHY ERROR");
     }
 };
 
-const resetMonthlyPoints = async (res, req) => {
+const resetMonthlyPoints = async (req, res) => {
     try {
-        const reset = await mPoint.resetMonthlyPoints();
+        const reset = await MonthlyPoints.resetMonthlyPoints();
         if (!reset) {
             return res.status(404).send("Unable to reset monthly points");
         }
@@ -23,9 +23,9 @@ const resetMonthlyPoints = async (res, req) => {
     }
 };
 
-const getUserMonthlyPoints = async (res, req) => {
+const getUserMonthlyPoints = async (req, res) => {
     try {
-        const user = await mPoint.getUserMonthlyPoints();
+        const user = await MonthlyPoints.getUserMonthlyPoints();
         if (!user) {
             return res.status(404).send("Unable to get user");
         }
