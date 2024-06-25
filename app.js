@@ -13,7 +13,7 @@ const validateLocation = require('./middlewares/validateLocation');
 const validateLogin = require('./middlewares/validateLogin');
 
 const app = express();
-const port = process.env.PORT || 5501;
+const port = process.env.PORT || 3000;
 const staticMiddleware = express.static("public");
 
 app.use(bodyParser.json());

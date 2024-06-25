@@ -2,8 +2,8 @@ const Joi = require("joi");
 
 const validateLocation = (req, res, next) => {
   const schema = Joi.object({
-    locationReqName: Joi.string().min(1).max(50).required(),
-    locationReqAddress: Joi.string().min(1).max(250).required(),
+    name: Joi.string().min(1).max(50).required(),
+    address: Joi.string().min(1).max(250).required(),
     status: Joi.string().min(1).max(1).required(),
     websiteLink: Joi.string().min(1).max(250),
   });

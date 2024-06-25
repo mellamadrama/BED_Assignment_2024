@@ -8,8 +8,8 @@ document.addEventListener('DOMContentLoaded', async() => {
 
         if (locationName !='' && locationAddress !='') {
             const locationDetails = {
-                locationReqName: locationName,
-                locationReqAddress: locationAddress,
+                name: locationName,
+                address: locationAddress,
                 status: 'P',
                 websiteLink: null,
                 //userId: user,
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', async() => {
             const result = await response.json();
     
             if (!response.ok) {
-                alert(`Failed to send location request: ${result.locationReqName}`);
+                alert(`Failed to send location request: ${result.name}`);
                 return;
             }
     
