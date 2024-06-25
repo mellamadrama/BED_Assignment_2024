@@ -235,7 +235,9 @@ CREATE TABLE LocationReq (
     websiteLink VARCHAR(250),
     userId char(10),
     adminId char(10),
-    CONSTRAINT PK_LocationReq PRIMARY KEY (locationReqId)
+    CONSTRAINT PK_LocationReq PRIMARY KEY (locationReqId),
+    CONSTRAINT FK_locationReq_userId FOREIGN KEY (userId) REFERENCES UserAcc(userId),
+    CONSTRAINT FK_locationReq_adminId FOREIGN KEY (adminId) REFERENCES Admin(adminId)
 );
 
 INSERT INTO LocationReq (locationReqId, locationReqName, locationReqAddress, status, websiteLink, userId, adminId)
