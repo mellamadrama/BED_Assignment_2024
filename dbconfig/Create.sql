@@ -229,16 +229,18 @@ VALUES
 
 CREATE TABLE LocationReq (
     locationReqId char(10),
-    locationReqName VARCHAR(50) NOT NULL,
-    locationReqAddress VARCHAR(250) NOT NULL,
+    name VARCHAR(50) NOT NULL,
+    address VARCHAR(250) NOT NULL,
     status char(1) NOT NULL CHECK (status IN ('A', 'P', 'R')),
     websiteLink VARCHAR(250),
     userId char(10),
     adminId char(10),
-    CONSTRAINT PK_LocationReq PRIMARY KEY (locationReqId)
+    CONSTRAINT PK_LocationReq PRIMARY KEY (locationReqId),
+    CONSTRAINT FK_locationReq_userId FOREIGN KEY (userId) REFERENCES UserAcc(userId),
+    CONSTRAINT FK_locationReq_adminId FOREIGN KEY (adminId) REFERENCES Admin(adminId)
 );
 
-INSERT INTO LocationReq (locationReqId, locationReqName, locationReqAddress, status, websiteLink, userId, adminId)
+INSERT INTO LocationReq (locationReqId, name, address, status, websiteLink, userId, adminId)
 VALUES 
 (1, 'The Green Collective SG', '02-18, Funan Mall, 107 North Bridge Rd, 179105', 'A', 'https://www.thegreencollective.sg/', 'Acc0000006', 'Acc0000004'),
 (2, 'Scoop Wholefoods Jem', '50 Jurong Gateway Rd, #01-12/13, Singapore 608549', 'A', 'https://scoopwholefoodsshop.com/', 'Acc0000003', 'Acc0000004'),

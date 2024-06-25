@@ -18,4 +18,4 @@ const validateChallenge = (req, res, next) => {
   next(); 
 };
 
-module.exports = validateBook;
+module.exports = validateChallenge;
