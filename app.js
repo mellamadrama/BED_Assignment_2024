@@ -35,7 +35,7 @@ app.get("/datainput", dataInputController.getAllCatDataInput);
 app.get("/datainput/:dataId/:catId/:weekName/:userId", dataInputController.getCatDataInputByIds);
 app.post("/datainput", validateDataInput, dataInputController.createDataInput);
 app.put("/datainput/:dataId/:catId/:weekName/:userId", validateDataInput, dataInputController.updateCatDataInput);
-app.delete('/datainput/:dataId/:catId/:weekName/:userId', dataInputController.deleteCatDataInput);
+app.delete('/datainput/:userId/:catId/:dataId/:weekName', dataInputController.deleteCatDataInput);
 
 
 //locations

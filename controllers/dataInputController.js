@@ -68,13 +68,13 @@ const getAllCatDataInput = async (req, res) => {
   };
   
   const deleteCatDataInput = async (req, res) => {
-    const catId = req.params;
-    const userId = req.params;
-    const dataId = req.params;
-    const weekName = req.params;
+    const userId = req.params.userId;
+    const catId = req.params.catId;
+    const dataId = req.params.dataId;
+    const weekName = req.params.weekName;
   
     try {
-      const success = await DataInput.deleteCatDataInput(dataId, catId, weekName, userId);
+      const success = await DataInput.deleteCatDataInput(userId, catId, dataId, weekName);
       if (!success) {
         return res.status(404).send("Data not found");
       }

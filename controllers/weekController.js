@@ -57,7 +57,7 @@ const updateWeekName = async (req, res) => {
     res.json(updatedWeekName);
   } catch (error) {
     console.error(error);
-    res.status(500).send("Error updating week name");
+    return res.status(500).send("Error updating week name");
   }
 };
 
@@ -72,12 +72,12 @@ const deleteWeek = async (req, res) => {
         return res.status(404).send("Week not found");
       }
       else {
-        res.status(200).send("Week deleted successfully");
+        return res.status(200).send("Week deleted successfully");
       }
-      res.status(204).send();
+      return res.status(204).send();
     } catch (error) {
       console.error(error);
-      res.status(500).send("Error deleting week");
+      return res.status(500).send("Error deleting week");
     }
 };
 

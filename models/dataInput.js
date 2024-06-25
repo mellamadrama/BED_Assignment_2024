@@ -126,14 +126,14 @@ class DataInputs {
     static async deleteCatDataInput(userId, catId, dataId, weekName) {
         const connection = await sql.connect(dbConfig);
     
-        const sqlQuery = `DELETE FROM CatDataInput 
-                            WHERE dataId = @dataId AND catId = @catId AND weekName = @weekName AND userId = @userId`;
+        const sqlQuery = `DELETE FROM CatDataInput WHERE userId = @userId AND catId = @catId AND dataId = @dataId AND weekName = @weekName`;
     
         const request = connection.request();
         request.input("userId", userId);
         request.input("catId", catId);
         request.input("dataId", dataId);
         request.input("weekName", weekName);
+
         const result = await request.query(sqlQuery);
     
         connection.close();
