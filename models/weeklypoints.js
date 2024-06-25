@@ -1,14 +1,13 @@
-class Points {
-    constructor(userId, userWeeklyPoints, userMonthlyPoints) {
+class WeeklyPoints {
+    constructor(userId, userWeeklyPoints) {
         this.userId = userId;
         this.userWeeklyPoints = userWeeklyPoints;
-        this.userMonthlyPoints = userMonthlyPoints;
     }
 
     static async getAllWeeklyPoints() {
         const connection = await sql.connect(dbConfig);
     
-        const sqlQuery = `SELECT * FROM WeeklyPoints`; 
+        const sqlQuery = `SELECT * FROM WeeklyPoints ORDER BY userWeeklyPoints DESC`; 
     
         const request = connection.request();
         const result = await request.query(sqlQuery);
@@ -17,21 +16,6 @@ class Points {
     
         return result.recordset.map(
             (row) => new Points(row.userId, row.userWeeklyPoints)
-        );
-    }
-
-    static async getAllMonthlyPoints() {
-        const connection = await sql.connect(dbConfig);
-    
-        const sqlQuery = `SELECT * FROM MonthlyPoints`; 
-    
-        const request = connection.request();
-        const result = await request.query(sqlQuery);
-    
-        connection.close();
-    
-        return result.recordset.map(
-            (row) => new Challenge(row.userId, row.userMonthlyPoints)
         );
     }
 
@@ -48,16 +32,22 @@ class Points {
         return result.rowsAffected > 0; 
     }
 
-    static async resetMonthlyPoints() {
+    static async getWeeklyUserPoints(uId) {
         const connection = await sql.connect(dbConfig);
-
-        const sqlQuery = `Update MonthlyPoints SET MonthlyPoints = 0`; 
-
+    
+        const sqlQuery = `SELECT * FROM WeeklyPoints WHERE userId = @uId`; 
+    
         const request = connection.request();
+        request.input("userId", uId);
         const result = await request.query(sqlQuery);
-
+    
         connection.close();
-
-        return result.rowsAffected > 0; 
+    
+        return result.recordset[0]
+            ? new Points(
+                result.recordset[0].userId,
+                result.recordset[0].userWeeklyPoints
+            )
+            : null;
     }
 }

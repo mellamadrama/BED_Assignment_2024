@@ -4,6 +4,9 @@ const weekController = require("./controllers/weekController");
 const dataInputController = require("./controllers/dataInputController");
 const locationController = require("./controllers/locationController");
 const loginController = require("./controllers/loginController");
+const challengeController = require("./controllers/challengeController");
+const weeklyPointsController = require("./controllers/weeklyPointsController");
+const monthlyPointsController = require("./controllers/monthlyPointsController");
 const sql = require("mssql");
 const dbConfig = require("./dbConfig");
 const bodyParser = require("body-parser");
@@ -11,7 +14,8 @@ const { validateWeek, validateUpdateWeekName } = require('./middlewares/validate
 const validateDataInput = require('./middlewares/validateDataInput');
 const validateLocation = require('./middlewares/validateLocation');
 const validateLogin = require('./middlewares/validateLogin');
-
+const validateChallenge = require('./middlewares/validateChallenge');
+const validatePoints = require("./middlewares/validatePoints");
 const app = express();
 const port = process.env.PORT || 3000;
 const staticMiddleware = express.static("public");
@@ -48,6 +52,19 @@ app.delete("/dellocations/:locationReqId", locationController.deleteLocation);
 
 // login
 app.post("/login", loginController.loginUser);
+
+// challenge
+app.get("/challenges", challengeController.getAllChallenges);
+app.get("/challenges/:challengeID/:userId", challengeController.getAllChallengesByUserID);
+app.put("/updatechallenges/:challengeID/:userId", challengeController.updateChallengeCompleted);
+
+// points
+app.get("/weeklypoints", weeklyPointsController.getAllWeeklyPoints);
+app.get("/monthlypoints", monthlyPointsController.getAllMonthlyPoints);
+app.put("/resetweekly", weeklyPointsController.resetWeeklyPoints);
+app.put("/resetmonthly", monthlyPointsController.resetMonthlyPoints);
+app.put("/userweeklypoints/:userId", weeklyPointsController.getUserWeeklyPoints);
+app.put("/usermonthlypoints/:userId", monthlyPointsController.getUserMonthlyPoints);
 
 app.listen(port, async () => {
   try {
