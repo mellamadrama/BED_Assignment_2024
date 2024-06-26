@@ -83,5 +83,3 @@ function displayWeeks(weeks) {
         console.error('Weeks container not found.');
     }
 }
-
-//create week
