@@ -1,14 +1,19 @@
 const Joi = require('joi');
 
-const loginSchema = Joi.object({
-  username: Joi.string().min(3).required(),
-  password: Joi.string().min(6).required()
-});
+const validateLogin = (req, res, next) =>  {
+  const schema = Joi.object({
+    username: Joi.string().min(3).required(),
+    password: Joi.string().min(6).required(),
+  })
 
-function validateLogin(req, res, next) {
-  const { error } = loginSchema.validate(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
-  next();
-}
+    const validation = scheme.validate(req.body, { abortEarly: false });
+    if (validation.error) {
+      const errors = validation.error.details.map((error) => error.message);
+      res.status(400).json({ message: "Validation error", errors });
+      return; 
+    }
+  
+    next(); 
+  };
 
 module.exports = validateLogin;
