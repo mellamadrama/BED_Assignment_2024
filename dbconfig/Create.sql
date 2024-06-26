@@ -221,7 +221,7 @@ VALUES
   ('Acc0000009', 'rithikajames', 75);
 
 CREATE TABLE LocationReq (
-    locationReqId char(10),
+    locationReqId INT,
     name VARCHAR(50) NOT NULL,
     address VARCHAR(250) NOT NULL,
     status char(1) NOT NULL CHECK (status IN ('A', 'P', 'R')),
