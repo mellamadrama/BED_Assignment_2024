@@ -84,12 +84,4 @@ function displayWeeks(weeks) {
     }
 }
 
-// // Display message when no weeks are found
-// function displayNoWeeksMessage() {
-//     const weeksContainer = document.getElementById('weeks');
-//     if (weeksContainer) {
-//         weeksContainer.innerHTML = '<p>No weeks found for this category.</p>';
-//     }
-// }
-
 //create week
