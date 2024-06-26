@@ -1,5 +1,13 @@
-//create week
 document.addEventListener("DOMContentLoaded", function() {
+    //back button logic
+    const backButton = document.getElementById('back-button');
+    if (backButton) {
+        backButton.addEventListener('click', function() {
+            window.history.back();
+        });
+    }
+    
+    //create new week
     const createWeekBtn = document.getElementById('create-week-btn');
     if (createWeekBtn) {
         createWeekBtn.addEventListener('click', async function() {
