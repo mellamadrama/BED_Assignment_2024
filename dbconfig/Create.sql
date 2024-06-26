@@ -1,24 +1,13 @@
-DROP TABLE LocationReq;
-DROP TABLE WeeklyPoints;
-DROP TABLE MonthlyPoints;
-DROP TABLE UserWeeklyChallenges;
-DROP TABLE WeeklyChallenge;
-DROP TABLE CatWeek;
-DROP TABLE CatDataInput;
-DROP TABLE Category;
-DROP TABLE UserAcc;
-DROP TABLE Admin;
-DROP TABLE Account;
-
 CREATE TABLE Account (
-  accId char(10),
-  username VARCHAR(100) NOT NULL,
+  accId CHAR(10),
+  username VARCHAR(100) NOT NULL UNIQUE,
   firstName VARCHAR(50) NOT NULL,
   lastName VARCHAR(50) NULL,
   email VARCHAR(100) NOT NULL UNIQUE,
   password VARCHAR(250) NOT NULL,
-  CONSTRAINT PK_Account PRIMARY KEY (accId),
+  CONSTRAINT PK_Account PRIMARY KEY (accId)
 );
+
 
 INSERT INTO Account (accId, username, firstName, lastName, email, password)
 VALUES
@@ -194,57 +183,60 @@ CROSS JOIN
     WeeklyChallenge wc;
 
 CREATE TABLE MonthlyPoints (
-    userId char(10),
-    userMonthlyPoints VARCHAR(200) NOT NULL,
-    CONSTRAINT PK_MonthlyPoints PRIMARY KEY (userId),
-    CONSTRAINT FK_MonthlyPoints_userId FOREIGN KEY (userId) REFERENCES Account(accId)
+  userId CHAR(10),
+  username VARCHAR(100) NOT NULL,
+  userMonthlyPoints INT NOT NULL,
+  CONSTRAINT PK_MonthlyPoints PRIMARY KEY (userId),
+  CONSTRAINT FK_MonthlyPoints_userId FOREIGN KEY (userId) REFERENCES Account(accId),
+  CONSTRAINT FK_MonthlyPoints_username FOREIGN KEY (username) REFERENCES Account(username)
 );
 
-INSERT INTO MonthlyPoints(userId, userMonthlyPoints) 
+INSERT INTO MonthlyPoints(userId, username, userMonthlyPoints) 
 VALUES
-  ('Acc0000002', 1200),
-  ('Acc0000003', 1000),
-  ('Acc0000005', 1500),
-  ('Acc0000006', 1205),
-  ('Acc0000008', 1005),
-  ('Acc0000009', 750);
+  ('Acc0000002', 'dobbyfree', 1200),
+  ('Acc0000003', 'junkaismith', 1000),
+  ('Acc0000005', 'renasoong', 1500),
+  ('Acc0000006', 'jefflow', 1205),
+  ('Acc0000008', 'hervinsie', 1005),
+  ('Acc0000009', 'rithikajames', 750);
 
 
 CREATE TABLE WeeklyPoints (
-    userId CHAR(10),
-    userWeeklyPoints VARCHAR(200) NULL,
-    CONSTRAINT PK_WeeklyPoints PRIMARY KEY (userId),
-    CONSTRAINT FK_WeeklyPoints_userId FOREIGN KEY (userId) REFERENCES Account(accId)
+  userId CHAR(10),
+	username VARCHAR(100) NOT NULL,
+  userWeeklyPoints VARCHAR(200) NULL,
+  CONSTRAINT PK_WeeklyPoints PRIMARY KEY (userId),
+  CONSTRAINT FK_WeeklyPoints_userId FOREIGN KEY (userId) REFERENCES Account(accId),
+	CONSTRAINT FK_WeeklyPoints_username FOREIGN KEY (username) REFERENCES Account(username)
 );
 
 
-INSERT INTO WeeklyPoints(userId, userWeeklyPoints) 
+INSERT INTO WeeklyPoints(userId, username, userWeeklyPoints) 
 VALUES
-  ('Acc0000002', 120),
-  ('Acc0000003', 100),
-  ('Acc0000005', 150),
-  ('Acc0000006', 125),
-  ('Acc0000008', 105),
-  ('Acc0000009', 75);
+  ('Acc0000002', 'dobbyfree', 120),
+  ('Acc0000003', 'junkaismith', 100),
+  ('Acc0000005', 'renasoong', 150),
+  ('Acc0000006', 'jefflow', 120),
+  ('Acc0000008', 'hervinsie', 105),
+  ('Acc0000009', 'rithikajames', 75);
 
 CREATE TABLE LocationReq (
-    locationReqId char(10),
-    name VARCHAR(50) NOT NULL,
-    address VARCHAR(250) NOT NULL,
-    status char(1) NOT NULL CHECK (status IN ('A', 'P', 'R')),
-    websiteLink VARCHAR(250),
-    userId char(10),
-    adminId char(10),
-    CONSTRAINT PK_LocationReq PRIMARY KEY (locationReqId),
-    CONSTRAINT FK_locationReq_userId FOREIGN KEY (userId) REFERENCES UserAcc(userId),
-    CONSTRAINT FK_locationReq_adminId FOREIGN KEY (adminId) REFERENCES Admin(adminId)
+  locationReqId INT PRIMARY KEY IDENTITY(1,1),
+  name VARCHAR(50) NOT NULL UNIQUE,
+  address VARCHAR(250) NOT NULL,
+  status char(1) NOT NULL CHECK (status IN ('A', 'P', 'R')),
+  websiteLink VARCHAR(250),
+  userId char(10),
+  adminId char(10),
+  CONSTRAINT FK_locationReq_userId FOREIGN KEY (userId) REFERENCES UserAcc(userId),
+  CONSTRAINT FK_locationReq_adminId FOREIGN KEY (adminId) REFERENCES Admin(adminId)
 );
 
-INSERT INTO LocationReq (locationReqId, name, address, status, websiteLink, userId, adminId)
+INSERT INTO LocationReq (name, address, status, websiteLink, userId, adminId)
 VALUES 
-(1, 'The Green Collective SG', '02-18, Funan Mall, 107 North Bridge Rd, 179105', 'A', 'https://www.thegreencollective.sg/', 'Acc0000006', 'Acc0000004'),
-(2, 'Scoop Wholefoods Jem', '50 Jurong Gateway Rd, #01-12/13, Singapore 608549', 'A', 'https://scoopwholefoodsshop.com/', 'Acc0000003', 'Acc0000004'),
-(3, 'OliveAnkara', '79 Chay Yan St, #01-02 Opposite Plain Vanilla, Singapore 160079', 'A', 'https://oliveankara.com/', 'Acc0000008', 'Acc0000007'),
-(4, 'Unpackt', '20 Mandai Lake Rd, #02-09 Mandai Wildlife WEST, Singapore 729825', 'A', 'https://unpackt.com.sg/', 'Acc0000009', 'Acc0000010'),
-(5, 'H&M', '345 Main St', 'P', NULL, 'Acc0000002', 'Acc0000001'),
-(6, 'Shein', '678 Main St', 'R', NULL, 'Acc0000005', 'Acc0000001');
+  ('The Green Collective SG', '02-18, Funan Mall, 107 North Bridge Rd, 179105', 'A', 'https://www.thegreencollective.sg/', 'Acc0000006', 'Acc0000004'),
+  ('Scoop Wholefoods Jem', '50 Jurong Gateway Rd, #01-12/13, Singapore 608549', 'A', 'https://scoopwholefoodsshop.com/', 'Acc0000003', 'Acc0000004'),
+  ('OliveAnkara', '79 Chay Yan St, #01-02 Opposite Plain Vanilla, Singapore 160079', 'A', 'https://oliveankara.com/', 'Acc0000008', 'Acc0000007'),
+  ('Unpackt', '20 Mandai Lake Rd, #02-09 Mandai Wildlife WEST, Singapore 729825', 'A', 'https://unpackt.com.sg/', 'Acc0000009', 'Acc0000010'),
+  ('H&M', '345 Main St', 'P', NULL, 'Acc0000002', NULL),
+  ('Shein', '678 Main St', 'R', NULL, 'Acc0000005', 'Acc0000001');

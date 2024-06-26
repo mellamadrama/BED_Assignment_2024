@@ -1,47 +1,57 @@
-document.addEventListener('DOMContentLoaded', async() => {
+document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById("requestLocationForm").addEventListener("submit", async function (e) {
         e.preventDefault();
     
-        const locationName = document.getElementById('locationName').value;
-        const locationAddress = document.getElementById('locationAddress').value;
-        //const user = 
+        let locationName = document.getElementById('locationName').value;
+        let locationAddress = document.getElementById('locationAddress').value;
 
-        if (locationName !='' && locationAddress !='') {
+        if (locationName !== '' && locationAddress !== '') {
             const locationDetails = {
-                locationReqName: locationName,
-                locationReqAddress: locationAddress,
+                name: locationName,
+                address: locationAddress,
                 status: 'P',
                 websiteLink: null,
-                //userId: user,
+                userId: null, // edit later
                 adminId: null
-            }
+            };
     
-            const response = await fetch('/createLocations', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(locationDetails)
-            });
+            try {
+                const response = await fetch('/createLocations', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(locationDetails)
+                });
+
+                if (response.ok) { // Check if the response status is in the range of 200-299
+                    const result = await response.json();
+                    console.log(result);  // Log the server response for debugging
+
+                    if (result.status === 'success') { // Check if the result status is 'success'
+                        alert('Location Request submitted!');
     
-            const result = await response.json();
-    
-            if (!response.ok) {
-                alert(`Failed to send location request: ${result.locationReqName}`);
-                return;
-            }
-    
-            if (result.status === 'success') {
-                alert('Location Request submitted!');
-    
-                //reset form fields after successful submission
-                locationName = '';
-                locationAddress = '';
-            } else {
-                alert('Failed to submit location request');
+                        // Reset form fields after successful submission
+                        document.getElementById('locationName').value = '';
+                        document.getElementById('locationAddress').value = '';
+                    } else {
+                        alert('Failed to submit location request');
+                    }
+                } else {
+                    const result = await response.json();
+                    const errorMessage = result.message || 'Unknown error';
+                    if (result.errors && result.errors.length > 0) {
+                        alert(`Failed to send location request: ${result.errors.join(', ')}`);
+                    } else {
+                        alert(`Failed to send location request: ${errorMessage}`);
+                    }
+                }
+            } catch (error) {
+                console.error('Error:', error);  // Log any caught errors
+                alert(`Failed to send location request: ${error.message}`);
             }
         } else {
             alert('Location Name and Address cannot be empty!');
         }
-    })
-})
+    });
+});

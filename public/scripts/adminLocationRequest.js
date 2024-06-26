@@ -17,7 +17,7 @@ async function fetchLocationRequests() {
         locationUserElement.classList.add("px-6 py-4 whitespace-nowrap text-sm text-gray-900");
 
         const locationContentElement = document.createElement("td");
-        locationContentElement.textContent = `${location.locationReqName}, ${location.locationReqAddress} `;
+        locationContentElement.textContent = `${location.name}, ${location.address} `;
         locationContentElement.classList.add("px-6 py-4 whitespace-nowrap text-sm text-gray-900");
 
         const locationStatusElement = document.createElement("td");
