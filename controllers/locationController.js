@@ -24,16 +24,31 @@ const getLocationById = async(req, res) => {
     }
 };
 
-const createLocation = async(req, res) => {
-    const newLocation = req.body;
+const createLocation = async (req, res) => {
+    const locationName = req.body.name;
     try {
-        const createdLocation = await Location.createLocation(newLocation);
-        res.status(201).json(createdLocation);
-        const success = res.sendFile(__dirname + '/sustainableShopping.html');
-        res.redirect(success);
+        // Check if location with the same name already exists
+        const existingLocation = await Location.getLocationByName(locationName);
+
+        if (existingLocation) {
+            return res.status(400).json({
+                status: 'error',
+                message: 'Location already exists',
+            });
+        }
+
+        const newLocation = await Location.createLocation(req.body);
+        res.status(201).json({
+            status: 'success',
+            data: newLocation
+        });
     } catch (error) {
         console.error(error);
-        res.status(500).send("Error creating location");
+        res.status(500).json({
+            status: 'error',
+            message: 'Failed to create location',
+            errors: [error.message]
+        });
     }
 };
 

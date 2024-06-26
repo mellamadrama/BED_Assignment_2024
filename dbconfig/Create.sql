@@ -221,23 +221,22 @@ VALUES
   ('Acc0000009', 'rithikajames', 75);
 
 CREATE TABLE LocationReq (
-    locationReqId INT,
-    name VARCHAR(50) NOT NULL,
-    address VARCHAR(250) NOT NULL,
-    status char(1) NOT NULL CHECK (status IN ('A', 'P', 'R')),
-    websiteLink VARCHAR(250),
-    userId char(10),
-    adminId char(10),
-    CONSTRAINT PK_LocationReq PRIMARY KEY (locationReqId),
-    CONSTRAINT FK_locationReq_userId FOREIGN KEY (userId) REFERENCES UserAcc(userId),
-    CONSTRAINT FK_locationReq_adminId FOREIGN KEY (adminId) REFERENCES Admin(adminId)
+  locationReqId INT PRIMARY KEY IDENTITY(1,1),
+  name VARCHAR(50) NOT NULL UNIQUE,
+  address VARCHAR(250) NOT NULL,
+  status char(1) NOT NULL CHECK (status IN ('A', 'P', 'R')),
+  websiteLink VARCHAR(250),
+  userId char(10),
+  adminId char(10),
+  CONSTRAINT FK_locationReq_userId FOREIGN KEY (userId) REFERENCES UserAcc(userId),
+  CONSTRAINT FK_locationReq_adminId FOREIGN KEY (adminId) REFERENCES Admin(adminId)
 );
 
-INSERT INTO LocationReq (locationReqId, name, address, status, websiteLink, userId, adminId)
+INSERT INTO LocationReq (name, address, status, websiteLink, userId, adminId)
 VALUES 
-(1, 'The Green Collective SG', '02-18, Funan Mall, 107 North Bridge Rd, 179105', 'A', 'https://www.thegreencollective.sg/', 'Acc0000006', 'Acc0000004'),
-(2, 'Scoop Wholefoods Jem', '50 Jurong Gateway Rd, #01-12/13, Singapore 608549', 'A', 'https://scoopwholefoodsshop.com/', 'Acc0000003', 'Acc0000004'),
-(3, 'OliveAnkara', '79 Chay Yan St, #01-02 Opposite Plain Vanilla, Singapore 160079', 'A', 'https://oliveankara.com/', 'Acc0000008', 'Acc0000007'),
-(4, 'Unpackt', '20 Mandai Lake Rd, #02-09 Mandai Wildlife WEST, Singapore 729825', 'A', 'https://unpackt.com.sg/', 'Acc0000009', 'Acc0000010'),
-(5, 'H&M', '345 Main St', 'P', NULL, 'Acc0000002', 'Acc0000001'),
-(6, 'Shein', '678 Main St', 'R', NULL, 'Acc0000005', 'Acc0000001');
+  ('The Green Collective SG', '02-18, Funan Mall, 107 North Bridge Rd, 179105', 'A', 'https://www.thegreencollective.sg/', 'Acc0000006', 'Acc0000004'),
+  ('Scoop Wholefoods Jem', '50 Jurong Gateway Rd, #01-12/13, Singapore 608549', 'A', 'https://scoopwholefoodsshop.com/', 'Acc0000003', 'Acc0000004'),
+  ('OliveAnkara', '79 Chay Yan St, #01-02 Opposite Plain Vanilla, Singapore 160079', 'A', 'https://oliveankara.com/', 'Acc0000008', 'Acc0000007'),
+  ('Unpackt', '20 Mandai Lake Rd, #02-09 Mandai Wildlife WEST, Singapore 729825', 'A', 'https://unpackt.com.sg/', 'Acc0000009', 'Acc0000010'),
+  ('H&M', '345 Main St', 'P', NULL, 'Acc0000002', NULL),
+  ('Shein', '678 Main St', 'R', NULL, 'Acc0000005', 'Acc0000001');

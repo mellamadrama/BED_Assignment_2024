@@ -55,6 +55,20 @@ class Location {
             : null; // Handle location not found
     }
 
+    static async getLocationByName(name) {
+        const connection = await sql.connect(dbConfig);
+
+        const sqlQuery = `SELECT * FROM LocationReq WHERE name = @name;`;
+        const request = connection.request();
+        request.input("name", name);
+
+        const result = await request.query(sqlQuery);
+
+        connection.close();
+
+        return result.recordset.length > 0 ? result.recordset[0] : null;
+    }
+
     static async createLocation(newLocationReqData) {
         const connection = await sql.connect(dbConfig);
 
