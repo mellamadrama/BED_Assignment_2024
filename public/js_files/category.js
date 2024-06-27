@@ -70,9 +70,18 @@ function displayWeeks(weeks) {
         if (weeks.length > 0) {
             weeks.forEach(week => {
                 const weekElement = document.createElement('week');
-                weekElement.href = `week.html?weekName=${week.weekName}&catId=${week.catId}&userId=${week.userId}`;
-                weekElement.className = "bg-[#baab76] font-semibold text-brown-800 py-16 px-8 w-48 text-center border-4 border-[#493d2c] rounded-[20px] bg-[#baab76] shadow-[0_0_0_4px_#baab76] hover:bg-[#f3e1c9] transition duration-300 ease-in-out";
+                weekElement.href = `week.html?weekName=${encodeURIComponent(week.weekName)}&catId=${week.catId}&userId=${week.userId}`;
+                weekElement.className = "bg-[#baab76] font-semibold text-brown-800 py-16 px-8 w-48 text-center border-4 border-[#493d2c] rounded-[20px] bg-[#baab76] shadow-[0_0_0_4px_#baab76] hover:bg-[#f3e1c9] transition duration-300 ease-in-out cursor-pointer";
                 weekElement.textContent = week.weekName;
+                weekElement.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    // Save week details to localStorage
+                    localStorage.setItem('weekName', week.weekName);
+                    localStorage.setItem('catId', week.catId);
+                    localStorage.setItem('userId', week.userId);
+                    // Navigate to week.html
+                    window.location.href = weekElement.href;
+                });
                 weeksContainer.appendChild(weekElement);
             });
         } else {
