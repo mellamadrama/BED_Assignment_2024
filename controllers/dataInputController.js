@@ -86,7 +86,7 @@ const getAllCatDataInput = async (req, res) => {
       console.error(error);
       res.status(500).send("Error deleting data");
     }
-};
+  };
 
 module.exports = {
     getAllCatDataInput,

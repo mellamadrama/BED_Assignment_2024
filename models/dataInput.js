@@ -122,7 +122,7 @@ class DataInputs {
         return this.getCatDataInputByIds(userId, catId, dataId, weekName);
     }
 
-    //delete
+    //delete single data input
     static async deleteCatDataInput(userId, catId, dataId, weekName) {
         const connection = await sql.connect(dbConfig);
     
@@ -140,6 +140,8 @@ class DataInputs {
     
         return result.rowsAffected > 0;
     }
+
+
 }
 
 module.exports = DataInputs;
