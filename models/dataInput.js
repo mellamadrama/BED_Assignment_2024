@@ -141,7 +141,39 @@ class DataInputs {
         return result.rowsAffected > 0;
     }
 
+    // Check for data inputs in a specific week
+    static async hasDataInputs(weekName, catId, userId) {
+        const connection = await sql.connect(dbConfig);
+    
+        const sqlQuery = `SELECT COUNT(*) as count FROM CatDataInput WHERE weekName = @weekName AND catId = @catId AND userId = @userId`;
+    
+        const request = connection.request();
+        request.input("weekName", weekName);
+        request.input("catId", catId);
+        request.input("userId", userId);
+    
+        const result = await request.query(sqlQuery);
+        
+        connection.close();
+    
+        return result.recordset[0].count > 0;
+    }
 
+    // Delete all data inputs for a specific week
+    static async deleteCatDataInputs(weekName, catId, userId) {
+        const connection = await sql.connect(dbConfig);
+        const sqlQuery = `DELETE FROM CatDataInput WHERE weekName = @weekName AND catId = @catId AND userId = @userId`;
+        const request = connection.request();
+        request.input("weekName", weekName);
+        request.input("catId", catId);
+        request.input("userId", userId);
+
+        const result = await request.query(sqlQuery);
+
+        connection.close();
+
+        return result.rowsAffected > 0;
+    }
 }
 
 module.exports = DataInputs;

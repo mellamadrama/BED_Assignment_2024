@@ -1,4 +1,5 @@
 const Week = require("../models/week");
+const DataInput = require("../models/dataInput");
 
 const getAllWeeks = async (req, res) => {
     try {
@@ -81,10 +82,50 @@ const deleteWeek = async (req, res) => {
     }
 };
 
+const deleteWeekAndData = async (req, res) => {
+  const weekName = req.params.weekName;
+  const catId = req.params.catId;
+  const userId = req.params.userId;
+
+  try {
+      // Check if there are data inputs for the week
+      console.log(`Checking data inputs for weekName: ${weekName}, catId: ${catId}, userId: ${userId}`);
+      const hasDataInputs = await DataInput.hasDataInputs(weekName, catId, userId);
+      
+      if (hasDataInputs) {
+        // First, delete all data inputs for the week
+        const deleteDataInputs = await DataInput.deleteCatDataInputs(weekName, catId, userId);
+        if (!deleteDataInputs) {
+            return res.status(500).send("Failed to delete related data inputs");
+        }
+
+        // Then, delete the week itself
+        const success = await Week.deleteWeek(weekName, catId, userId);
+        if (!success) {
+            return res.status(404).send("Week not found");
+        }
+
+        res.status(200).send("Week and related data deleted successfully");
+    } else {
+        // If no data inputs found, just delete the week
+        const success = await Week.deleteWeek(weekName, catId, userId);
+        if (!success) {
+            return res.status(404).send("Week not found");
+        }
+
+        res.status(200).send("Week deleted successfully");
+    }
+} catch (error) {
+    console.error(error);
+    res.status(500).send("Error deleting week and related data");
+}
+};
+
 module.exports = {
     getAllWeeks,
     getWeekByUserCatId,
     createWeek,
     updateWeekName,
     deleteWeek,
+    deleteWeekAndData,
   };

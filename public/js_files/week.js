@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Add event listeners for the update and delete buttons
     document.getElementById('update-week').addEventListener('click', handleUpdateWeek);
+    document.getElementById('delete-week').addEventListener('click', handleDeleteWeek);
 });
 
 // Update the week title name
@@ -67,6 +68,32 @@ async function handleUpdateWeek() {
         } catch (error) {
             console.error("Error updating week:", error);
             alert("Error updating week.");
+        }
+    }
+}
+
+async function handleDeleteWeek() {
+    const weekName = localStorage.getItem('weekName');
+    const catId = localStorage.getItem('catId');
+    const userId = localStorage.getItem('userId');
+
+    if (confirm('Are you sure you want to delete this week and all related data?')) {
+        try {
+            const response = await fetch(`/weeks/${weekName}/${catId}/${userId}`, {
+                method: 'DELETE'
+            });
+
+            if (response.ok) {
+                alert('Week and related data deleted successfully');
+                // Redirect or update the UI as needed
+                window.location.href = `choosencat.html?catId=${catId}`;
+            } else {
+                const errorMessage = await response.text();
+                alert(`Failed to delete week: ${errorMessage}`);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred while deleting the week');
         }
     }
 }

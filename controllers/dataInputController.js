@@ -88,10 +88,31 @@ const getAllCatDataInput = async (req, res) => {
     }
   };
 
+  const deleteCatDataInputs = async (req, res) => {
+    const weekName = req.params.weekName;
+    const catId = req.params.catId;
+    const userId = req.params.userId;
+  
+    try {
+      const success = await DataInput.deleteCatDataInputs(weekName, catId, userId);
+      if (!success) {
+        return res.status(404).send("Data not found");
+      }
+      else {
+        res.status(200).send("Data deleted successfully");
+      }
+      res.status(204).send();
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Error deleting data");
+    }
+  }
+
 module.exports = {
     getAllCatDataInput,
     getCatDataInputByIds,
     createDataInput,
     updateCatDataInput,
     deleteCatDataInput,
+    deleteCatDataInputs,
 };

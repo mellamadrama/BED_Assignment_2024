@@ -34,7 +34,7 @@ app.get("/weeks", weekController.getAllWeeks);
 app.get("/weeks/:catId/:userId", weekController.getWeekByUserCatId);
 app.post("/weeks", validateWeek, weekController.createWeek);
 app.put("/weeks/:weekName/:catId/:userId", validateUpdateWeekName, weekController.updateWeekName);
-app.delete('/weeks/:weekName/:catId/:userId', weekController.deleteWeek);
+app.delete('/weeks/:weekName/:catId/:userId', weekController.deleteWeekAndData);
 
 // datainput
 app.get("/datainput", dataInputController.getAllCatDataInput);
@@ -42,6 +42,7 @@ app.get("/datainput/:dataId/:catId/:weekName/:userId", dataInputController.getCa
 app.post("/datainput", validateDataInput, dataInputController.createDataInput);
 app.put("/datainput/:dataId/:catId/:weekName/:userId", validateDataInput, dataInputController.updateCatDataInput);
 app.delete('/datainput/:userId/:catId/:dataId/:weekName', dataInputController.deleteCatDataInput);
+
 
 // locations
 app.get("/locations", locationController.getAllLocations);

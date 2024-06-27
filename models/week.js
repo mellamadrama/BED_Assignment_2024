@@ -100,6 +100,7 @@ class Weeks {
     
         return result.rowsAffected > 0;
     }
+
 }
 
 module.exports = Weeks;
