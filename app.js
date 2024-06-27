@@ -55,7 +55,8 @@ app.post("/login", loginController.loginUser);
 
 // challenge
 app.get("/challenges", challengeController.getAllChallenges);
-app.get("/challenges/:challengeID/:userId", challengeController.getAllChallengesByUserID);
+app.get("/challenges/:userId", challengeController.getAllChallengesByUserID);
+app.get("/challenges/:challengeID/:userId", challengeController.getAllChallengesByChallengeID);
 app.put("/updatechallenges/:challengeID/:userId", challengeController.updateChallengeCompleted);
 
 // points
