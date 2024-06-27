@@ -11,6 +11,21 @@ document.addEventListener("DOMContentLoaded", function() {
     } else {
         console.error("No week name found in localStorage.");
     }
+
+    // Retrieve the previous page URL from local storage
+    const previousPage = localStorage.getItem('previousPage');
+
+    // Back button logic
+    const backButton = document.getElementById('back-button');
+    if (backButton) {
+        backButton.addEventListener('click', function() {
+            if (previousPage) {
+                window.location.href = previousPage;
+            } else {
+                window.location.href = `choosencat.html?catId=${catId}`;
+            }
+        });
+    }
 });
 
 // Update the week title name
