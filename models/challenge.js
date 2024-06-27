@@ -13,7 +13,7 @@ class Challenge {
     static async getAllChallenges() {
         const connection = await sql.connect(dbConfig);
     
-        const sqlQuery = `SELECT * FROM WeeklyChallenges`; 
+        const sqlQuery = `SELECT * FROM WeeklyChallenge`; 
     
         const request = connection.request();
         const result = await request.query(sqlQuery);
@@ -26,26 +26,41 @@ class Challenge {
     }
   
     static async getAllChallengesByUserID(uId) {
-        const connection = await sql.connect(dbConfig);
+        try {
+            const connection = await sql.connect(dbConfig);
+            const sqlQuery = `SELECT * FROM UserWeeklyChallenges WHERE userId = @uId`; 
+
+            const request = connection.request();
+            request.input("uId", uId); 
     
-        const sqlQuery = `SELECT * FROM UserWeeklyChallenges WHERE userId = @uId`; 
+            const result = await request.query(sqlQuery);
+            connection.close();
     
-        const request = connection.request();
-        request.input("userId", uId);
-        const result = await request.query(sqlQuery);
-    
-        connection.close();
-    
-        return result.recordset[0]
-            ? new Challenge(
-                result.recordset[0].userId,
-                result.recordset[0].ChallengeID,
-                result.recordset[0].ChallengeDesc,
-                result.recordset[0].Points,
-                result.recordset[0].ChallengeCompleted
-            )
-            : null;
+            return result.recordset;
+        } catch (error) {
+            console.error("Error fetching challenges:", error);
+            throw error; 
+        }
     }
+
+    static async getAllChallengesByChallengeID(cId) {
+        try {
+            const connection = await sql.connect(dbConfig);
+            const sqlQuery = `SELECT * FROM WeeklyChallenge WHERE ChallengeID = @cId`; 
+
+            const request = connection.request();
+            request.input("cId", cId); 
+    
+            const result = await request.query(sqlQuery);
+            connection.close();
+    
+            return result.recordset;
+        } catch (error) {
+            console.error("Error fetching challenges:", error);
+            throw error; 
+        }
+    }
+    
 
     static async updateChallengeCompleted(cId, uId, newChallenge) {
         const connection = await sql.connect(dbConfig);
@@ -70,7 +85,7 @@ class Challenge {
     static async deleteChallenge(cId) {
         const connection = await sql.connect(dbConfig);
     
-        const sqlQuery = `DELETE FROM WeeklyChallenges 
+        const sqlQuery = `DELETE FROM UserWeeklyChallenges 
                             WHERE ChallengeID = @cId`;
     
         const request = connection.request();

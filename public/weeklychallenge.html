@@ -30,71 +30,11 @@
             <h2 class="text-xl font-semibold text-gray-700 border-b-2 border-gray-400 mx-4"><a href="monthlyLeaderboard.html">Monthly Ranking</a></h2>
         </div>
           <!-- Challenges List -->
-          <ul class="space-y-2 inline-block">
-            <li x-data="{ checked: false }" class="flex gap-10 justify-between items-center">
-                <div class="flex items-center">
-                    <label for="challenge1" :class="{ 'text-gray-400': checked, 'text-gray-700': !checked }">Challenge 1</label>
-                </div>
-                <div class="flex items-center">
-                    <span class="text-gray-700 mr-2">100pt</span>
-                    <input type="checkbox" id="challenge1" x-model="checked" class="form-checkbox h-5 w-5 text-blue-600 mr-2">
-                </div>
-            </li>
-            <li x-data="{ checked: false }" class="flex gap-10 justify-between items-center">
-                <div class="flex items-center">
-                    <label for="challenge2" :class="{ 'text-gray-400': checked, 'text-gray-700': !checked }">Challenge 2</label>
-                </div>
-                <div class="flex items-center">
-                    <span class="text-gray-700 mr-2">75pt</span>
-                    <input type="checkbox" id="challenge2" x-model="checked" class="form-checkbox h-5 w-5 text-blue-600 mr-2">
-                </div>
-            </li>
-            <li x-data="{ checked: false }" class="flex gap-10 justify-between items-center">
-                <div class="flex items-center">
-                    <label for="challenge3" :class="{ 'text-gray-400': checked, 'text-gray-700': !checked }">Challenge 3</label>
-                </div>
-                <div class="flex items-center">
-                    <span class="text-gray-700 mr-2">75pt</span>
-                    <input type="checkbox" id="challenge3" x-model="checked" class="form-checkbox h-5 w-5 text-blue-600 mr-2">
-                </div>
-            </li>
-            <li x-data="{ checked: false }" class="flex gap-10 justify-between items-center">
-                <div class="flex items-center">
-                    <label for="challenge4" :class="{ 'text-gray-400': checked, 'text-gray-700': !checked }">Challenge 4</label>
-                </div>
-                <div class="flex items-center">
-                    <span class="text-gray-700 mr-2">50pt</span>
-                    <input type="checkbox" id="challenge4" x-model="checked" class="form-checkbox h-5 w-5 text-blue-600 mr-2">
-                </div>
-            </li>
-            <li x-data="{ checked: false }" class="flex gap-10 justify-between items-center">
-                <div class="flex items-center">
-                    <label for="challenge5" :class="{ 'text-gray-400': checked, 'text-gray-700': !checked }">Challenge 5</label>
-                </div>
-                <div class="flex items-center">
-                    <span class="text-gray-700 mr-2">30pt</span>
-                    <input type="checkbox" id="challenge5" x-model="checked" class="form-checkbox h-5 w-5 text-blue-600 mr-2">
-                </div>
-            </li>
-            <li x-data="{ checked: false }" class="flex gap-10 justify-between items-center">
-                <div class="flex items-center">
-                    <label for="challenge6" :class="{ 'text-gray-400': checked, 'text-gray-700': !checked }">Challenge 6</label>
-                </div>
-                <div class="flex items-center">
-                    <span class="text-gray-700 mr-2">20pt</span>
-                    <input type="checkbox" id="challenge6" x-model="checked" class="form-checkbox h-5 w-5 text-blue-600 mr-2">
-                </div>
-            </li>
-            <li x-data="{ checked: false }" class="flex gap-10 justify-between items-center">
-                <div class="flex items-center">
-                    <label for="challenge7" :class="{ 'text-gray-400': checked, 'text-gray-700': !checked }">Challenge 7</label>
-                </div>
-                <div class="flex items-center">
-                    <span class="text-gray-700 mr-2">10pt</span>
-                    <input type="checkbox" id="challenge7" x-model="checked" class="form-checkbox h-5 w-5 text-blue-600 mr-2">
-                </div>
-            </li>
-        </ul>
+          <div class="challenges-list">
+            <ul id="challenge-list" class="space-y-2 inline-block">
+                <!-- List items will be dynamically added here -->
+            </ul>
+        </div>
     
           <!-- Points Summary -->
           <div class="mt-8 flex justify-between items-center">
@@ -103,5 +43,7 @@
           </div>
         </div>
     </div>
+
+    <script src="js_files/challenge.js"></script>
 </body>
 </html>
