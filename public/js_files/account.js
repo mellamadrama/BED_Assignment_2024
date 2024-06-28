@@ -68,12 +68,32 @@ document.getElementById('firstNameSubmit').addEventListener('click', function ()
     }
   });
 
-// function validateEmail(email) {
-//   const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-//   return re.test(email);
-// }
+  document.addEventListener('DOMContentLoaded', async function () {
+    // Retrieve userId from localStorage
+    const userId = localStorage.getItem('userId');
 
-// function validatePassword(password) {
-//   const re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/;
-//   return re.test(password);
-// }
+    try {
+        // Fetch user details using userId
+        const response = await fetch('/getUserDetails', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ userId })
+        });
+
+        const userData = await response.json();
+
+        if (response.ok) {
+            // Update HTML elements with user data
+            document.getElementById('viewusername').textContent = userData.username;
+            document.getElementById('viewfirstname').textContent = userData.firstName;
+            document.getElementById('viewlastname').textContent = userData.lastName;
+            document.getElementById('viewemail').textContent = userData.email;
+        } else {
+            console.error('Failed to fetch user details:', userData.message);
+        }
+    } catch (error) {
+        console.error('Error fetching user details:', error);
+    }
+});
