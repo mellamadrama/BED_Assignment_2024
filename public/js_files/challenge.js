@@ -1,13 +1,16 @@
 document.addEventListener("DOMContentLoaded", async () => {
     async function getAllChallengesByChallengeID(challengeID, completed) {
         try {
-            const userId = "Acc0000002";
+            const userId = localStorage.getItem('userId');
+            if (!userId) {
+                throw new Error("No userId found in localStorage");
+            }
             const response = await fetch(`/challenges/${challengeID}/${userId}`);
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
             const challenges = await response.json();
-            console.log(`Challenges for challengeID ${challengeID} and userId Acc0000002:`);
+            console.log(`Challenges for challengeID ${challengeID} and userId ${userId}:`);
             console.log(challenges);
 
             const challengeList = document.getElementById("challenge-list");
@@ -58,13 +61,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     async function fetchAndDisplayChallenges() {
         try {
-            const userId = "Acc0000002";
+            const userId = localStorage.getItem('userId');
+            if (!userId) {
+                throw new Error("No userId found in localStorage");
+            }
             const response = await fetch(`/challenges/${userId}`);
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
             const challenges = await response.json();
-            console.log("Challenges for userId Acc0000002:");
+            console.log(`Challenges for userId ${userId}:`);
             console.log(challenges);
 
             const challengeStatus = [];
