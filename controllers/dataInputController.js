@@ -26,6 +26,23 @@ const getAllCatDataInput = async (req, res) => {
       res.status(500).send("Error retrieving Data");
     }
   };
+
+  const getCatDataInputById = async (req, res) => {
+    const weekName = req.params.weekName;
+    const catId = req.params.catId;
+    const userId = req.params.userId;
+
+    try {
+      const catDataInput = await DataInput.getCatDataInputById(weekName, catId, userId);
+      if (!catDataInput) {
+        return res.status(404).send("Data not found");
+      }
+      res.json(catDataInput);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Error retrieving Data");
+    }
+  };
   
   const createDataInput = async (req, res) => {
     const newCatDataInput = {
@@ -66,6 +83,24 @@ const getAllCatDataInput = async (req, res) => {
       res.status(500).send("Error updating data info, amount and date");
     }
   };
+
+  const updateAllCatDataInput = async (req, res) => {
+    const weekName = req.params.weekName;
+    const catId = req.params.catId;
+    const userId = req.params.userId;
+    const newWeekName = req.params.newWeekName;
+  
+    try {
+      const updatedCatDataInput = await DataInput.updateAllCatDataInput(weekName, catId, userId, newWeekName);
+      if (!updatedCatDataInput) {
+        return res.status(404).send("Data not found");
+      }
+      res.json(updatedCatDataInput);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Error updating data info, amount and date");
+    }
+  }
   
   const deleteCatDataInput = async (req, res) => {
     const userId = req.params.userId;
@@ -115,4 +150,6 @@ module.exports = {
     updateCatDataInput,
     deleteCatDataInput,
     deleteCatDataInputs,
+    updateAllCatDataInput,
+    getCatDataInputById,
 };

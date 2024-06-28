@@ -1,5 +1,6 @@
 const Week = require("../models/week");
 const DataInput = require("../models/dataInput");
+const sql = require("mssql");
 
 const getAllWeeks = async (req, res) => {
     try {
@@ -51,14 +52,37 @@ const updateWeekName = async (req, res) => {
   const newWeekName = req.body.newWeekName;
 
   try {
-    const updatedWeekName = await Week.updateWeekName(weekName, catId, userId, newWeekName);
-    if (!updateWeekName) {
-      return res.status(404).send("Week not found");
-    }
-    res.json(updatedWeekName);
+      const updatedWeekName = await Week.updateWeekName(weekName, catId, userId, newWeekName);
+      if (!updatedWeekName) {
+          return res.status(404).send("Week not found");
+      }
+      res.json(updatedWeekName);
   } catch (error) {
-    console.error(error);
-    return res.status(500).send("Error updating week name");
+      console.error(error);
+      return res.status(500).send("Error updating week name");
+  }
+};
+
+const updateWeekAndData = async (req, res) => {
+    const weekName = req.body.weekName;
+    const catId = req.body.catId;
+    const userId = req.body.userId;
+    const newWeekName = req.body.newWeekName;
+
+    try {
+      // Create new week
+      await Week.createWeek({ weekName: newWeekName, catId, userId });
+
+      // Update all data inputs for the week
+      await DataInput.updateAllCatDataInput(weekName, catId, userId, newWeekName);
+
+      // Delete the old week
+      await Week.deleteWeek(weekName, catId, userId);
+
+      res.status(200).send("Week and related data updated successfully");
+  } catch (error) {
+      console.error("Error updating week and related data:", error);
+      res.status(500).send("Error updating week and related data");
   }
 };
 
@@ -128,4 +152,5 @@ module.exports = {
     updateWeekName,
     deleteWeek,
     deleteWeekAndData,
+    updateWeekAndData,
   };

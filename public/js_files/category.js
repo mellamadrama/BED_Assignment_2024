@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", async function() {
     const params = new URLSearchParams(window.location.search);
     const catId = params.get("catId");
+    const userId = localStorage.getItem('userId');
 
     if (catId) {
         // Store the selected category id in localStorage
@@ -10,7 +11,7 @@ document.addEventListener("DOMContentLoaded", async function() {
     if (catId) {
         // Fetch category details from the backend
         await fetchCategoryById(catId);
-        await fetchWeekByCatId(catId);
+        await fetchWeekByCatId(catId, userId);
     } else {
         console.error("No category ID found.");
     }
@@ -43,9 +44,9 @@ function updateCategoryName(catName) {
 }
 
 //getting the week by catId, userId
-async function fetchWeekByCatId(catId) {
+async function fetchWeekByCatId(catId, userId) {
     try {
-        const res = await fetch(`/weeks/${catId}/Acc0000002`);
+        const res = await fetch(`/weeks/${catId}/${userId}`);
         const data = await res.json();
         if (data) {
             console.log(data)

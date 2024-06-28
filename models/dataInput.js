@@ -28,22 +28,40 @@ class DataInputs {
         );
     }
 
-    static async getCatDataInputByIds(userId, catId, dataId, weekName) {
+    static async getCatDataInputByIds(weekName, catId, userId, dataId) {
         const connection = await sql.connect(dbConfig);
     
-        const sqlQuery = `SELECT * FROM CatDataInput WHERE userId = @userId AND catId = @catId AND dataId = @dataId AND weekName = @weekName`;
+        const sqlQuery = `SELECT * FROM CatDataInput WHERE weekName = @weekName AND catId = @catId AND userId = @userId AND dataId = @dataId`;
     
         const request = connection.request();
-        request.input("userId", userId);
-        request.input("catId", catId);
-        request.input("dataId", dataId);
         request.input("weekName", weekName);
+        request.input("catId", catId);
+        request.input("userId", userId);
+        request.input("dataId", dataId);
         const result = await request.query(sqlQuery);
     
         connection.close();
     
         return result.recordset.map(
-            (row) => new DataInputs(row.userId, row.catId, row.dataId, row.weekName, row.info, row.amount, row.dateInput)
+            (row) => new DataInputs(row.weekName, row.catId, row.userId, row.dataId, row.info, row.amount, row.dateInput)
+          );
+    }
+
+    static async getCatDataInputById(weekName, catId, userId) {
+        const connection = await sql.connect(dbConfig);
+    
+        const sqlQuery = `SELECT * FROM CatDataInput WHERE weekName = @weekName AND catId = @catId AND userId = @userId`;
+    
+        const request = connection.request();
+        request.input("weekName", weekName);
+        request.input("catId", catId);
+        request.input("userId", userId);
+        const result = await request.query(sqlQuery);
+    
+        connection.close();
+    
+        return result.recordset.map(
+            (row) => new DataInputs(row.weekName, row.catId, row.userId, row.dataId, row.info, row.amount, row.dateInput)
           );
     }
 
@@ -119,7 +137,27 @@ class DataInputs {
     
         connection.close();
     
-        return this.getCatDataInputByIds(userId, catId, dataId, weekName);
+        return this.getCatDataInputByIds(weekName, catId, userId, dataId);
+    }
+
+    //update all data inputs for a specific week
+    static async updateAllCatDataInput(weekName, catId, userId, newWeekName) {
+        const connection = await sql.connect(dbConfig);
+
+        const sqlQueryDataInput = `UPDATE CatDataInput SET weekName = @newWeekName WHERE weekName = @weekName AND catId = @catId AND userId = @userId`;
+                
+        const requestDataInput = connection.request();
+        console.log(weekName, catId, userId, newWeekName);
+        requestDataInput.input("weekName", weekName);
+        requestDataInput.input("catId", catId);
+        requestDataInput.input("userId", userId);
+        requestDataInput.input("newWeekName", newWeekName);
+        await requestDataInput.query(sqlQueryDataInput);
+    
+        connection.close();
+    
+        return this.getCatDataInputById(weekName, catId, userId);
+
     }
 
     //delete single data input

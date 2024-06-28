@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function() {
         createWeekBtn.addEventListener('click', async function() {
             const weekName = document.getElementById('weekName').value;
             const catId = localStorage.getItem('catId');
-            const userId = "Acc0000002"; // Replace with actual user ID
+            const userId = localStorage.getItem('userId');
 
             try {
                 const res = await fetch('/weeks', {
