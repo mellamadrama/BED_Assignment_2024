@@ -50,9 +50,7 @@ class User {
     
             connection.close();
     
-            return result.recordset.map(
-                (row) => new User(row.userId, row.username, row.firstName, row.lastName, row.email, row.password)
-            );
+            return result.recordset[0]
         } catch (error) {
             console.error("Error fetching User:", error);
             throw error;

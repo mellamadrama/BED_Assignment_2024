@@ -22,6 +22,7 @@ const getAllUsersById = async (req, res) => {
             return res.status(404).send("Unable to get user");
         }
         res.json(user);
+        return user;
     } catch (error) {
         console.error(error);
         res.status(500).send("Error getting user");

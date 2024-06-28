@@ -78,7 +78,7 @@ document.getElementById('firstNameSubmit').addEventListener('click', function ()
 
     try {
         // Fetch user data from the server
-        const response = await fetch(`/getUser/:${userId}`);
+        const response = await fetch(`/getUser/${userId}`);
         if (!response.ok) {
             throw new Error('Failed to fetch user data');
         }
