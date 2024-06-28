@@ -68,12 +68,30 @@ document.getElementById('firstNameSubmit').addEventListener('click', function ()
     }
   });
 
-// function validateEmail(email) {
-//   const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-//   return re.test(email);
-// }
+  document.addEventListener('DOMContentLoaded', async function () {
+    // Retrieve userId from localStorage
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+        console.error('No userId found in localStorage');
+        return;
+    }
 
-// function validatePassword(password) {
-//   const re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/;
-//   return re.test(password);
-// }
+    try {
+        // Fetch user data from the server
+        const response = await fetch(`/getUser/${userId}`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch user data');
+        }
+
+        const getUser = await response.json();
+
+        // Update HTML elements with user data
+        document.getElementById('viewusername').textContent = `@${getUser.username}`;
+        document.getElementById('viewfirstname').textContent = `${getUser.firstName}`;
+        document.getElementById('viewlastname').textContent = `${getUser.lastName}`;
+        document.getElementById('viewemail').textContent = `${getUser.email}`;
+    } catch (error) {
+        console.error('Error fetching user data:', error);
+    }
+});
+

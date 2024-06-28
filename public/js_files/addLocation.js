@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     
         let locationName = document.getElementById('locationName').value;
         let locationAddress = document.getElementById('locationAddress').value;
+        let user = localStorage.getItem('userId');
 
         if (locationName !== '' && locationAddress !== '') {
             const locationDetails = {
@@ -11,7 +12,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 address: locationAddress,
                 status: 'P',
                 websiteLink: null,
-                userId: null, // edit later
+                userId: user,
                 adminId: null
             };
     
