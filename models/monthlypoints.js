@@ -24,16 +24,22 @@ class MonthlyPoints {
     }
 
     static async resetMonthlyPoints() {
-        const connection = await sql.connect(dbConfig);
+        let connection;
+        try {
+            connection = await sql.connect(dbConfig);
 
-        const sqlQuery = `Update MonthlyPoints SET MonthlyPoints = 0`; 
+            const sqlQuery = `UPDATE MonthlyPoints SET userMonthlyPoints = 0`;
 
-        const request = connection.request();
-        const result = await request.query(sqlQuery);
+            const request = connection.request();
+            const result = await request.query(sqlQuery);
 
-        connection.close();
-
-        return result.rowsAffected > 0; 
+            return result.rowsAffected.length > 0;
+        } catch (error) {
+            console.error("Database error in resetMonthlyPoints:", error);
+            throw error;
+        } finally {
+            if (connection) connection.close();
+        }
     }
 
     static async getMonthlyUserPoints(uId) {

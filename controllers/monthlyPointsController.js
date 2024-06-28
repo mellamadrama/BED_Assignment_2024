@@ -14,12 +14,12 @@ const resetMonthlyPoints = async (req, res) => {
     try {
         const reset = await MonthlyPoints.resetMonthlyPoints();
         if (!reset) {
-            return res.status(404).send("Unable to reset monthly points");
+            return res.status(404).json({ message: "Unable to get reset user points" });
         }
-        res.json(reset);
+        res.json({ message: "Monthly points reset successfully" });
     } catch (error) {
         console.error(error);
-        res.status(500).send("Error resetting monthly points");
+        res.status(500).json({ message: "Error resetting monthly points" });
     }
 };
 
@@ -41,3 +41,5 @@ module.exports = {
     resetMonthlyPoints,
     getUserMonthlyPoints,
 };
+
+
