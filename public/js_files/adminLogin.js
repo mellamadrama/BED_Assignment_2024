@@ -5,7 +5,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     const password = document.getElementById('password').value;
   
     try {
-        const response = await fetch('/login', {
+        const response = await fetch('/loginAdmin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -20,7 +20,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
             localStorage.setItem('adminId', result.adminId);
             document.getElementById('message').textContent = 'Login successful!';
             
-            window.location.href = 'home.html';
+            window.location.href = 'homeAdmin.html';
         } else {
             document.getElementById('message').textContent = result.message;
         }

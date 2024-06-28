@@ -4,6 +4,7 @@ const weekController = require("./controllers/weekController");
 const dataInputController = require("./controllers/dataInputController");
 const locationController = require("./controllers/locationController");
 const loginController = require("./controllers/loginController");
+const adminLoginController = require("./controllers/adminLoginController")
 const challengeController = require("./controllers/challengeController");
 const weeklyPointsController = require("./controllers/weeklyPointsController");
 const monthlyPointsController = require("./controllers/monthlyPointsController");
@@ -15,7 +16,8 @@ const bodyParser = require("body-parser");
 const { validateWeek, validateUpdateWeekName } = require('./middlewares/validateWeek');
 const validateDataInput = require('./middlewares/validateDataInput');
 const validateLocation = require('./middlewares/validateLocation');
-const validateLogin = require("./middlewares/validateLogin")
+const validateLogin = require("./middlewares/validateLogin");
+const validateAdminLogin = require("./middlewares/validateAdminLogin")
 const validateChallenge = require('./middlewares/validateChallenge');
 const validatePoints = require("./middlewares/validatePoints");
 
@@ -30,6 +32,7 @@ app.use(staticMiddleware);
 
 //login
 app.post('/login', validateLogin, loginController.loginUser);
+app.post('/loginAdmin', validateAdminLogin, adminLoginController.loginAdmin);
 
 // categories
 app.get("/categories", categoryController.getAllCategories);
