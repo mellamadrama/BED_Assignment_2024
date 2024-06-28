@@ -33,5 +33,22 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    async function resetPoints() {
+        try {
+            const response = await fetch("/resetweekly", { method: "PUT" }); 
+            if (response.ok) {
+                console.log("Points reset successfully.");
+                fetchAndDisplayWeeklyPoints(); // Refresh the leaderboard
+            } else {
+                const errorData = await response.json();
+                console.error("Error resetting points:", errorData);
+            }
+        } catch (error) {
+            console.error("Error resetting points:", error);
+        }
+    }
+
+    document.getElementById("resetPointsButton").addEventListener("click", resetPoints);
+
     fetchAndDisplayWeeklyPoints();
 });
