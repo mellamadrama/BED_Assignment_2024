@@ -70,7 +70,12 @@ const updateWeekAndData = async (req, res) => {
     const newWeekName = req.body.newWeekName;
 
     try {
-      // Create new week
+      // Check if there are data inputs for the week
+      console.log(`Checking data inputs for weekName: ${weekName}, catId: ${catId}, userId: ${userId}`);
+      const hasDataInputs = await DataInput.hasDataInputs(weekName, catId, userId);
+
+      if (hasDataInputs) {
+        // Create new week
       await Week.createWeek({ weekName: newWeekName, catId, userId });
 
       // Update all data inputs for the week
@@ -78,6 +83,11 @@ const updateWeekAndData = async (req, res) => {
 
       // Delete the old week
       await Week.deleteWeek(weekName, catId, userId);
+      } else {
+        // If no data inputs found, just update the week name
+        await Week.updateWeekName(weekName, catId, userId, newWeekName);
+      }
+      
 
       res.status(200).send("Week and related data updated successfully");
   } catch (error) {
