@@ -11,7 +11,13 @@ class Account {
   static async getUserByUsernameAndPassword(username, password) {
     const connection = await sql.connect(dbConfig);
 
-    const sqlQuery = `SELECT * FROM Account WHERE username = @username AND password = @password`;
+    const sqlQuery = `
+    SELECT a.accId, a.username, a.password
+    FROM Account a
+    JOIN UserAcc u
+    ON a.accId = u.userId
+    WHERE a.username = @username AND a.password = @password
+  `;
 
     const request = connection.request();
     request.input("username", sql.NVarChar, username);
