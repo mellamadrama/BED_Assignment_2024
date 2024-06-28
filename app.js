@@ -42,12 +42,13 @@ app.get('/categories/:catId', categoryController.getCategoryById);
 app.get("/weeks", weekController.getAllWeeks);
 app.get("/weeks/:catId/:userId", weekController.getWeekByUserCatId);
 app.post("/weeks", validateWeek, weekController.createWeek);
-app.put("/weeks/:weekName/:catId/:userId", validateUpdateWeekName, weekController.updateWeekName);
+app.put("/weeks/:weekName/:catId/:userId", validateUpdateWeekName, weekController.updateWeekAndData);
 app.delete('/weeks/:weekName/:catId/:userId', weekController.deleteWeekAndData);
 
 // datainput
 app.get("/datainput", dataInputController.getAllCatDataInput);
 app.get("/datainput/:dataId/:catId/:weekName/:userId", dataInputController.getCatDataInputByIds);
+app.get("/datainput/:weekName/:catId/:userId", dataInputController.getCatDataInputById);
 app.post("/datainput", validateDataInput, dataInputController.createDataInput);
 app.put("/datainput/:dataId/:catId/:weekName/:userId", validateDataInput, dataInputController.updateCatDataInput);
 app.delete('/datainput/:userId/:catId/:dataId/:weekName', dataInputController.deleteCatDataInput);
