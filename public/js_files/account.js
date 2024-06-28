@@ -41,37 +41,55 @@ document.getElementById('confirmDeleteBtn').addEventListener('click', function (
   window.location.href = 'index.html'
 });
 
-// update user details
 document.getElementById('profileForm').addEventListener('submit', async function(event) {
   event.preventDefault();
   
   const userId = localStorage.getItem('userId');
-  const firstName = document.getElementById('firstName').value;
-  const lastName = document.getElementById('lastName').value;
-  const username = document.getElementById('username').value;
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
+  const firstName = document.getElementById('firstName').value || null;
+  const lastName = document.getElementById('lastName').value || null;
+  const username = document.getElementById('username').value || null;
+  const email = document.getElementById('email').value || null;
+  const password = document.getElementById('password').value || null;
 
-  const updatedUserDetails = { userId, firstName, lastName, username, email, password };
+  if (!userId) {
+    alert('User ID is missing. Please log in again.');
+    return;
+  }
+
+  const updatedUserDetails = { 
+    firstName: null, 
+    lastName: null, 
+    username: null, 
+    email: null, 
+    passwor: null, 
+  };
 
   try {
-      const response = await fetch(`/updateUserAccount/${userId}`, {
-          method: 'PUT',
-          headers: {
-              'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(updatedUserDetails),
-      });
+    const response = await fetch(`/updateuser/${userId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedUserDetails),
+    });
 
-      if (response.ok) {
-          alert('Details Updated');
-          console.log('Details updated');
-      } else {
-          alert('Failed to update details');
-          console.error('Failed to update details');
-      }
+    if (response.ok) {
+      alert('Details Updated');
+      console.log('Details updated');
+
+      // update the displayed user details in the UI
+      const updatedUser = await response.json();
+      document.getElementById('viewusername').innerText = updatedUser.username;
+      document.getElementById('viewfirstname').innerText = updatedUser.firstName;
+      document.getElementById('viewlastname').innerText = updatedUser.lastName;
+      document.getElementById('viewemail').innerText = updatedUser.email;
+
+    } else {
+      alert('Failed to update details');
+      console.error('Failed to update details');
+    }
   } catch (error) {
-      console.error('Error:', error);
+    console.error('Error:', error);
   }
 });
 

@@ -7,7 +7,7 @@ async function validateUserAccount(req, res, next) {
         firstName: Joi.string().min(1).max(50).required(),
         lastName: Joi.string().min(1).max(50).required(),
         email: Joi.string().min(1).max(100).required(),
-        password: Joi.string().min(1).max(250).required,
+        password: Joi.string().min(1).max(250).required(),
     })
 
     const validation = schema.validate(req.body, { abortEarly: false });

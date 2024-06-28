@@ -36,7 +36,7 @@ const updateUserAccount = async(req, res) => {
     try {
         const updatedUser = await User.updatedUser(userId, newUserData);
         if (!updatedUser) {
-            return res.status(404).send("Location not found");
+            return res.status(404).send("User not found");
         }
         res.json(updatedUser);
     } catch (error) {

@@ -58,26 +58,41 @@ class User {
     }
 
     static async updateUserAccount(userId, newUserData) {
-        const connection = await sql.connect(dbConfig);
+        try {
+            const connection = await sql.connect(dbConfig);
 
-        const sqlQuery = `
-        UPDATE Account 
-        SET username = @username, firstName = @firstName, lastName = @lastName, email = @email, password = @password
-        WHERE accId = @userId
-        `;
+            // Construct the dynamic query
+            let sqlQuery = `
+            UPDATE Account 
+            SET `;
+            const fields = [];
+            if (newUserData.username) fields.push("username = @username");
+            if (newUserData.firstName) fields.push("firstName = @firstName");
+            if (newUserData.lastName) fields.push("lastName = @lastName");
+            if (newUserData.email) fields.push("email = @email");
+            if (newUserData.password) fields.push("password = @password");
+            sqlQuery += fields.join(", ");
+            sqlQuery += `
+            WHERE accId = @userId`;
 
-        const request = connection.request();
+            const request = connection.request();
 
-        request.input("userId", userId); 
-        request.input("username", newUserData.username || null);
-        request.input("firstName", newUserData.firstName || null);
-        request.input("lastName", newUserData.lastName || null);
-        request.input("email", newUserData.email || null);
-        request.input("password", newUserData.password || null);
+            request.input("userId", userId); 
+            if (newUserData.username) request.input("username", newUserData.username);
+            if (newUserData.firstName) request.input("firstName", newUserData.firstName);
+            if (newUserData.lastName) request.input("lastName", newUserData.lastName);
+            if (newUserData.email) request.input("email", newUserData.email);
+            if (newUserData.password) request.input("password", newUserData.password);
 
-        const result = await request.query(sqlQuery);
-        connection.close();
-        return this.getAllUsersById(userId);
+            await request.query(sqlQuery);
+
+            connection.close();
+            
+            return await User.getAllUsersById(userId);
+        } catch (error) {
+            console.error("Error updating User:", error);
+            throw error;
+        }
     }
 }
 
