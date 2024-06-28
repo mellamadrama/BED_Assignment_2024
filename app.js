@@ -7,15 +7,18 @@ const loginController = require("./controllers/loginController");
 const challengeController = require("./controllers/challengeController");
 const weeklyPointsController = require("./controllers/weeklyPointsController");
 const monthlyPointsController = require("./controllers/monthlyPointsController");
+
 const sql = require("mssql");
 const dbConfig = require("./dbConfig");
 const bodyParser = require("body-parser");
+
 const { validateWeek, validateUpdateWeekName } = require('./middlewares/validateWeek');
 const validateDataInput = require('./middlewares/validateDataInput');
 const validateLocation = require('./middlewares/validateLocation');
-const validateLogin = require('./middlewares/validateLogin');
+const validateLogin = require("./middlewares/validateLogin")
 const validateChallenge = require('./middlewares/validateChallenge');
 const validatePoints = require("./middlewares/validatePoints");
+
 const app = express();
 const port = process.env.PORT || 3000;
 const staticMiddleware = express.static("public");
@@ -24,6 +27,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(staticMiddleware);
+
+//login
+app.post('/login', validateLogin, loginController.loginUser);
 
 // categories
 app.get("/categories", categoryController.getAllCategories);
@@ -43,16 +49,12 @@ app.post("/datainput", validateDataInput, dataInputController.createDataInput);
 app.put("/datainput/:dataId/:catId/:weekName/:userId", validateDataInput, dataInputController.updateCatDataInput);
 app.delete('/datainput/:userId/:catId/:dataId/:weekName', dataInputController.deleteCatDataInput);
 
-
 // locations
 app.get("/locations", locationController.getAllLocations);
 app.get("/locations/:locationReqId", locationController.getLocationById);
 app.post("/createlocations", validateLocation, locationController.createLocation);
 app.put("/updlocations/:locationReqId", validateLocation, locationController.updateLocation);
 app.delete("/dellocations/:locationReqId", locationController.deleteLocation);
-
-// login
-app.post("/login", loginController.loginUser);
 
 // challenge
 app.get("/challenges", challengeController.getAllChallenges);

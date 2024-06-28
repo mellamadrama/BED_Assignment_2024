@@ -1,22 +1,22 @@
-const userModel = require("../models/login");
+const Account = require('../models/login');
 
-async function loginUser(req, res) {
+const loginUser = async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    const user = await userModel.getUserByUsername(username);
-    if (!user) {
-      return res.status(400).json({ success: false, message: "Username does not exist" });
+    const account = await Account.getUserByUsernameAndPassword(username, password);
+    
+    if (account) {
+      res.json({ userId: account.userId, message: 'Login successful!' });
+    } else {
+      res.status(401).json({ message: 'Invalid username or password' });
     }
-    if (user.password !== password) {
-      return res.status(400).json({ success: false, message: "Password incorrect" });
-    }
-    res.json({ success: true, message: "Login successful" });
-  } catch (err) {
-    res.status(500).json({ success: false, message: "Server error", error: err.message });
+  } catch (error) {
+    console.error("Error logging in: ", error);
+    res.status(500).send("Internal Server Error");
   }
-}
+};
 
 module.exports = {
-  loginUser
+  loginUser,
 };

@@ -1,43 +1,33 @@
-document.querySelector("form").addEventListener("submit", async function (event) {
-    event.preventDefault();
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
   
-    const username = document.querySelector("#username").value;
-    const password = document.querySelector("#password").value;
-  
-    try {
-      const response = await fetch("/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, password }),
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+
+  try {
+      const response = await fetch('/login', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ username, password })
       });
 
-      const text = await response.text();
-      let result;
-      
-      // Check if response text is not empty before parsing as JSON
-      if (text) {
-        result = JSON.parse(text);
-      } else {
-        result = { message: "Empty response from server" };
-      }
+      const result = await response.json();
 
       if (response.ok) {
-        alert(result.message);
+          // Save userId to local storage
+          localStorage.setItem('accId', result.accId);
+          document.getElementById('message').textContent = 'Login successful!';
+          
+          window.location.href = 'home.html';
       } else {
-        alert(result.message);
+          document.getElementById('message').textContent = result.message;
       }
-    } catch (err) {
-      console.error("Error:", err);
-      alert("An error occurred during login. Please try again later.");
-    }
+  } catch (error) {
+      document.getElementById('message').textContent = 'An error occurred. Please try again.';
+  }
 });
-
-document.getElementById('login').addEventListener('click', function() {
-    window.location.href = 'home.html';
-});
-
 
 document.getElementById('back').addEventListener('click', function() {
     window.location.href = 'index.html';
