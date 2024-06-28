@@ -76,8 +76,9 @@ app.put("/userweeklypoints/:userId", weeklyPointsController.getUserWeeklyPoints)
 app.put("/usermonthlypoints/:userId", monthlyPointsController.getUserMonthlyPoints);
 
 // account
-app.get("/getUser", userAccController.getAllUsersById);
-app.get("/getUser/:userId", userAccController.getAllUsersById);
+app.get("/getuser", userAccController.getAllUsersById);
+app.get("/getuser/:userId", userAccController.getAllUsersById);
+app.put("/updateuser/:userId", validateUserAccount, userAccController.updateUserAccount);
 
 app.listen(port, async () => {
   try {

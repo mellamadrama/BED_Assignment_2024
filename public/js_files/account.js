@@ -1,3 +1,31 @@
+// show user details
+document.addEventListener('DOMContentLoaded', async function () {
+  // retrieve userId from localStorage
+  const userId = localStorage.getItem('userId');
+  if (!userId) {
+      console.error('No userId found in localStorage');
+      return;
+  }
+
+  try {
+      const response = await fetch(`/getuser/${userId}`);
+      if (!response.ok) {
+          throw new Error('Failed to fetch user data');
+      }
+
+      const getUser = await response.json();
+      console.log(getUser)
+
+      document.getElementById('viewusername').textContent = `@${getUser.username}`;
+      document.getElementById('viewfirstname').textContent = `${getUser.firstName}`;
+      document.getElementById('viewlastname').textContent = `${getUser.lastName}`;
+      document.getElementById('viewemail').textContent = `${getUser.email}`;
+  } catch (error) {
+      console.error('Error fetching user data:', error);
+  }
+});
+
+// for delete modal + btn
 document.getElementById('deleteAccountBtn').addEventListener('click', function () {
   document.getElementById('deleteModal').classList.remove('hidden');
 });
@@ -13,85 +41,39 @@ document.getElementById('confirmDeleteBtn').addEventListener('click', function (
   window.location.href = 'index.html'
 });
 
-document.getElementById('firstNameSubmit').addEventListener('click', function () {
-    const firstName = document.getElementById('firstName');
-    
-    if (firstName.value.trim() === '') {
-      alert('First name is required');
-    } else {
-      alert('First name updated');
-      console.log('First name updated');
-    }
-  });
+// update user details
+document.getElementById('profileForm').addEventListener('submit', async function(event) {
+  event.preventDefault();
+  
+  const userId = localStorage.getItem('userId');
+  const firstName = document.getElementById('firstName').value;
+  const lastName = document.getElementById('lastName').value;
+  const username = document.getElementById('username').value;
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
 
-  document.getElementById('lastNameSubmit').addEventListener('click', function () {
-    const firstName = document.getElementById('lastName');
-    
-    if (firstName.value.trim() === '') {
-      alert('Last name is required');
-    } else {
-      alert('Last name updated');
-      console.log('Last name updated');
-    }
-  });
+  const updatedUserDetails = { userId, firstName, lastName, username, email, password };
 
-  document.getElementById('usernameSubmit').addEventListener('click', function () {
-    const firstName = document.getElementById('username');
-    
-    if (firstName.value.trim() === '') {
-      alert('Username is required');
-    } else {
-      alert('Username updated');
-      console.log('username updated');
-    }
-  });
+  try {
+      const response = await fetch(`/updateUserAccount/${userId}`, {
+          method: 'PUT',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(updatedUserDetails),
+      });
 
-  document.getElementById('emailSubmit').addEventListener('click', function () {
-    const firstName = document.getElementById('email');
-    
-    if (firstName.value.trim() === '') {
-      alert('Valid Email Address is required');
-    } else {
-      alert('Email Address updated');
-      console.log('Email Address updated');
-    }
-  });
-
-  document.getElementById('pwSubmit').addEventListener('click', function () {
-    const firstName = document.getElementById('password');
-    
-    if (firstName.value.trim() === '') {
-      alert('Password is required');
-    } else {
-      alert('Password updated');
-      console.log('Password updated');
-    }
-  });
-
-  document.addEventListener('DOMContentLoaded', async function () {
-    // Retrieve userId from localStorage
-    const userId = localStorage.getItem('userId');
-    if (!userId) {
-        console.error('No userId found in localStorage');
-        return;
-    }
-
-    try {
-        // Fetch user data from the server
-        const response = await fetch(`/getUser/${userId}`);
-        if (!response.ok) {
-            throw new Error('Failed to fetch user data');
-        }
-
-        const getUser = await response.json();
-
-        // Update HTML elements with user data
-        document.getElementById('viewusername').textContent = `@${getUser.username}`;
-        document.getElementById('viewfirstname').textContent = `${getUser.firstName}`;
-        document.getElementById('viewlastname').textContent = `${getUser.lastName}`;
-        document.getElementById('viewemail').textContent = `${getUser.email}`;
-    } catch (error) {
-        console.error('Error fetching user data:', error);
-    }
+      if (response.ok) {
+          alert('Details Updated');
+          console.log('Details updated');
+      } else {
+          alert('Failed to update details');
+          console.error('Failed to update details');
+      }
+  } catch (error) {
+      console.error('Error:', error);
+  }
 });
+
+
 

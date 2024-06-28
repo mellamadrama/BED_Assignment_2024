@@ -56,6 +56,29 @@ class User {
             throw error;
         }
     }
+
+    static async updateUserAccount(userId, newUserData) {
+        const connection = await sql.connect(dbConfig);
+
+        const sqlQuery = `
+        UPDATE Account 
+        SET username = @username, firstName = @firstName, lastName = @lastName, email = @email, password = @password
+        WHERE accId = @userId
+        `;
+
+        const request = connection.request();
+
+        request.input("userId", userId); 
+        request.input("username", newUserData.username || null);
+        request.input("firstName", newUserData.firstName || null);
+        request.input("lastName", newUserData.lastName || null);
+        request.input("email", newUserData.email || null);
+        request.input("password", newUserData.password || null);
+
+        const result = await request.query(sqlQuery);
+        connection.close();
+        return this.getAllUsersById(userId);
+    }
 }
 
 module.exports = User;
