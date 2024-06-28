@@ -8,6 +8,7 @@ const adminLoginController = require("./controllers/adminLoginController")
 const challengeController = require("./controllers/challengeController");
 const weeklyPointsController = require("./controllers/weeklyPointsController");
 const monthlyPointsController = require("./controllers/monthlyPointsController");
+const userAccController = require("./controllers/userAccController");
 
 const sql = require("mssql");
 const dbConfig = require("./dbConfig");
@@ -20,6 +21,7 @@ const validateLogin = require("./middlewares/validateLogin");
 const validateAdminLogin = require("./middlewares/validateAdminLogin")
 const validateChallenge = require('./middlewares/validateChallenge');
 const validatePoints = require("./middlewares/validatePoints");
+const validateUserAccount = require("./middlewares/validateUserAccount");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -72,6 +74,10 @@ app.put("/resetweekly", weeklyPointsController.resetWeeklyPoints);
 app.put("/resetmonthly", monthlyPointsController.resetMonthlyPoints);
 app.put("/userweeklypoints/:userId", weeklyPointsController.getUserWeeklyPoints);
 app.put("/usermonthlypoints/:userId", monthlyPointsController.getUserMonthlyPoints);
+
+// account
+app.get("/getUser", userAccController.getAllUsersById);
+app.get("/getUser/:userId", userAccController.getAllUsersById);
 
 app.listen(port, async () => {
   try {

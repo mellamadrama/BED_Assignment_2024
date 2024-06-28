@@ -71,29 +71,27 @@ document.getElementById('firstNameSubmit').addEventListener('click', function ()
   document.addEventListener('DOMContentLoaded', async function () {
     // Retrieve userId from localStorage
     const userId = localStorage.getItem('userId');
+    if (!userId) {
+        console.error('No userId found in localStorage');
+        return;
+    }
 
     try {
-        // Fetch user details using userId
-        const response = await fetch('/getUserDetails', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ userId })
-        });
-
-        const userData = await response.json();
-
-        if (response.ok) {
-            // Update HTML elements with user data
-            document.getElementById('viewusername').textContent = userData.username;
-            document.getElementById('viewfirstname').textContent = userData.firstName;
-            document.getElementById('viewlastname').textContent = userData.lastName;
-            document.getElementById('viewemail').textContent = userData.email;
-        } else {
-            console.error('Failed to fetch user details:', userData.message);
+        // Fetch user data from the server
+        const response = await fetch(`/getUser/:${userId}`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch user data');
         }
+
+        const getUser = await response.json();
+
+        // Update HTML elements with user data
+        document.getElementById('viewusername').textContent = `@${getUser.username}`;
+        document.getElementById('viewfirstname').textContent = `${getUser.firstName}`;
+        document.getElementById('viewlastname').textContent = `${getUser.lastName}`;
+        document.getElementById('viewemail').textContent = `${getUser.email}`;
     } catch (error) {
-        console.error('Error fetching user details:', error);
+        console.error('Error fetching user data:', error);
     }
 });
+

@@ -1,22 +1,34 @@
-const sql = require('mssql');
+const User = require("../models/userAccount");
 
-// Assume you have established your SQL connection
-
-// Function to get user details by userId
-async function getUserDetails(userId) {
-    try {
-        const query = `SELECT * FROM Users WHERE userId = @userId`;
-        const pool = await sql.connect(config);
-        const result = await pool.request()
-            .input('userId', sql.Int, userId)
-            .query(query);
-
-        return result.recordset[0]; // Assuming only one user found with that userId
+const getAllUsers = async (req, res) => {
+    try{
+        const users = await User.getAllUsers();
+        if (!users) {
+            return res.status(404).send("Unable to get user");
+        }
+        res.json(users);
     } catch (error) {
-        throw new Error(`Error fetching user details: ${error.message}`);
+        console.error(error);
+        res.status(500).send("Error getting user");
     }
-}
+};
+
+const getAllUsersById = async (req, res) => {
+    const userId = req.params.userId;
+
+    try {
+        const user = await User.getAllUsersById(userId);
+        if (!user) {
+            return res.status(404).send("Unable to get user");
+        }
+        res.json(user);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error getting user");
+    }
+};
 
 module.exports = {
-    getUserDetails
-};
+    getAllUsers,
+    getAllUsersById,
+}
