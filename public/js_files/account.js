@@ -45,11 +45,11 @@ document.getElementById('profileForm').addEventListener('submit', async function
   event.preventDefault();
   
   const userId = localStorage.getItem('userId');
-  const firstName = document.getElementById('firstName').value || null;
-  const lastName = document.getElementById('lastName').value || null;
-  const username = document.getElementById('username').value || null;
-  const email = document.getElementById('email').value || null;
-  const password = document.getElementById('password').value || null;
+  const firstName = document.getElementById('firstName').value;
+  const lastName = document.getElementById('lastName').value;
+  const username = document.getElementById('username').value;
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
 
   if (!userId) {
     alert('User ID is missing. Please log in again.');
@@ -57,12 +57,14 @@ document.getElementById('profileForm').addEventListener('submit', async function
   }
 
   const updatedUserDetails = { 
-    firstName: null, 
-    lastName: null, 
-    username: null, 
-    email: null, 
-    passwor: null, 
+    firstName, 
+    lastName, 
+    username, 
+    email, 
+    password, 
   };
+
+  console.log(updatedUserDetails)
 
   try {
     const response = await fetch(`/updateuser/${userId}`, {
@@ -83,6 +85,7 @@ document.getElementById('profileForm').addEventListener('submit', async function
       document.getElementById('viewfirstname').innerText = updatedUser.firstName;
       document.getElementById('viewlastname').innerText = updatedUser.lastName;
       document.getElementById('viewemail').innerText = updatedUser.email;
+      document.getElementById('viewpassword').innerText = updatedUser.password;
 
     } else {
       alert('Failed to update details');

@@ -34,11 +34,13 @@ const updateUserAccount = async(req, res) => {
     const newUserData = req.body;
 
     try {
-        const updatedUser = await User.updatedUser(userId, newUserData);
+        const updatedUser = await User.updateUserAccount(userId, newUserData);
         if (!updatedUser) {
             return res.status(404).send("User not found");
         }
         res.json(updatedUser);
+        return updatedUser;
+
     } catch (error) {
         console.error(error);
         res.status(500).send("Error updating user");

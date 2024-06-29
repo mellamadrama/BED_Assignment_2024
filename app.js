@@ -79,7 +79,7 @@ app.put("/usermonthlypoints/:userId", monthlyPointsController.getUserMonthlyPoin
 // account
 app.get("/getuser", userAccController.getAllUsersById);
 app.get("/getuser/:userId", userAccController.getAllUsersById);
-app.put("/updateuser/:userId", validateUserAccount, userAccController.updateUserAccount);
+app.put("/updateuser/:userId", userAccController.updateUserAccount);
 
 app.listen(port, async () => {
   try {
