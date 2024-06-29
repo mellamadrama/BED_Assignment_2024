@@ -41,6 +41,16 @@ document.getElementById('confirmDeleteBtn').addEventListener('click', function (
   window.location.href = 'index.html'
 });
 
+function logout() {
+  localStorage.removeItem('userId');
+  window.location.href = 'index.html'; 
+}
+
+document.getElementById('logoutBtn').addEventListener('click', function (e) {
+  e.preventDefault();
+  logout();
+});
+
 document.getElementById('profileForm').addEventListener('submit', async function(event) {
   event.preventDefault();
   
