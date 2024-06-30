@@ -61,14 +61,14 @@ Files worked on:
 - adminHistory.html
 - home.html
 - homeAdmin.html
-- account.js
-- adminHome.js 
+- account.js (script)
+- adminHome.js (script)
 - adminLogin.js (script)
-- home.js
-- userLogin.js
+- home.js (script)
+- userLogin.js (script)
 - adminLogin.js (model)
-- login.js
-- userAccount.js
+- login.js (model)
+- userAccount.js (model)
 - validateAdminLogin.js
 - validateLogin.js
 - validateUserAccount.js
