@@ -11,6 +11,7 @@ class User {
         this.password = password;
     }
 
+    // get user details
     static async getAllUsers() {
         const connection = await sql.connect(dbConfig);
 
@@ -31,6 +32,8 @@ class User {
         );
     }
 
+
+    //get user details by ID
     static async getAllUsersById(userId) {
         try {
             const connection = await sql.connect(dbConfig);
@@ -57,6 +60,8 @@ class User {
         }
     }
 
+
+    //update user account details
     static async updateUserAccount(userId, newUserData) {
         const connection = await sql.connect(dbConfig);
 
