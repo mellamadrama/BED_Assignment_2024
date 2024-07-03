@@ -30,7 +30,7 @@ const registerUser = async(req, res) => {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        password = hashedPassword;
+        newUser.passwordHash = hashedPassword;
 
         await User.registerUser(newUser);
 
@@ -45,7 +45,7 @@ const login = async(req, res) => {
     const { username, password } = req.body;
 
     try {
-        const user = await getUserByUsername(username);
+        const user = await User.getUserByUsername(username);
         if (!user) {
             return res.status(400).json({message: "Invalid credentials"})
         }

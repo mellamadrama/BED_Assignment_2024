@@ -37,7 +37,7 @@ class User {
         
         const request = connection.request();
         request.input("username", user.username);
-        request.input("email", user.passwordHash);
+        request.input("passwordHash", user.passwordHash);
         request.input("role", user.role);
         
         const result = await request.query(sqlQuery);
@@ -45,7 +45,7 @@ class User {
         connection.close();
         
         // Retrieve the newly created user using its ID
-        return this.getUserById(result.recordset[0].user_id);
+        return this.getUserByUsername(result.recordset[0].username);
     }
 }
 module.exports = User;

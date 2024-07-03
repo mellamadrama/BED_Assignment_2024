@@ -1,3 +1,4 @@
+const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
@@ -5,7 +6,7 @@ async function login(req, res) {
   const { username, password } = req.body;
 
   try {
-    const user = await getUserByUsername(username);
+    const user = await User.getUserByUsername(username);
     if (!user) {
         return res.status(401).json({ message: "Invalid credentials" });
     }
