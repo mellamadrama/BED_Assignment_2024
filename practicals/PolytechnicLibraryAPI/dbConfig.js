@@ -1,8 +1,8 @@
 module.exports = {
     user: "bedpractical_user", 
-    password: "1234", 
+    password: "bedbedbed", 
     server: "localhost",
-    database: "polytechnic-library",
+    database: "polytechnic_library",
     trustServerCertificate: true,
     options: {
       port: 1433, 

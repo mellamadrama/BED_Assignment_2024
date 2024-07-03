@@ -1,6 +1,6 @@
 const express = require("express");
 const bookController = require("./controllers/bookController");
-const userController = require("./controllers/userController");
+const authController = require("./controllers/authController");
 
 const sql = require("mssql");
 const dbConfig = require("./dbConfig");
@@ -24,8 +24,8 @@ app.get("/books", bookController.getAllBooks);
 app.put("/books/:bookId/availability", validateBook, bookController.updateBook);
 
 //user
-app.post("/register", validateUser, userController.registerUser);
-app.post("/login", validateLogin, userController.login);
+app.post("/register", validateUser, authController.registerUser);
+app.post("/login", validateLogin, authController.login);
 
 app.listen(port, async () => {
     try {
