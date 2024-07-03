@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", async function() {
     // Get the weekName, catId, and userId from localStorage
     const weekName = localStorage.getItem('weekName');
     const catId = localStorage.getItem('catId');
@@ -30,6 +30,13 @@ document.addEventListener("DOMContentLoaded", function() {
     // Add event listeners for the update and delete buttons
     document.getElementById('update-week').addEventListener('click', handleUpdateWeek);
     document.getElementById('delete-week').addEventListener('click', handleDeleteWeek);
+
+    if (weekName, catId, userId) {
+        // Fetch week data input details from the backend
+        await fetchCatDataInputById(weekName, catId, userId);
+    } else {
+        console.error("No data input found.");
+    }
 });
 
 // Update the week title name
@@ -100,5 +107,48 @@ async function handleDeleteWeek() {
             console.error('Error:', error);
             alert('An error occurred while deleting the week');
         }
+    }
+}
+
+// Fetch week data input by weekName, catId, and userId
+async function fetchCatDataInputById(weekName, catId, userId) {
+    try {
+        const response = await fetch(`/datainput/${weekName}/${catId}/${userId}`);
+        const data = await response.json();
+        if (data && data.length > 0) {
+            console.log(data);
+            displayDataInputs(data);
+        } else {
+            console.error("Data input not found.");
+        }
+    } catch (error) {
+        console.error("Error fetching data input:", error);
+    }
+}
+
+// Display week data input
+function displayDataInputs(datainputcontainer) {
+    const datainputContainer = document.getElementById('datainputcontainer');
+    if (datainputContainer) {
+        // Clear any existing content
+        datainputContainer.innerHTML = '';
+
+        if (datainputcontainer.length > 0) {
+            datainputcontainer.forEach(datainput => {
+                const datainputElement = document.createElement('datainput');
+                datainputElement.className = "bg-[#807558] rounded-lg p-4 mb-4 max-w-fit mx-auto text-left";
+                datainputElement.innerHTML = `
+                    <p id="datainfo" class="text-lg">Info:  ${datainput.info}</p>
+                    <p id="dataamt" class="text-lg">Amt:    ${datainput.amount}</p>
+                    <p id="datadate" class="text-lg">Date:  ${datainput.dateInput}</p>
+                `;
+                datainputContainer.appendChild(datainputElement);
+            });
+        } else {
+            // Display message when no data inputs are found
+            datainputContainer.innerHTML = '<p>No data inputs found for this category.</p>';
+        }
+    } else {
+        console.error('Data input container not found.');
     }
 }
