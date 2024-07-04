@@ -2,11 +2,12 @@ const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 
 const getUserByUsername = async (req, res) => {
-    const name = parseInt(req.params.username);
+    const name = req.body;
+
     try {
         const user = await User.getUserByUsername(name);
         if (!user) {
-        return res.status(404).send("User not found");
+            return res.status(404).send("User not found");
         }
         res.json(user);
     } catch (error) {
@@ -21,7 +22,7 @@ const registerUser = async(req, res) => {
     const password = newUser.passwordHash;
 
     try {
-        const existingUser = await getUserByUsername(username);
+        const existingUser = await User.getUserByUsername(username);
         if (existingUser) {
             return res.status(400).json({message: "Username already exists"})
         }
@@ -44,7 +45,7 @@ const login = async(req, res) => {
     const { username, password } = req.body;
 
     try {
-        const user = await getUserByUsername(username);
+        const user = await User.getUserByUsername(username);
         if (!user) {
             return res.status(400).json({message: "Invalid credentials"})
         }
