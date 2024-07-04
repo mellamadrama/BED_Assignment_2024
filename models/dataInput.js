@@ -118,18 +118,18 @@ class DataInputs {
     }
 
     //update
-    static async updateCatDataInput(userId, catId, dataId, weekName, updatedData) {
+    static async updateCatDataInput(weekName, catId, userId, dataId, updatedData) {
         const connection = await sql.connect(dbConfig);
     
         const sqlQuery = `UPDATE CatDataInput 
                             SET info = @info, amount = @amount, dateInput = @dateInput
-                            WHERE dataId = @dataId AND catId = @catId AND weekName = @weekName AND userId = @userId`;
+                            WHERE weekName = @weekName AND catId = @catId AND userId = @userId AND dataId = @dataId`;
     
         const request = connection.request();
-        request.input("userId", userId);
-        request.input("catId", catId);
-        request.input("dataId", dataId);
         request.input("weekName", weekName);
+        request.input("catId", catId);
+        request.input("userId", userId);
+        request.input("dataId", dataId);
         request.input("info", updatedData.info);
         request.input("amount", updatedData.amount);
         request.input("dateInput", updatedData.dateInput);

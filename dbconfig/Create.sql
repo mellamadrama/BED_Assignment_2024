@@ -100,10 +100,10 @@ VALUES
   ('Week-1', '4', 'Acc0000009');
 
 CREATE TABLE CatDataInput (
-  dataId char(10),
-  catId char(1),
   weekName VARCHAR(100),
+  catId char(1),
   userId char(10),
+  dataId char(10),
   info VARCHAR(200) NOT NULL,
   amount VARCHAR(200) NOT NULL,
   dateInput VARCHAR(100) NOT NULL,

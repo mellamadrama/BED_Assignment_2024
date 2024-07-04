@@ -15,7 +15,7 @@ const dbConfig = require("./dbConfig");
 const bodyParser = require("body-parser");
 
 const { validateWeek, validateUpdateWeekName } = require('./middlewares/validateWeek');
-const validateDataInput = require('./middlewares/validateDataInput');
+const { validateDataInput, validateDataInputs } = require('./middlewares/validateDataInput');
 const validateLocation = require('./middlewares/validateLocation');
 const validateLogin = require("./middlewares/validateLogin");
 const validateAdminLogin = require("./middlewares/validateAdminLogin")
@@ -49,11 +49,11 @@ app.delete('/weeks/:weekName/:catId/:userId', weekController.deleteWeekAndData);
 
 // datainput
 app.get("/datainput", dataInputController.getAllCatDataInput);
-app.get("/datainput/:dataId/:catId/:weekName/:userId", dataInputController.getCatDataInputByIds);
+app.get("/datainput/:weekName/:catId/:userId/:dataId", dataInputController.getCatDataInputByIds);
 app.get("/datainput/:weekName/:catId/:userId", dataInputController.getCatDataInputById);
 app.post("/datainput", validateDataInput, dataInputController.createDataInput);
-app.put("/datainput/:dataId/:catId/:weekName/:userId", validateDataInput, dataInputController.updateCatDataInput);
-app.delete('/datainput/:userId/:catId/:dataId/:weekName', dataInputController.deleteCatDataInput);
+app.put("/datainput/:weekName/:catId/:userId/:dataId", validateDataInputs, dataInputController.updateCatDataInput);
+app.delete('/datainput/:weekName/:catId/:userId/:dataId', dataInputController.deleteCatDataInput);
 
 // locations
 app.get("/locations", locationController.getAllLocations);

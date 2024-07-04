@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>SustainableMe</title>
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="viewport" content="width=device-width">
+</head>
+<body class="bg-[#f3e1c9] h-screen items-center">
+    <header class="bg-[#baab76] text-center py-4 shadow-md">
+        <h1 class="text-3xl font-bold text-[#493d2c] pb-4 border-b-2 border-black">SustainableMe</h1>
+        <div class="flex justify-around mt-6">
+            <div class="nav-item"><a href="categoryscreen.html" class="font-semibold hover:underline">Eco Tracker</a></div>
+            <div class="nav-item"><a href="sustainableShopping.html" class="hover:underline">Sustainable Shopping</a></div>
+            <div class="nav-item"><a href="weeklychallenge.html" class="hover:underline">Weekly Challenge</a></div>
+            <div class="nav-item"><a href="account.html" class="hover:underline">Account</a></div>
+        </div>
+    </header>
+    <div class="text-center mt-12">
+        <div class="flex flex-wrap justify-center p-4">
+            <button id="back-button" class="text-4xl ml-20 mb-12 cursor-pointer">&#8592;</button>
+            <h1 id="title" class="flex-grow text-4xl text-brown-800 mb-12 font-semibold mr-28">Week</h1>
+        </div>
+        <div class="flex flex-wrap justify-center gap-8 mb-8">
+            <button id="update-data" class="bg-[#baab76] font-semibold text-brown-800 px-4 w-48 text-center border-4 border-[#493d2c] rounded-[20px] shadow-[0_0_0_4px_#baab76] hover:bg-[#f3e1c9] transition duration-300 ease-in-out">Update Data</button>
+            <button id="delete-data" class="bg-[#baab76] font-semibold text-brown-800 px-4 w-48 text-center border-4 border-[#493d2c] rounded-[20px] shadow-[0_0_0_4px_#baab76] hover:bg-[#f3e1c9] transition duration-300 ease-in-out">Delete Data</button>
+        </div>
+        <div id="datainputcontainer" class="flex flex-col">
+            <div id="datainput" class="bg-[#807558] rounded-lg p-4 mb-4 max-w-fill mx-auto text-left">
+                <p id="datainfo" class="text-lg">Info: ......</p>
+                <p id="dataamt" class="text-lg">Amt: ......</p>
+                <p id="datadate" class="text-lg">Date: ......</p>
+            </div>
+        </div>
+        <div id="updatedata" class="bg-grey rounded-lg p-4 mb-4 max-w-md mx-auto hidden">
+            <div class="bg-[#807558] rounded-lg p-4 mb-4 max-w-md mx-auto">
+                <div class="mb-2">
+                    <label class="block text-lg" for="info">Info:</label>
+                    <input class="w-full py-2 px-4 rounded-lg bg-[#e4d7c6] text-black" type="text" id="info" name="info">
+                </div>
+                <div class="mb-2">
+                    <label class="block text-lg" for="amount">Amount:</label>
+                    <input class="w-full py-2 px-4 rounded-lg bg-[#e4d7c6] text-black" type="text" id="amount" name="amount">
+                </div>
+                <div class="mb-2">
+                    <label class="block text-lg" for="date">Date:</label>
+                    <input class="w-full py-2 px-4 rounded-lg bg-[#e4d7c6] text-black" type="text" id="date" name="date">
+                </div>
+            </div>
+            <div class="flex justify-center mt-10">
+                <a id="updatebtn" href="week.html" class="bg-[#baab76] mb-20 font-semibold text-brown-800 px-4 w-48 text-center border-4 border-[#493d2c] rounded-[20px] bg-[#baab76] shadow-[0_0_0_4px_#baab76] hover:bg-[#f3e1c9] transition duration-300 ease-in-out">Update Data</a>
+            </div>
+        </div>
+    </div>
+ 
+    <!-- This is the JavaScript-->
+    <script src="js_files/tracker.js"></script>
+</body>
+</html>
