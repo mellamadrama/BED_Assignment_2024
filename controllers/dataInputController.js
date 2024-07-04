@@ -11,12 +11,12 @@ const getAllCatDataInput = async (req, res) => {
   };
   
   const getCatDataInputByIds = async (req, res) => {
+    const weekName = req.params.weekName;
     const catId = req.params.catId;
     const userId = req.params.userId;
     const dataId = req.params.dataId;
-    const weekName = req.params.weekName;
     try {
-      const catDataInput = await DataInput.getCatDataInputByIds(userId, catId, dataId, weekName);
+      const catDataInput = await DataInput.getCatDataInputByIds(weekName, catId, userId, dataId);
       if (!catDataInput) {
         return res.status(404).send("Data not found");
       }

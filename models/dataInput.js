@@ -2,11 +2,11 @@ const sql = require("mssql");
 const dbConfig = require("../dbConfig");
 
 class DataInputs {
-    constructor(userId, catId, dataId, weekName, info, amount, dateInput) {
-        this.userId = userId;
-        this.catId = catId;
-        this.dataId = dataId;
+    constructor(weekName, catId, userId, dataId, info, amount, dateInput) {
         this.weekName = weekName;
+        this.catId = catId;
+        this.userId = userId;
+        this.dataId = dataId;
         this.info = info;
         this.amount = amount;
         this.dateInput = dateInput;
@@ -24,7 +24,7 @@ class DataInputs {
         connection.close();
 
         return result.recordset.map(
-          (row) => new DataInputs(row.userId, row.catId, row.dataId, row.weekName, row.info, row.amount, row.dateInput)
+          (row) => new DataInputs(row.weekName, row.catId, row.userId, row.dataId, row.info, row.amount, row.dateInput)
         );
     }
 
@@ -68,40 +68,27 @@ class DataInputs {
     //create
     static async createDataInput(newCatDataInput) {
         const connection = await sql.connect(dbConfig);
-        console.log('1');
     
         const sqlQueryCheck = `SELECT * FROM CatDataInput WHERE dataId = @dataId`;
-        console.log('2');
     
         const sqlQueryLastDataId = `SELECT TOP 1 dataId FROM CatDataInput ORDER BY dataId DESC`;
-        console.log('3');
         const requestLastDataId = connection.request();
-        console.log('4');
         const resultLastDataId = await requestLastDataId.query(sqlQueryLastDataId);
-        console.log('5');
 
         let newDataId;
-        console.log('6');
         if (resultLastDataId.recordset.length > 0) {
-            console.log('7');
             const lastDataId = resultLastDataId.recordset[0].dataId;
-            console.log('8');
             const lastIdNumber = parseInt(lastDataId.slice(2));
-            console.log('9');
             newDataId = `CD${String(lastIdNumber + 1).padStart(8, '0')}`;
-            console.log('10');
         } else {
-            console.log('11');
             newDataId = 'CD00000001';
-            console.log('12');
         }
 
-        console.log('13');
         const sqlQueryInsert = `INSERT INTO CatDataInput (weekName, catId, dataId, userId, info, amount, dateInput) 
                                 VALUES (@weekName, @catId, @dataId, @userId, @info, @amount, @dateInput)`;
         
         const request = connection.request();
-        console.log('14');
+
         request.input("weekName", newCatDataInput.weekName);
         request.input("catId", newCatDataInput.catId);
         request.input("userId", newCatDataInput.userId);
@@ -109,23 +96,16 @@ class DataInputs {
         request.input("info", newCatDataInput.info);
         request.input("amount", newCatDataInput.amount);
         request.input("dateInput", newCatDataInput.dateInput);
-        console.log(newCatDataInput);
-        console.log('15');
     
         const resultCheck = await request.query(sqlQueryCheck);
-        console.log('16');
         const resultInsert = await request.query(sqlQueryInsert);
-        console.log('17');
     
         connection.close();
-        console.log('18');
 
         if (resultCheck.recordset.length != 0) {
-            console.log('19');
             throw new Error('Matching CatWeek entry found for the provided dataId');
         }
 
-        console.log('20');
         return this.getCatDataInputByIds(
             newCatDataInput.weekName,
             newCatDataInput.catId,
@@ -135,7 +115,6 @@ class DataInputs {
             newCatDataInput.amount,
             newCatDataInput.dateInput
         );
-        console.log('21');
     }
 
     //update

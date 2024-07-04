@@ -136,7 +136,7 @@ function displayDataInputs(datainputcontainer) {
         if (datainputcontainer.length > 0) {
             datainputcontainer.forEach(datainput => {
                 const datainputElement = document.createElement('datainput');
-                datainputElement.className = "bg-[#807558] rounded-lg p-4 mb-4 max-w-fit mx-auto text-left";
+                datainputElement.className = "bg-[#807558] rounded-lg p-4 mb-4 max-w-fit mx-auto text-left shadow-[0_0_0_4px_#baab76] hover:bg-[#f3e1c9] transition duration-300 ease-in-out cursor-pointer";
                 datainputElement.innerHTML = `
                     <p id="datainfo" class="text-lg">Info:  ${datainput.info}</p>
                     <p id="dataamt" class="text-lg">Amt:    ${datainput.amount}</p>
