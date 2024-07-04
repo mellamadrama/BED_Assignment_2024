@@ -46,12 +46,12 @@ const getAllCatDataInput = async (req, res) => {
   
   const createDataInput = async (req, res) => {
     const newCatDataInput = {
-        weekName: req.body,
-        catId: req.body,
-        userId: req.body,
-        info: req.body,
-        amount: req.body,
-        dateInput: req.body
+        weekName: req.body.weekName,
+        catId: req.body.catId,
+        userId: req.body.userId,
+        info: req.body.info,
+        amount: req.body.amount,
+        dateInput: req.body.dateInput
     };
     try {
         const createdCatDataInput = await DataInput.createDataInput(newCatDataInput);
