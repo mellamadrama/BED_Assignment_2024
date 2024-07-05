@@ -30,6 +30,16 @@ document.addEventListener("DOMContentLoaded", async function() {
 
     // Add event listeners for the update and delete buttons
     //document.getElementById('delete-data').addEventListener('click', handleDeleteDataInput);
+    //delete button
+    const deleteButton = document.getElementById('delete-data');
+    if (deleteButton) {
+        deleteButton.addEventListener('click', function() {
+            if (confirm('Are you sure you want to delete this data input?')) {
+                // Handle delete data input process
+                handleDeleteDataInput();
+            }
+        });
+    }
 
     //update button
     const updateButton = document.getElementById('update-data');
@@ -114,12 +124,37 @@ async function updateDataInput(info, amount, dateInput) {
         if (res.ok) {
             const data = await res.json();
             console.log('Data updated successfully:', data);
-            displayDataInput(data);
+            displayDataInput(data[0]);
+            alert('Data updated successfully');
             document.getElementById('updatedata').classList.add('hidden');
         } else {
             console.error('Error updating data:', await res.text());
         }
     } catch (err) {
         console.error('Error updating data:', err);
+    }
+}
+
+// Handle delete data input process
+async function handleDeleteDataInput() {
+    const weekName = localStorage.getItem('weekName');
+    const catId = localStorage.getItem('catId');
+    const userId = localStorage.getItem('userId');
+    const dataId = localStorage.getItem('dataId');
+
+    try {
+        const res = await fetch(`/datainput/${weekName}/${catId}/${userId}/${dataId}`, {
+            method: 'DELETE'
+        });
+        if (res.ok) {
+            alert('Data input deleted successfully');
+            window.location.href = `week.html?weekName=${weekName}&catId=${catId}&userId=${userId}`;
+        } else {
+            const errorMessage = await response.text();
+            console.error(`Error deleting data input: ${errorMessage}`);
+        }
+    } catch (err) {
+        console.error('Error:', error);
+            alert('An error occurred while deleting the week');
     }
 }

@@ -114,12 +114,11 @@ const getAllCatDataInput = async (req, res) => {
         return res.status(404).send("Data not found");
       }
       else {
-        res.status(200).send("Data deleted successfully");
+        return res.status(200).send("Data deleted successfully");
       }
-      res.status(204).send();
     } catch (error) {
       console.error(error);
-      res.status(500).send("Error deleting data");
+      return res.status(500).send("Error deleting data");
     }
   };
 
