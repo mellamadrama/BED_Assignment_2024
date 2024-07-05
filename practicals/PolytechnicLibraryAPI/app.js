@@ -9,6 +9,7 @@ const bodyParser = require("body-parser");
 const validateBook = require("./middlewares/validateBook");
 const validateUser = require("./middlewares/validateUser");
 const validateLogin = require("./middlewares/validateLogin");
+const verifyJWT = require("./middlewares/verifyJWT");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -25,7 +26,7 @@ app.put("/books/:bookId/availability", validateBook, bookController.updateBook);
 
 //user
 app.post("/register", validateUser, authController.registerUser);
-app.post("/login", validateLogin, authController.login);
+app.post("/login", validateLogin, verifyJWT, authController.login);
 
 app.listen(port, async () => {
     try {
