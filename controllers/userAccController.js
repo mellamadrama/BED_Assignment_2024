@@ -33,9 +33,10 @@ const getAllUsersById = async (req, res) => {
 const updateUsername = async (req, res) => {
     const userId = req.params.userId;
     const username = req.params.username;
+    const newUsername = req.body.newUsername;
 
     try {
-        const updatedUsername = await User.updateUsername(userId, username);
+        const updatedUsername = await User.updateUsername(userId, username, newUsername);
         if (!updatedUsername) {
             return res.status(404).send("Data not found");
         }
@@ -97,11 +98,28 @@ const updateEmail = async (req, res) => {
     }
 };
 
+const updatePassword = async (req, res) => {
+    const userId = req.params.userId;
+    const password = req.params.password;
+    const newPassword = req.body.newPassword;
+
+    try {
+        const updatedPassword = await User.updatePassword(userId, password, newPassword);
+        if (!updatedPassword) {
+            return res.status(404).send("Data not found");
+        }
+        res.json(updatedPassword);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error updating password");
+    }
+};
 module.exports = {
     getAllUsers,
     getAllUsersById,
     updateUsername,
     updateFirstname,
     updateLastname,
-    updateEmail
+    updateEmail,
+    updatePassword
 };

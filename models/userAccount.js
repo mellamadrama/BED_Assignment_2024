@@ -60,33 +60,6 @@ class User {
         }
     }
 
-
-    // //update user account details
-    // static async updateUserAccount(userId, newUserData) {
-    //     const connection = await sql.connect(dbConfig);
-
-    //     const sqlQuery = `
-    //     UPDATE Account
-    //     SET username = @username, firstName = @firstName, lastName = @lastName, email = @email, password = @password
-    //     WHERE accId = @userId;
-    //     `;
-
-    //     const request = connection.request();
-
-    //     request.input("userId", userId); 
-    //     request.input("username", newUserData.username);
-    //     request.input("firstName", newUserData.firstName);
-    //     request.input("lastName", newUserData.lastName );
-    //     request.input("email", newUserData.email || null);
-    //     request.input("password", newUserData.password || null);
-
-    //     const result = await request.query(sqlQuery);
-
-    //     connection.close();
-        
-    //     return result.getAllUsersById(userId);
-    // }
-
     static async updateUsername(userId, username) {
         const connection = await sql.connect(dbConfig);
 
@@ -154,6 +127,25 @@ class User {
 
         const request = connection.request();
         request.input("email", email);
+        request.input("userId", userId)
+        
+        await request.query(sqlQuery);
+
+        connection.close();
+
+        return this.getAllUsersById(userId);
+    }
+    
+    static async updatePassword(userId, password) {
+        const connection = await sql.connect(dbConfig);
+
+        const sqlQuery = `
+        UPDATE Account
+        SET password = @password
+        WHERE accId = @userId`;
+
+        const request = connection.request();
+        request.input("password", password);
         request.input("userId", userId)
         
         await request.query(sqlQuery);

@@ -1,12 +1,11 @@
-// show user details
 document.addEventListener('DOMContentLoaded', async function () {
+
   // retrieve userId from localStorage
   const userId = localStorage.getItem('userId');
   if (!userId) {
       console.error('No userId found in localStorage');
       return;
   }
-
   try {
       const response = await fetch(`/getuser/${userId}`);
       if (!response.ok) {
@@ -23,33 +22,49 @@ document.addEventListener('DOMContentLoaded', async function () {
   } catch (error) {
       console.error('Error fetching user data:', error);
   }
+
+
+  // add event listeners for delete button
+  const deleteBtn = document.getElementById('deleteAccountBtn');
+  if (deleteBtn) {
+    deleteBtn.addEventListener('click', function() {
+      document.getElementById('deleteModal').classList.remove('hidden');
+    });
+  }
+
+  // add event listener for close modal button
+  const closeBtn = document.getElementById('closeBtn');
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function() {
+      document.getElementById('deleteModal').classList.add('hidden');
+    });
+  }
+
+  // add event listeners for delete btn
+  const comfirmDeleteBtn = document.getElementById('comfirmDeleteBtn');
+  if (comfirmDeleteBtn) {
+    comfirmDeleteBtn.addEventListener('click', function() {
+
+      // in progress
+      alert('Account deleted! ');
+      document.getElementById('deleteModal').classList.add('hidden');
+      window.location.href = 'index.html';
+    });
+  }
+
+  // add event listeners for log out
+  const logoutBtn = document.getElementById('logoutBtn');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', function() {
+      alert('Logging out')
+      localStorage.removeItem('userId');
+      window.location.href = 'index.html';
+    })
+    
+  }
+
 });
 
-// for delete modal + btn
-document.getElementById('deleteAccountBtn').addEventListener('click', function () {
-  document.getElementById('deleteModal').classList.remove('hidden');
-});
-
-document.getElementById('closeBtn').addEventListener('click', function () {
-  document.getElementById('deleteModal').classList.add('hidden');
-});
-
-document.getElementById('confirmDeleteBtn').addEventListener('click', function () {
-  // in progress
-  alert('Account deleted!');
-  document.getElementById('deleteModal').classList.add('hidden');
-  window.location.href = 'index.html'
-});
-
-// log out of account
-// function logout() {
-//   localStorage.removeItem('userId');
-//   window.location.href = 'index.html'; 
-// }
-
-// document.getElementById('logoutBtn').addEventListener('click', function() {
-//   logout();
-// });
 
 // update first name
 document.getElementById('updateFirstname').addEventListener('submit', async function(event) {
@@ -155,6 +170,80 @@ document.getElementById('updateEmail').addEventListener('submit', async function
     } else {
       const errorMessage = await response.text();
       alert(`Failed to update email address: ${errorMessage}`)
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    alert('An error occured.')
+  }
+});
+
+// update password
+document.getElementById('updatePassword').addEventListener('submit', async function(event) {
+  event.preventDefault();
+
+  const userId = localStorage.getItem('userId');
+  const password = document.getElementById('password').value;
+
+  if (!newPassword) {
+    alert('Please enter a new password');
+    return;
+  }
+
+  try {
+    const response = await fetch(`/updatepassword/${password}/${userId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type' : 'application/json'
+      },
+      body: JSON.stringify({
+        password, userId, newPassword
+      })
+    });
+
+    if (response.ok) {
+      alert('Password successfully updated!');
+      localStorage.setItem('password', newPassword);
+      updatePassword(newPassword);
+    } else {
+      const errorMessage = await response.text();
+      alert(`Failed to update password: ${errorMessage}`)
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    alert('An error occured.')
+  }
+});
+
+// update username
+document.getElementById('updateUsername').addEventListener('submit', async function(event) {
+  event.preventDefault();
+
+  const userId = localStorage.getItem('userId');
+  const username = document.getElementById('username').value;
+
+  if (!newUsername) {
+    alert('Please enter a new username');
+    return;
+  }
+
+  try {
+    const response = await fetch(`/updateusername/${username}/${userId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type' : 'application/json'
+      },
+      body: JSON.stringify({
+        username, userId, newUsername
+      })
+    });
+
+    if (response.ok) {
+      alert('Username successfully updated!');
+      localStorage.setItem('username', username);
+      updateUsername(username);
+    } else {
+      const errorMessage = await response.text();
+      alert(`Failed to update username: ${errorMessage}`)
     }
   } catch (error) {
     console.error('Error:', error);
