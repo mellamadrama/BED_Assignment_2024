@@ -61,38 +61,106 @@ class User {
     }
 
 
-    //update user account details
-    static async updateUserAccount(userId, newUserData) {
+    // //update user account details
+    // static async updateUserAccount(userId, newUserData) {
+    //     const connection = await sql.connect(dbConfig);
+
+    //     const sqlQuery = `
+    //     UPDATE Account
+    //     SET username = @username, firstName = @firstName, lastName = @lastName, email = @email, password = @password
+    //     WHERE accId = @userId;
+    //     `;
+
+    //     const request = connection.request();
+
+    //     request.input("userId", userId); 
+    //     request.input("username", newUserData.username);
+    //     request.input("firstName", newUserData.firstName);
+    //     request.input("lastName", newUserData.lastName );
+    //     request.input("email", newUserData.email || null);
+    //     request.input("password", newUserData.password || null);
+
+    //     const result = await request.query(sqlQuery);
+
+    //     connection.close();
+        
+    //     return result.getAllUsersById(userId);
+    // }
+
+    static async updateUsername(userId, username) {
         const connection = await sql.connect(dbConfig);
 
         const sqlQuery = `
-        UPDATE MonthlyPoints
-        SET username = @username
-        WHERE username = (SELECT username FROM Account WHERE accId = @userId);
-
-        UPDATE WeeklyPoints
-        SET username = @username
-        WHERE username = (SELECT username FROM Account WHERE accId = @userId);
-
         UPDATE Account
-        SET username = @username, firstName = @firstName, lastName = @lastName, email = @email, password = @password
-        WHERE accId = @userId;
-        `;
+        SET username = @username
+        WHERE accId = @userId`;
 
         const request = connection.request();
-
-        request.input("userId", userId); 
-        request.input("username", newUserData.username || null);
-        request.input("firstName", newUserData.firstName || null);
-        request.input("lastName", newUserData.lastName || null);
-        request.input("email", newUserData.email || null);
-        request.input("password", newUserData.password || null);
-
-        const result = await request.query(sqlQuery);
+        request.input("username", username);
+        request.input("userId", userId)
+        
+        await request.query(sqlQuery);
 
         connection.close();
+
+        return this.getAllUsersById(userId);
+    }
+
+    static async updateFirstname(userId, firstName) {
+        const connection = await sql.connect(dbConfig);
+
+        const sqlQuery = `
+        UPDATE Account
+        SET firstName = @firstName
+        WHERE accId = @userId`;
+
+        const request = connection.request();
+        request.input("firstName", firstName);
+        request.input("userId", userId)
         
-        return result.getAllUsersById(userId);
+        await request.query(sqlQuery);
+
+        connection.close();
+
+        return this.getAllUsersById(userId);
+    }
+
+    static async updateLastname(userId, lastName) {
+        const connection = await sql.connect(dbConfig);
+
+        const sqlQuery = `
+        UPDATE Account
+        SET lastName = @lastName
+        WHERE accId = @userId`;
+
+        const request = connection.request();
+        request.input("lastName", lastName);
+        request.input("userId", userId)
+        
+        await request.query(sqlQuery);
+
+        connection.close();
+
+        return this.getAllUsersById(userId);
+    }
+
+    static async updateEmail(userId, email) {
+        const connection = await sql.connect(dbConfig);
+
+        const sqlQuery = `
+        UPDATE Account
+        SET email = @email
+        WHERE accId = @userId`;
+
+        const request = connection.request();
+        request.input("email", email);
+        request.input("userId", userId)
+        
+        await request.query(sqlQuery);
+
+        connection.close();
+
+        return this.getAllUsersById(userId);
     }
 }
 
