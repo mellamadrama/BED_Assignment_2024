@@ -77,7 +77,7 @@ app.put("/userweeklypoints/:userId", weeklyPointsController.getUserWeeklyPoints)
 app.put("/usermonthlypoints/:userId", monthlyPointsController.getUserMonthlyPoints);
 
 // account
-app.get("/getuser", userAccController.getAllUsersById);
+app.get("/getuser", userAccController.getAllUsers);
 app.get("/getuser/:userId", userAccController.getAllUsersById);
 app.put("/updateusername/:username/:userId", userAccController.updateUsername);
 app.put("/updatefirstname/:firstName/:userId", userAccController.updateFirstname);

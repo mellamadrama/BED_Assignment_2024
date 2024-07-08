@@ -4,7 +4,6 @@ const dbConfig = require("../dbConfig");
 class MonthlyPoints {
     constructor(userId, username, userMonthlyPoints) {
         this.userId = userId;
-        this.username = username;
         this.userMonthlyPoints = userMonthlyPoints;
     }
 
@@ -56,7 +55,6 @@ class MonthlyPoints {
         return result.recordset[0]
             ? new Points(
                 result.recordset[0].userId,
-                result.recordset[0].username,
                 result.recordset[0].userMonthlyPoints
             )
             : null;

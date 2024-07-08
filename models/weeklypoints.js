@@ -2,9 +2,8 @@ const sql = require("mssql");
 const dbConfig = require("../dbConfig");
 
 class WeeklyPoints {
-    constructor(userId, username, userWeeklyPoints) {
+    constructor(userId, userWeeklyPoints) {
         this.userId = userId;
-        this.username = username;
         this.userWeeklyPoints = userWeeklyPoints;
     }
 
@@ -19,7 +18,7 @@ class WeeklyPoints {
         connection.close();
 
         return result.recordset.map(
-            (row) => new WeeklyPoints(row.userId, row.username, row.userWeeklyPoints)
+            (row) => new WeeklyPoints(row.userId, row.userWeeklyPoints)
         );
     }
 
@@ -56,7 +55,6 @@ class WeeklyPoints {
         return result.recordset[0]
             ? new WeeklyPoints(
                 result.recordset[0].userId,
-                result.recordset[0].username,
                 result.recordset[0].userWeeklyPoints
             )
             : null;
