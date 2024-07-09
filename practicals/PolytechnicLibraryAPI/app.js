@@ -1,6 +1,8 @@
 const express = require("express");
 const bookController = require("./controllers/bookController");
 const authController = require("./controllers/authController");
+const swaggerUI = require("swagger-ui-express");
+const swaggerDocument = require("./swagger-output.json");
 
 const sql = require("mssql");
 const dbConfig = require("./dbConfig");
@@ -15,6 +17,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 const staticMiddleware = express.static("public");
 
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
