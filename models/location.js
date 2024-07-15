@@ -92,12 +92,12 @@ class Location {
 
     static async updateLocation(id, newLocationReqData) {
         const connection = await sql.connect(dbConfig);
-
-        const sqlQuery = `UPDATE LocationReq SET name = @name, address = @address, status = @status, websiteLink = @websiteLink, userId = @userId, adminId = @adminId WHERE locationReqId = @locationReqId`; // Parameterized query
-
+    
+        const sqlQuery = `UPDATE LocationReq SET name = @name, address = @address, status = @status, websiteLink = @websiteLink, userId = @userId, adminId = @adminId WHERE locationReqId = @locationReqId`;
+        
         const request = connection.request();
         request.input("locationReqId", id);
-        request.input("name", newLocationReqData.name || null); // Handle optional fields
+        request.input("name", newLocationReqData.name || null);
         request.input("address", newLocationReqData.address || null);
         request.input("status", newLocationReqData.status || null);
         request.input("websiteLink", newLocationReqData.websiteLink || null);
@@ -109,7 +109,9 @@ class Location {
         connection.close();
 
         return this.getLocationById(id); // Returning the updated location data
-    }
+        
+    }    
+    
 
     static async deleteLocation(id) {
         const connection = await sql.connect(dbConfig);

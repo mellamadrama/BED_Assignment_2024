@@ -11,7 +11,7 @@ async function fetchLocationRequests() {
         data.forEach((location) => {
             const locationItem = document.createElement("tr");
             locationItem.classList.add("bg-[#908660]", "border-t", "border-gray-200");
-            
+
             const locationIdElement = document.createElement("td");
             locationIdElement.textContent = location.locationReqId;
             locationIdElement.classList.add("px-6", "py-4", "whitespace-nowrap", "text-sm", "text-gray-900", "border", "border-gray-200");
@@ -42,7 +42,7 @@ async function fetchLocationRequests() {
 
             const locationUpdateElement = document.createElement("td");
             const updateLink = document.createElement("a");
-            updateLink.href = `../adminApproveLocation.html`;
+            updateLink.href = `../adminApproveLocation.html?locationReqId=${location.locationReqId}`;
             updateLink.textContent = `Update`;
             updateLink.classList.add("underline");
             locationUpdateElement.appendChild(updateLink);

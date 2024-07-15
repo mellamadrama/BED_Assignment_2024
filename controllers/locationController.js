@@ -11,18 +11,21 @@ const getAllLocations = async (req, res) => {
 };
 
 const getLocationById = async(req, res) => {
-    const locationId = parseInt(req.params.id);
+    const locationReqId = req.params.locationReqId;
+    console.log("Received locationReqId:", locationReqId); // Debugging
+
     try {
-        const location = await Location.getLocationById(locationId);
+        const location = await Location.getLocationById(locationReqId);
         if (!location) {
             return res.status(404).send("Location not found");
         }
         res.json(location);
     } catch (error) {
-        console.error(error);
-    res.status(500).send("Error retrieving location");
+        console.error("Error retrieving location:", error); // Debugging
+        res.status(500).send("Error retrieving location");
     }
 };
+
 
 const createLocation = async (req, res) => {
     const locationName = req.body.name;
@@ -52,23 +55,22 @@ const createLocation = async (req, res) => {
     }
 };
 
-const updateLocation = async(req, res) => {
-    const locationId = parseInt(req.params.id);
+const updateLocation = async (req, res) => {
+    const locationReqId = req.params.locationReqId;
     const newLocationReqData = req.body;
 
     try {
-        const updatedLocation = await Location.updateLocation(locationId, newLocationReqData);
+        const updatedLocation = await Location.updateLocation(locationReqId, newLocationReqData);
         if (!updatedLocation) {
             return res.status(404).send("Location not found");
         }
         res.json(updatedLocation);
-        const success = res.sendFile(__dirname + '/adminLocationRequest.html');
-        res.redirect(success);
     } catch (error) {
-        console.error(error);
+        console.error("Error updating location:", error);
         res.status(500).send("Error updating location");
     }
 };
+
 
 const deleteLocation = async(req, res) => {
     const locationId = parseInt(req.params.id);
