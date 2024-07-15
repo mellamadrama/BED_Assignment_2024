@@ -19,6 +19,12 @@ document.addEventListener('DOMContentLoaded', async function () {
       document.getElementById('viewfirstname').textContent = `${getUser.firstName}`;
       document.getElementById('viewlastname').textContent = `${getUser.lastName}`;
       document.getElementById('viewemail').textContent = `${getUser.email}`;
+
+      document.getElementById('firstName').value = getUser.firstName;
+      document.getElementById('lastName').value = getUser.lastName;
+      document.getElementById('username').value = getUser.username;
+      document.getElementById('email').value = getUser.email;
+      document.getElementById('password').value = getUser.password;
   } catch (error) {
       console.error('Error fetching user data:', error);
   }
@@ -69,12 +75,16 @@ document.getElementById('profileForm').addEventListener('submit', async function
   event.preventDefault();
   
   const userId = localStorage.getItem('userId');
+
+  if (!userId) {
+    console.error('No userId found in localStorage');
+    return;
+  }
   const firstName = document.getElementById('firstName').value;
   const lastName = document.getElementById('lastName').value;
   const username = document.getElementById('username').value;
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
-
   const newUserData = { firstName, lastName, username, email, password };
 
   if (!newUserData.username || !newUserData.email || !newUserData.firstName || !newUserData.lastName || !newUserData.password) {
