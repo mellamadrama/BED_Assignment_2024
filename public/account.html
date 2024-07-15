@@ -55,23 +55,19 @@
                 </div>
 
                 <form id="profileForm" class="space-y-4">
-                    <form id="firstnameForm">
-                        <!-- input first name -->
-                        <div>
-                            <label for="firstName" class="block text-sm font-medium text-gray-700">First name</label>
-                            <div class="flex mt-1">
-                            <input type="text" id="firstName" class="block w-full p-2 border border-gray-300 rounded-md">
-                            <button type="submit" class="bg-[#f3e1c9] text-black p-2 rounded-md ml-2" id="updateFirstname">Update</button>
-                            </div>
+                    <!-- input first name -->
+                    <div>
+                        <label for="firstName" class="block text-sm font-medium text-gray-700">First name</label>
+                        <div class="flex mt-1">
+                        <input type="text" id="firstName" class="block w-full p-2 border border-gray-300 rounded-md">
                         </div>
-                      </form>
+                    </div>
                       
                     <!-- input last name -->
                     <div>
                         <label for="lastName" class="block text-sm font-medium text-gray-700">Last name</label>
                         <div class="flex mt-1">
                           <input type="text" id="lastName" class="block w-full p-2 border border-gray-300 rounded-md">
-                          <button type="submit" class="bg-[#f3e1c9] text-black p-2 rounded-md ml-2" id="updateLastname">Update</button>
                         </div>
                     </div>
                     <!-- input username -->
@@ -80,7 +76,6 @@
                         <div class="mt-1 flex rounded-md shadow-sm mt-1">
                             <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">@</span>
                             <input type="text" id="username" class="flex-1 min-w-0 block w-full px-3 py-2 border border-gray-300 rounded-none rounded-r-md sm:text-sm">
-                            <button type="submit" class="bg-[#f3e1c9] text-black p-2 rounded-md ml-2" id="updateUsername">Update</button>
                         </div>
                     </div>
                     <!-- input email -->
@@ -88,7 +83,6 @@
                         <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
                         <div class="flex mt-1">
                             <input type="email" id="email" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
-                            <button type="submit" class="bg-[#f3e1c9] text-black p-2 rounded-md ml-2" id="updateEmail">Update</button>
                         </div>
                     </div>
                     <!-- input password -->
@@ -96,9 +90,13 @@
                         <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
                         <div class="flex mt-1">
                             <input type="password" id="password" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
-                            <button type="submit" class="bg-[#f3e1c9] text-black p-2 rounded-md ml-2" id="updatePassword">Update</button>
                         </div>
                     </div>
+
+                <!-- update user account -->
+                <div class="mt-4 text-center">
+                    <button type="submit" class="bg-[#f3e1c9] text-black p-2 rounded-md ml-2" id="updateAccount">Update</button>              
+                </div>
 
                 <!-- delete account button -->
                 <div class="mt-4 text-center">

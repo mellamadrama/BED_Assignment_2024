@@ -65,191 +65,49 @@ document.addEventListener('DOMContentLoaded', async function () {
 
 });
 
-
-// update first name
-document.getElementById('updateFirstname').addEventListener('submit', async function(event) {
+document.getElementById('profileForm').addEventListener('submit', async function(event) {
   event.preventDefault();
-
+  
   const userId = localStorage.getItem('userId');
   const firstName = document.getElementById('firstName').value;
-
-  if (!newFirstname) {
-    alert('Please enter a new first name');
-    return;
-  }
-
-  try {
-    const response = await fetch(`/updatefirstname/${firstName}/${userId}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type' : 'application/json'
-      },
-      body: JSON.stringify({
-        firstName, userId, newFirstname
-      })
-    });
-
-    if (response.ok) {
-      alert('First name successfully updated!');
-      localStorage.setItem('firstName', newFirstname);
-      updateFirstname(newFirstname);
-    } else {
-      const errorMessage = await response.text();
-      alert(`Failed to update first name: ${errorMessage}`)
-    }
-  } catch (error) {
-    console.error('Error:', error);
-    alert('An error occured.')
-  }
-});
-
-// update last name
-document.getElementById('updateLastname').addEventListener('submit', async function(event) {
-  event.preventDefault();
-
-  const userId = localStorage.getItem('userId');
   const lastName = document.getElementById('lastName').value;
-
-  if (!newLastname) {
-    alert('Please enter a new last name');
-    return;
-  }
-
-  try {
-    const response = await fetch(`/updatelastname/${lastName}/${userId}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type' : 'application/json'
-      },
-      body: JSON.stringify({
-        lastName, userId, newLastname
-      })
-    });
-
-    if (response.ok) {
-      alert('Last name successfully updated!');
-      localStorage.setItem('lastName', newLastname);
-      updateLastname(newLastname);
-    } else {
-      const errorMessage = await response.text();
-      alert(`Failed to update last name: ${errorMessage}`)
-    }
-  } catch (error) {
-    console.error('Error:', error);
-    alert('An error occured.')
-  }
-});
-
-// update email
-document.getElementById('updateEmail').addEventListener('submit', async function(event) {
-  event.preventDefault();
-
-  const userId = localStorage.getItem('userId');
+  const username = document.getElementById('username').value;
   const email = document.getElementById('email').value;
-
-  if (!newEmail) {
-    alert('Please enter a new email');
-    return;
-  }
-
-  try {
-    const response = await fetch(`/updateemail/${email}/${userId}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type' : 'application/json'
-      },
-      body: JSON.stringify({
-        email, userId, newEmail
-      })
-    });
-
-    if (response.ok) {
-      alert('Email successfully updated!');
-      localStorage.setItem('email', newEmail);
-      updateEmail(newEmail);
-    } else {
-      const errorMessage = await response.text();
-      alert(`Failed to update email address: ${errorMessage}`)
-    }
-  } catch (error) {
-    console.error('Error:', error);
-    alert('An error occured.')
-  }
-});
-
-// update password
-document.getElementById('updatePassword').addEventListener('submit', async function(event) {
-  event.preventDefault();
-
-  const userId = localStorage.getItem('userId');
   const password = document.getElementById('password').value;
 
-  if (!newPassword) {
-    alert('Please enter a new password');
+  const newUserData = { firstName, lastName, username, email, password };
+
+  if (!newUserData.username || !newUserData.email || !newUserData.firstName || !newUserData.lastName || !newUserData.password) {
+    alert('Please enter updated user details');
     return;
   }
 
   try {
-    const response = await fetch(`/updatepassword/${password}/${userId}`, {
+    const response = await fetch(`/updateuser/${userId}`, {
       method: 'PUT',
       headers: {
-        'Content-Type' : 'application/json'
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        password, userId, newPassword
-      })
+      body: JSON.stringify({newUserData}),
     });
 
     if (response.ok) {
-      alert('Password successfully updated!');
-      localStorage.setItem('password', newPassword);
-      updatePassword(newPassword);
+      alert('Details Updated');
+      console.log('Details updated');
+      // update the displayed user details in the UI
+      const updatedUser = await response.json();
+      localStorage.setItem('firstName', newUserData.firstName);
+      localStorage.setItem('lastName', newUserData.lastName);
+      localStorage.setItem('email', newUserData.email);
+      localStorage.setItem('password', newUserData.password);
+      localStorage.setItem('username', newUserData.username);
+      location.reload();
     } else {
-      const errorMessage = await response.text();
-      alert(`Failed to update password: ${errorMessage}`)
+      alert('Failed to update details');
+      console.error('Failed to update details');
     }
   } catch (error) {
     console.error('Error:', error);
-    alert('An error occured.')
+    alert("An error occured")
   }
 });
-
-// update username
-document.getElementById('updateUsername').addEventListener('submit', async function(event) {
-  event.preventDefault();
-
-  const userId = localStorage.getItem('userId');
-  const username = document.getElementById('username').value;
-
-  if (!newUsername) {
-    alert('Please enter a new username');
-    return;
-  }
-
-  try {
-    const response = await fetch(`/updateusername/${username}/${userId}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type' : 'application/json'
-      },
-      body: JSON.stringify({
-        username, userId, newUsername
-      })
-    });
-
-    if (response.ok) {
-      alert('Username successfully updated!');
-      localStorage.setItem('username', username);
-      updateUsername(username);
-    } else {
-      const errorMessage = await response.text();
-      alert(`Failed to update username: ${errorMessage}`)
-    }
-  } catch (error) {
-    console.error('Error:', error);
-    alert('An error occured.')
-  }
-});
-
-
-

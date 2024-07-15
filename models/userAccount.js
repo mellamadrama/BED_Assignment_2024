@@ -60,99 +60,35 @@ class User {
         }
     }
 
-    static async updateUsername(userId, username) {
+    static async updateUserAccount(userId, username, firstName, lastName, email, password) {
         const connection = await sql.connect(dbConfig);
 
         const sqlQuery = `
-        UPDATE Account
-        SET username = @username
-        WHERE accId = @userId`;
+        UPDATE Account 
+        SET username = @username, 
+        firstName = @firstName, 
+        lastName = @lastName, 
+        email = @email, 
+        password = @password
+        WHERE accId = @userId
+        `;
 
         const request = connection.request();
+
+        request.input("userId", userId); 
         request.input("username", username);
-        request.input("userId", userId)
-        
-        await request.query(sqlQuery);
-
-        connection.close();
-
-        return this.getAllUsersById(userId);
-    }
-
-    static async updateFirstname(userId, firstName) {
-        const connection = await sql.connect(dbConfig);
-
-        const sqlQuery = `
-        UPDATE Account
-        SET firstName = @firstName
-        WHERE accId = @userId`;
-
-        const request = connection.request();
         request.input("firstName", firstName);
-        request.input("userId", userId)
-        
-        await request.query(sqlQuery);
-
-        connection.close();
-
-        return this.getAllUsersById(userId);
-    }
-
-    static async updateLastname(userId, lastName) {
-        const connection = await sql.connect(dbConfig);
-
-        const sqlQuery = `
-        UPDATE Account
-        SET lastName = @lastName
-        WHERE accId = @userId`;
-
-        const request = connection.request();
         request.input("lastName", lastName);
-        request.input("userId", userId)
-        
-        await request.query(sqlQuery);
-
-        connection.close();
-
-        return this.getAllUsersById(userId);
-    }
-
-    static async updateEmail(userId, email) {
-        const connection = await sql.connect(dbConfig);
-
-        const sqlQuery = `
-        UPDATE Account
-        SET email = @email
-        WHERE accId = @userId`;
-
-        const request = connection.request();
         request.input("email", email);
-        request.input("userId", userId)
-        
-        await request.query(sqlQuery);
-
-        connection.close();
-
-        return this.getAllUsersById(userId);
-    }
-    
-    static async updatePassword(userId, password) {
-        const connection = await sql.connect(dbConfig);
-
-        const sqlQuery = `
-        UPDATE Account
-        SET password = @password
-        WHERE accId = @userId`;
-
-        const request = connection.request();
         request.input("password", password);
-        request.input("userId", userId)
-        
+
         await request.query(sqlQuery);
 
+        const result = await request.query(`SELECT * FROM Account WHERE accId = @userId`);
+        
         connection.close();
 
-        return this.getAllUsersById(userId);
+        return result.recordset[0];
     }
 }
 

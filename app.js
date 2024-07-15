@@ -79,11 +79,7 @@ app.put("/usermonthlypoints/:userId", monthlyPointsController.getUserMonthlyPoin
 // account
 app.get("/getuser", userAccController.getAllUsers);
 app.get("/getuser/:userId", userAccController.getAllUsersById);
-app.put("/updateusername/:username/:userId", userAccController.updateUsername);
-app.put("/updatefirstname/:firstName/:userId", userAccController.updateFirstname);
-app.put("/updatelastname/:lastName/:userId", userAccController.updateLastname);
-app.put("/updateemail/:email/:userId", userAccController.updateEmail);
-app.put("/updatepassword/:password/:userId", userAccController.updatePassword);
+app.put("/updateuser/:userId", userAccController.updateUserAccount);
 
 app.listen(port, async () => {
   try {

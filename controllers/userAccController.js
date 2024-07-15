@@ -30,96 +30,24 @@ const getAllUsersById = async (req, res) => {
 };
 
 
-const updateUsername = async (req, res) => {
+const updateUserAccount = async(req, res) => {
     const userId = req.params.userId;
-    const username = req.params.username;
-    const newUsername = req.body.newUsername;
+    const { username, email, firstName, lastName, password } = req.body.newUserData;
 
     try {
-        const updatedUsername = await User.updateUsername(userId, username, newUsername);
-        if (!updatedUsername) {
-            return res.status(404).send("Data not found");
+        const updatedUser = await User.updateUserAccount(userId, username, email, firstName, lastName, password);
+        if (!updatedUser) {
+            return res.status(404).send("User not found");
         }
-        res.json(updatedUsername);
+        res.json(updatedUser);
     } catch (error) {
         console.error(error);
-        res.status(500).send("Error updating username");
+        res.status(500).send("Error updating user");
     }
 };
 
-const updateFirstname = async (req, res) => {
-    const userId = req.params.userId;
-    const firstName = req.params.firstName;
-    const newFirstname = req.body.newFirstname;
-
-    try {
-        const updatedFirstname = await User.updateFirstname(userId, firstName, newFirstname);
-        if (!updatedFirstname) {
-            return res.status(404).send("Data not found");
-        }
-        res.json(updatedFirstname);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send("Error updating first name");
-    }
-};
-
-const updateLastname = async (req, res) => {
-    const userId = req.params.userId;
-    const lastName = req.params.lastName;
-    const newLastname = req.body.newLastname;
-
-    try {
-        const updatedLastname = await User.updateLastname(userId, lastName, newLastname);
-        if (!updatedLastname) {
-            return res.status(404).send("Data not found");
-        }
-        res.json(updatedLastname);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send("Error updating last name");
-    }
-};
-
-const updateEmail = async (req, res) => {
-    const userId = req.params.userId;
-    const email = req.params.email;
-    const newEmail = req.body.newEmail;
-
-    try {
-        const updatedEmail = await User.updateEmail(userId, email, newEmail);
-        if (!updatedEmail) {
-            return res.status(404).send("Data not found");
-        }
-        res.json(updatedEmail);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send("Error updating email address");
-    }
-};
-
-const updatePassword = async (req, res) => {
-    const userId = req.params.userId;
-    const password = req.params.password;
-    const newPassword = req.body.newPassword;
-
-    try {
-        const updatedPassword = await User.updatePassword(userId, password, newPassword);
-        if (!updatedPassword) {
-            return res.status(404).send("Data not found");
-        }
-        res.json(updatedPassword);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send("Error updating password");
-    }
-};
 module.exports = {
     getAllUsers,
     getAllUsersById,
-    updateUsername,
-    updateFirstname,
-    updateLastname,
-    updateEmail,
-    updatePassword
+    updateUserAccount
 };
