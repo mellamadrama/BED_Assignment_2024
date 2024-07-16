@@ -14,6 +14,7 @@ const adminSignupController = require("./controllers/adminSignupController");
 const adminAccountController = require("./controllers/adminAccountController");
 const userLocationController = require("./controllers/userLocationController");
 const userTrackerController = require("./controllers/userTrackerController");
+const adminHistoryController = require("./controllers/adminHistoryController");
 
 const sql = require("mssql");
 const dbConfig = require("./dbConfig");
@@ -32,6 +33,7 @@ const validateAdminSignup = require("./middlewares/validateAdminSignup");
 const validateAdminAccount = require("./middlewares/validateAdminAccount");
 const validateUserLocation = require("./middlewares/validateUserLocation");
 const validateUserTracker = require("./middlewares/validateUserTracker");
+const validateAdminHistory = require("./middlewares/validateAdminHistory");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -107,6 +109,7 @@ app.get("/getadmin", adminAccountController.getAllAdmins);
 app.get("/getadmin/:adminId", adminAccountController.getAllAdminsById);
 app.put("/updateadmin/:adminId", adminAccountController.updateAdminAccount);
 app.delete("/deleteadmin/:adminId", adminAccountController.deleteAdminAccount);
+app.get("/adminhistory/:adminId", validateAdminHistory, adminHistoryController.getApprovedLocationsByAdminId);
 
 app.listen(port, async () => {
   try {

@@ -82,7 +82,6 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     const trackerContainer = document.querySelector('.overflow-x-auto');
-
     try {
         const response = await fetch(`/usertracker/${userId}`);
         if (!response.ok) {
