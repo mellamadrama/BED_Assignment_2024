@@ -59,6 +59,8 @@ const updateLocation = async (req, res) => {
     const locationReqId = req.params.locationReqId;
     const newLocationReqData = req.body;
 
+    console.log('Received Data for Update:', newLocationReqData); // Logging the received data
+
     try {
         const updatedLocation = await Location.updateLocation(locationReqId, newLocationReqData);
         if (!updatedLocation) {
@@ -66,17 +68,17 @@ const updateLocation = async (req, res) => {
         }
         res.json(updatedLocation);
     } catch (error) {
-        console.error("Error updating location:", error);
+        console.error(error);
         res.status(500).send("Error updating location");
     }
 };
 
 
-const deleteLocation = async(req, res) => {
-    const locationId = parseInt(req.params.id);
+const deleteLocation = async (req, res) => {
+    const locationReqId = parseInt(req.params.locationReqId); // Ensure parsing ID
 
     try {
-        const success = await Location.deleteLocation(locationId);
+        const success = await Location.deleteLocation(locationReqId);
         if (!success) {
             return res.status(404).send("Location not found");
         }

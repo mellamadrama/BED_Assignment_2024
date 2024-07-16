@@ -111,7 +111,6 @@ class Location {
         return this.getLocationById(id); // Returning the updated location data
         
     }    
-    
 
     static async deleteLocation(id) {
         const connection = await sql.connect(dbConfig);
