@@ -1,0 +1,136 @@
+document.addEventListener('DOMContentLoaded', async function () {
+
+    // retrieve userId from localStorage
+    const adminId = localStorage.getItem('adminId');
+    if (!adminId) {
+        console.error('No adminId found in localStorage');
+        return;
+    }
+    try {
+        const response = await fetch(`/getadmin/${adminId}`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch admin data');
+        }
+  
+        const getAdmin = await response.json();
+        console.log(getAdmin)
+  
+        document.getElementById('viewusername').textContent = `@${getAdmin.username}`;
+        document.getElementById('viewfirstname').textContent = `${getAdmin.firstName}`;
+        document.getElementById('viewlastname').textContent = `${getAdmin.lastName}`;
+        document.getElementById('viewemail').textContent = `${getAdmin.email}`;
+  
+        document.getElementById('inputusername').value = getAdmin.username;
+        document.getElementById('inputfirstName').value = getAdmin.firstName;
+        document.getElementById('inputlastName').value = getAdmin.lastName;
+        document.getElementById('inputemail').value = getAdmin.email;
+        document.getElementById('inputpassword').value = getAdmin.password;
+    } catch (error) {
+        console.error('Error fetching admin data:', error);
+    }
+  
+    // add event listeners for delete button
+    const deleteBtn = document.getElementById('deleteAccountBtn');
+    if (deleteBtn) {
+      deleteBtn.addEventListener('click', function() {
+        document.getElementById('deleteModal').classList.remove('hidden');
+      });
+    }
+  
+    // add event listener for close modal button
+    const closeBtn = document.getElementById('closeBtn');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', function() {
+        document.getElementById('deleteModal').classList.add('hidden');
+      });
+    }
+  
+    // add event listeners for log out
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', function() {
+        alert('Logging out')
+        localStorage.removeItem('adminId');
+        window.location.href = 'index.html';
+      });
+    }
+  
+    const updateAccount = document.getElementById('profileForm');
+    if (updateAccount) {
+      updateAccount.addEventListener('submit', async function() {
+        const adminId = localStorage.getItem('adminId');
+  
+        if (!adminId) {
+          console.error('No adminId found in localStorage');
+          return;
+        }
+        const username = document.getElementById('inputusername').value;
+        const firstName = document.getElementById('inputfirstName').value;
+        const lastName = document.getElementById('inputlastName').value;
+        const email = document.getElementById('inputemail').value;
+        const password = document.getElementById('inputpassword').value;
+        const newAdminData = { username, firstName, lastName, email, password };
+  
+        try {
+          const response = await fetch(`/updateadmin/${adminId}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ newAdminData }),
+          });
+  
+          if (response.ok) {
+            alert('Details Updated');
+            console.log('Details updated');
+   
+            const updatedAdmin = await response.json();
+            localStorage.setItem('inputusername', newAdminData.username);
+            localStorage.setItem('inputfirstName', newAdminData.firstName);
+            localStorage.setItem('inputlastName', newAdminData.lastName);
+            localStorage.setItem('inputemail', newAdminData.email);
+            localStorage.setItem('inputpassword', newAdminData.password);
+            location.reload();
+          } else {
+            alert('Failed to update details');
+            console.error('Failed to update details');
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          alert("An error occurred");
+        }
+      });
+    }
+  
+    const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+    if (confirmDeleteBtn) {
+      confirmDeleteBtn.addEventListener('click', async function() {
+        const adminId = localStorage.getItem('adminId');
+        if (!userId) {
+          alert('adminId not found');
+          return;
+        }
+        
+        try {
+          const response = await fetch(`deleteadmin/${adminId}`, {
+            method: 'DELETE',
+          });
+  
+          if (response.ok) {
+            alert('Account deleted successfully');
+            window.location.href = 'index.html';
+          } else {
+            alert('Failed to delete account');
+            console.log("Failed to delete account");
+          }
+        } catch (error) {
+          console.error('Error: ', error);
+          alert("An error occured");
+        }
+      });
+    }
+  
+  });
+   
+  
+  

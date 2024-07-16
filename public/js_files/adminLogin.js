@@ -16,7 +16,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         const result = await response.json();
   
         if (response.ok) {
-            // Save userId to local storage
+            // Save adminId to local storage
             localStorage.setItem('adminId', result.adminId);
             document.getElementById('message').textContent = 'Login successful!';
             

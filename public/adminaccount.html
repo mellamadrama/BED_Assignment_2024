@@ -29,7 +29,7 @@
                 <ul class="mt-4">
                     <li><a href="adminaccount.html" class="block px-4 py-2 bg-white text-black rounded-md mb-2">Profile</a></li>
                     <li><a href="adminHistory.html" class="block px-4 py-2 hover:bg-white hover:text-black rounded-md mb-2">History</a></li>
-                    <li><a href="/index.html" class="block px-4 py-2 hover:bg-white hover:text-black rounded-md">Log Out</a></li>
+                    <li><a href="index.html" class="block px-4 py-2 hover:bg-white hover:text-black rounded-md">Log Out</a></li>
                 </ul>
             </div>
         </div>
@@ -41,90 +41,105 @@
                   Personal Information
                 </div>
                 <div class="flex mb-4 pb-2 border-b">
-                    <div class="w-1/2">
-                        <p class="font-semibold" id="viewusername">@username</p>
-                        <p id="viewfirstname">first name</p>
-                        <p id="viewlastname">last name</p>
-                        <p id="viewemail">email@gmail.com</p>
+                    <div class="w-1/2 border-r">
+                        <p class="font-semibold" id="viewusername"></p>
+                        <p id="viewfirstname"></p>
+                        <p id="viewlastname"></p>
+                        <p id="viewemail"></p>
+                    </div>
+                    <div class="w-1/2 pl-4">
+                        <h5 class="text-xl font-bold">Points</h5>
+                        <p>1234</p>
                     </div>
                 </div>
 
                 <form id="profileForm" class="space-y-4">
-                    <!-- input first name -->
-                    <div>
-                        <label for="firstName" class="block text-sm font-medium text-gray-700">First name</label>
-                        <input type="text" id="firstName" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
-                    </div>
-                    <!-- input last name -->
-                    <div>
-                        <label for="lastName" class="block text-sm font-medium text-gray-700">Last name</label>
-                        <input type="text" id="lastName" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
-                    </div>
                     <!-- input username -->
                     <div>
                         <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
-                        <div class="mt-1 flex rounded-md shadow-sm">
+                        <div class="mt-1 flex rounded-md shadow-sm mt-1">
                             <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">@</span>
-                            <input type="text" id="username" class="flex-1 min-w-0 block w-full px-3 py-2 border border-gray-300 rounded-none rounded-r-md sm:text-sm">
+                            <input type="text" id="inputusername" class="flex-1 min-w-0 block w-full px-3 py-2 border border-gray-300 rounded-none rounded-r-md sm:text-sm">
                         </div>
                     </div>
+                    <!-- input first name -->
+                    <div>
+                        <label for="firstName" class="block text-sm font-medium text-gray-700">First name</label>
+                        <div class="flex mt-1">
+                        <input type="text" id="inputfirstName" class="block w-full p-2 border border-gray-300 rounded-md">
+                        </div>
+                    </div>
+                      
+                    <!-- input last name -->
+                    <div>
+                        <label for="lastName" class="block text-sm font-medium text-gray-700">Last name</label>
+                        <div class="flex mt-1">
+                          <input type="text" id="inputlastName" class="block w-full p-2 border border-gray-300 rounded-md">
+                        </div>
+                    </div>
+                    
                     <!-- input email -->
                     <div>
                         <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
-                        <input type="email" id="email" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                        <div class="flex mt-1">
+                            <input type="email" id="inputemail" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                        </div>
                     </div>
                     <!-- input password -->
                     <div>
                         <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                        <input type="password" id="password" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                        <div class="flex mt-1">
+                            <input type="text" id="inputpassword" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                        </div>
                     </div>
-                    <!-- update button -->
-                    <div class="text-center">
-                        <button type="submit" class="bg-[#f3e1c9] text-black p-2 rounded-md">Update</button>
-                    </div>
-                </form>
+
+                <!-- update user account -->
+                <div class="mt-4 text-center">
+                    <button type="submit" class="bg-[#f3e1c9] text-black p-2 rounded-md ml-2" id="updateAccount">Update</button>              
+                </div>
 
                 <!-- delete account button -->
                 <div class="mt-4 text-center">
-                    <button type="button" class="bg-red-500 text-white p-2 rounded-md" data-bs-toggle="modal" data-bs-target="#deleteAccountModal">
+                    <button type="button" class="bg-red-500 text-white p-2 rounded-md" data-bs-toggle="modal" data-bs-target="#deleteAccountModal" id="deleteAccountBtn">
                         Delete Account
                     </button>
                 </div>
+            </form>
 
-                <!-- Modal -->
-                <div class="fixed z-10 inset-0 overflow-y-auto hidden" id="deleteAccountModal" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-                  <div class="flex items-center justify-center min-h-screen">
-                      <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
-                      <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
-                          <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                              <div class="sm:flex sm:items-start">
-                                  <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                                      <svg class="h-6 w-6 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" />
-                                      </svg>
-                                  </div>
-                                  <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                                      <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">Delete Account</h3>
-                                      <div class="mt-2">
-                                          <p class="text-sm text-gray-500">Are you sure? All account data will be lost.</p>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                              <button type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm" id="confirmDeleteButton">Delete Account</button>
-                              <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm" id="closeModalButton">Cancel</button>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-
+            <!-- Modal -->
+            <div class="fixed z-10 inset-0 overflow-y-auto hidden" id="deleteModal" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+            <div class="flex items-center justify-center min-h-screen">
+                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+                <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
+                    <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                        <div class="sm:flex sm:items-start">
+                            <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                                <svg class="h-6 w-6 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" />
+                                </svg>
+                            </div>
+                            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">Delete Account</h3>
+                                <div class="mt-2">
+                                    <p class="text-sm text-gray-500">Are you sure? All account data will be lost.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                        <button type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm" id="confirmDeleteBtn">Delete Account</button>
+                        <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm" id="closeBtn">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
             </div>
         </div>
     </div>
 
     <!-- This is the JavaScript-->
-    <script src="/js_files/account.js" type="module"></script>
+    <script src="/js_files/adminAccount.js" type="module"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

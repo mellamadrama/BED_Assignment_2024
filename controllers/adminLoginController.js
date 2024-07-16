@@ -7,7 +7,7 @@ const loginAdmin = async (req, res) => {
     const account = await Account.getAdminByUsernameAndPassword(username, password);
     
     if (account) {
-      res.json({ userId: account.accId, message: 'Login successful!' });
+      res.json({ adminId: account.adminId, message: 'Login successful!' });
     } else {
       res.status(401).json({ message: 'Invalid username or password' });
     }

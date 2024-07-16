@@ -11,6 +11,7 @@ const monthlyPointsController = require("./controllers/monthlyPointsController")
 const userAccController = require("./controllers/userAccController");
 const userSignupController = require("./controllers/userSignupController");
 const adminSignupController = require("./controllers/adminSignupController");
+const adminAccountController = require("./controllers/adminAccountController");
 
 const sql = require("mssql");
 const dbConfig = require("./dbConfig");
@@ -26,6 +27,7 @@ const validateChallenge = require('./middlewares/validateChallenge');
 const validatePoints = require("./middlewares/validatePoints");
 const validateUserAccount = require("./middlewares/validateUserAccount");
 const validateAdminSignup = require("./middlewares/validateAdminSignup");
+const validateAdminAccount = require("./middlewares/validateAdminAccount");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -89,6 +91,11 @@ app.get("/getuser", userAccController.getAllUsers);
 app.get("/getuser/:userId", userAccController.getAllUsersById);
 app.put("/updateuser/:userId", userAccController.updateUserAccount);
 app.delete("/deleteuser/:userId", userAccController.deleteUserAccount);
+
+app.get("/getadmin", adminAccountController.getAllAdmins);
+app.get("/getadmin/:adminId", adminAccountController.getAllAdminsById);
+app.put("/updateadmin/:adminId", adminAccountController.updateAdminAccount);
+app.delete("/deleteadmin/:adminId", adminAccountController.deleteAdminAccount);
 
 app.listen(port, async () => {
   try {
