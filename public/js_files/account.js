@@ -69,50 +69,53 @@ document.addEventListener('DOMContentLoaded', async function () {
     
   }
 
-});
+  const updateAccount = document.getElementById('profileForm');
+  if (updateAccount) {
+    updateAccount.addEventListener('submit', async function() {
+      const userId = localStorage.getItem('userId');
 
-document.getElementById('profileForm').addEventListener('submit', async function(event) {
-  event.preventDefault();
-  
-  const userId = localStorage.getItem('userId');
+      if (!userId) {
+        console.error('No userId found in localStorage');
+        return;
+      }
+      const username = document.getElementById('inputusername').value;
+      const firstName = document.getElementById('inputfirstName').value;
+      const lastName = document.getElementById('inputlastName').value;
+      const email = document.getElementById('inputemail').value;
+      const password = document.getElementById('inputpassword').value;
+      const newUserData = { username, firstName, lastName, email, password };
 
-  if (!userId) {
-    console.error('No userId found in localStorage');
-    return;
+      try {
+        const response = await fetch(`/updateuser/${userId}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ newUserData }),
+        });
+
+        if (response.ok) {
+          alert('Details Updated');
+          console.log('Details updated');
+ 
+          const updatedUser = await response.json();
+          localStorage.setItem('inputusername', newUserData.username);
+          localStorage.setItem('inputfirstName', newUserData.firstName);
+          localStorage.setItem('inputlastName', newUserData.lastName);
+          localStorage.setItem('inputemail', newUserData.email);
+          localStorage.setItem('inputpassword', newUserData.password);
+          location.reload();
+        } else {
+          alert('Failed to update details');
+          console.error('Failed to update details');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert("An error occurred");
+      }
+    })
   }
-  const username = document.getElementById('inputusername').value;
-  const firstName = document.getElementById('inputfirstName').value;
-  const lastName = document.getElementById('inputlastName').value;
-  const email = document.getElementById('inputemail').value;
-  const password = document.getElementById('inputpassword').value;
-  const newUserData = { username, firstName, lastName, email, password };
 
-  try {
-    const response = await fetch(`/updateuser/${userId}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ newUserData }),
-    });
-
-    if (response.ok) {
-      alert('Details Updated');
-      console.log('Details updated');
-      // update the displayed user details in the UI
-      const updatedUser = await response.json();
-      localStorage.setItem('inputusername', newUserData.username);
-      localStorage.setItem('inputfirstName', newUserData.firstName);
-      localStorage.setItem('inputlastName', newUserData.lastName);
-      localStorage.setItem('inputemail', newUserData.email);
-      localStorage.setItem('inputpassword', newUserData.password);
-      location.reload();
-    } else {
-      alert('Failed to update details');
-      console.error('Failed to update details');
-    }
-  } catch (error) {
-    console.error('Error:', error);
-    alert("An error occurred");
-  }
 });
+ 
+
