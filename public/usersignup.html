@@ -13,7 +13,7 @@
     <div class="text-center text-[#493d2c]">
         <h1 class="text-6xl font-bold mb-6">SustainableMe</h1>
         <h2 class="text-xl mb-8 underline">SIGN UP AS USER</h2>
-        <form class="space-y-4 max-w-md mx-auto">
+        <form class="space-y-4 max-w-md mx-auto" id="createUser">
             <div>
                 <label for="username" class="block text-left text-lg mb-1">Username:</label>
                 <div class="relative">
@@ -41,12 +41,13 @@
                     <button type="submit" class="w-full py-2 mt-4 text-lg bg-[#baab76] text-gray-900 rounded-full shadow-md hover:bg-[#baab76] hover:text-white focus:outline-none focus:ring-2 focus:ring-[#baab76]">Sign Up</button>
                 </div>
             </form>
-            <form action="user_admin.html">
-                <button type="button" class="w-full py-2 mt-4 text-lg bg-[#baab76] text-gray-900 rounded-full shadow-md hover:bg-[#baab76] hover:text-white focus:outline-none focus:ring-2 focus:ring-[#baab76]">Back</button>
-            </form>
+            <div>
+                <button type="button" id="backBtn" class="w-full py-2 mt-4 text-lg bg-[#baab76] text-gray-900 rounded-full shadow-md hover:bg-[#baab76] hover:text-white focus:outline-none focus:ring-2 focus:ring-[#baab76]">Back</button>
+            </div>
+          
     </div>
 
     <!-- This is the JavaScript-->
-    <script src="js_files/signup.js" type="module"></script>
+    <script src="js_files/usersignup.js" type="module"></script>
 </body>
 </html>
