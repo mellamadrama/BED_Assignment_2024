@@ -74,7 +74,6 @@ document.addEventListener('DOMContentLoaded', async function () {
                 <p class="mb-2">Location of place: ${userlocation.address}</p>
                 <p class="mb-2">Website Link: <a href="${userlocation.websiteLink}" class="text-blue-500 hover:underline" target="_blank">${userlocation.websiteLink}</a></p>
                 <p class="mb-2">Status: ${userlocation.status}</p>
-                <a href="#" class="bg-[#baab76] text-white px-4 py-2 rounded-md hover:underline">View</a>
             `;
 
             sustainableShoppingList.appendChild(locationDiv);
