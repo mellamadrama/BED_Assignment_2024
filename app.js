@@ -12,6 +12,7 @@ const userAccController = require("./controllers/userAccController");
 const userSignupController = require("./controllers/userSignupController");
 const adminSignupController = require("./controllers/adminSignupController");
 const adminAccountController = require("./controllers/adminAccountController");
+const userLocationController = require("./controllers/userLocationController");
 
 const sql = require("mssql");
 const dbConfig = require("./dbConfig");
@@ -28,6 +29,7 @@ const validatePoints = require("./middlewares/validatePoints");
 const validateUserAccount = require("./middlewares/validateUserAccount");
 const validateAdminSignup = require("./middlewares/validateAdminSignup");
 const validateAdminAccount = require("./middlewares/validateAdminAccount");
+const validateUserLocation = require("./middlewares/validateUserLocation");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -86,12 +88,17 @@ app.put("/resetmonthly", monthlyPointsController.resetMonthlyPoints);
 app.put("/userweeklypoints/:userId", weeklyPointsController.getUserWeeklyPoints);
 app.put("/usermonthlypoints/:userId", monthlyPointsController.getUserMonthlyPoints);
 
-// account
+// user account
 app.get("/getuser", userAccController.getAllUsers);
 app.get("/getuser/:userId", userAccController.getAllUsersById);
 app.put("/updateuser/:userId", userAccController.updateUserAccount);
 app.delete("/deleteuser/:userId", userAccController.deleteUserAccount);
 
+// user history (request location)
+app.get("/userlocations", userLocationController.getAllLocations);
+app.get("/userlocation/:userId", userLocationController.getLocationByUserId);
+
+// admin account
 app.get("/getadmin", adminAccountController.getAllAdmins);
 app.get("/getadmin/:adminId", adminAccountController.getAllAdminsById);
 app.put("/updateadmin/:adminId", adminAccountController.updateAdminAccount);

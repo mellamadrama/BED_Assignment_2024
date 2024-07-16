@@ -9,8 +9,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-
-<!-- nav bar -->
 <body class="bg-[#f3e1c9] h-screen items-center">
     <header class="bg-[#baab76] text-center py-4 shadow-md">
         <h1 class="text-3xl font-bold text-[#493d2c] pb-4 border-b-2 border-black">SustainableMe</h1>
@@ -23,7 +21,6 @@
     </header>
 
     <div class="flex mt-10 w-full justify-center text-gray-700">
-        <!-- side nav -->
         <div class="w-1/4 mr-10">
             <div class="bg-[#baab76] shadow-md rounded-lg p-4">
               <h2 class="text-2xl font-bold" id="viewusername">@username</h2>
@@ -35,14 +32,9 @@
             </div>
         </div>
 
-
-        <!-- main body -->
         <div class="w-2/4">
             <div class="bg-[#baab76] shadow-md rounded-lg p-4 text-gray-700">
-                <div class="font-bold text-lg border-b pb-2 mb-4">
-                    History
-                </div>
-                
+                <div class="font-bold text-lg border-b pb-2 mb-4">History</div>
                 <div class="mb-4">
                     <h5 class="font-bold mb-2">Eco Tracker</h5>
                     <div class="overflow-x-auto whitespace-nowrap">
@@ -58,21 +50,14 @@
                 
                 <div class="mb-4">
                     <h5 class="font-bold mb-2">Sustainable Shopping</h5>
-                    <div class="overflow-x-auto whitespace-nowrap">
-                        <div class="inline-block rounded-lg border border-gray-200 p-4 mr-4 bg-white">
-                            <h5 class="font-bold mb-2">Location</h5>
-                            <p class="mb-2">Name of place:</p>
-                            <p class="mb-2">Location of place:</p>
-                            <a href="#" class="bg-[#baab76] text-white px-4 py-2 rounded-md hover:underline">View</a>
-                        </div>
+                    <div class="overflow-x-auto whitespace-nowrap" id="sustainable-shopping-list">
+                        <!-- Sustainable shopping locations will be appended here by JavaScript -->
                     </div>
                 </div>
-                
             </div>
         </div>
     </div>
 
-    <!-- This is the JavaScript-->
-    <script src="/js_files/account.js" type="module"></script>
+    <script src="/js_files/userHistory.js" type="module"></script>
 </body>
 </html>
