@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', async function () {
-
     // retrieve userId from localStorage
     const userId = localStorage.getItem('userId');
     if (!userId) {
@@ -80,5 +79,35 @@ document.addEventListener('DOMContentLoaded', async function () {
         });
     } catch (error) {
         console.error("Failed to fetch locations:", error);
+    }
+
+    const trackerContainer = document.querySelector('.overflow-x-auto');
+
+    try {
+        const response = await fetch(`/usertracker/${userId}`);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        renderTrackerData(data);
+    } catch (error) {
+        console.error('Error fetching tracker data:', error);
+    }
+
+    function renderTrackerData(data) {
+        trackerContainer.innerHTML = ''; // Clear existing content
+
+        data.forEach(item => {
+            const trackerItem = document.createElement('div');
+            trackerItem.className = 'inline-block rounded-lg border border-gray-200 p-4 mr-4 bg-white';
+            trackerItem.innerHTML = `
+                <h5 class="font-bold mb-2">${item.catName}</h5>
+                <p class="mb-2">Week: ${item.weekName}</p>
+                <p class="mb-2">Info: ${item.info}</p>
+                <p class="mb-2">Amount: ${item.amount}</p>
+                <p class="mb-2">Date: ${item.dateInput}</p>
+            `;
+            trackerContainer.appendChild(trackerItem);
+        });
     }
 });
