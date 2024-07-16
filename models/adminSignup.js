@@ -33,7 +33,7 @@ class Admin {
         INSERT INTO Account (accId, username, firstName, lastName, email, password)
         VALUES (@adminId, @username, @firstName, @lastName, @email, @password)
 
-        INSERT INTO UserAcc (userId)
+        INSERT INTO Admin (adminId)
         VALUES (@adminId)
         `;
 
