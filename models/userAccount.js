@@ -90,6 +90,7 @@ class User {
 
         return result.recordset[0];
     }
+
 }
 
 module.exports = User;

@@ -55,11 +55,19 @@
                 </div>
 
                 <form id="profileForm" class="space-y-4">
+                    <!-- input username -->
+                    <div>
+                        <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+                        <div class="mt-1 flex rounded-md shadow-sm mt-1">
+                            <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">@</span>
+                            <input type="text" id="inputusername" class="flex-1 min-w-0 block w-full px-3 py-2 border border-gray-300 rounded-none rounded-r-md sm:text-sm">
+                        </div>
+                    </div>
                     <!-- input first name -->
                     <div>
                         <label for="firstName" class="block text-sm font-medium text-gray-700">First name</label>
                         <div class="flex mt-1">
-                        <input type="text" id="firstName" class="block w-full p-2 border border-gray-300 rounded-md">
+                        <input type="text" id="inputfirstName" class="block w-full p-2 border border-gray-300 rounded-md">
                         </div>
                     </div>
                       
@@ -67,29 +75,22 @@
                     <div>
                         <label for="lastName" class="block text-sm font-medium text-gray-700">Last name</label>
                         <div class="flex mt-1">
-                          <input type="text" id="lastName" class="block w-full p-2 border border-gray-300 rounded-md">
+                          <input type="text" id="inputlastName" class="block w-full p-2 border border-gray-300 rounded-md">
                         </div>
                     </div>
-                    <!-- input username -->
-                    <div>
-                        <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
-                        <div class="mt-1 flex rounded-md shadow-sm mt-1">
-                            <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">@</span>
-                            <input type="text" id="username" class="flex-1 min-w-0 block w-full px-3 py-2 border border-gray-300 rounded-none rounded-r-md sm:text-sm">
-                        </div>
-                    </div>
+                    
                     <!-- input email -->
                     <div>
                         <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
                         <div class="flex mt-1">
-                            <input type="email" id="email" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                            <input type="email" id="inputemail" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
                         </div>
                     </div>
                     <!-- input password -->
                     <div>
                         <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
                         <div class="flex mt-1">
-                            <input type="password" id="password" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                            <input type="text" id="inputpassword" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
                         </div>
                     </div>
 

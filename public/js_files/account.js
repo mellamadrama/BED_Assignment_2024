@@ -20,11 +20,11 @@ document.addEventListener('DOMContentLoaded', async function () {
       document.getElementById('viewlastname').textContent = `${getUser.lastName}`;
       document.getElementById('viewemail').textContent = `${getUser.email}`;
 
-      document.getElementById('firstName').value = getUser.firstName;
-      document.getElementById('lastName').value = getUser.lastName;
-      document.getElementById('username').value = getUser.username;
-      document.getElementById('email').value = getUser.email;
-      document.getElementById('password').value = getUser.password;
+      document.getElementById('inputusername').value = getUser.username;
+      document.getElementById('inputfirstName').value = getUser.firstName;
+      document.getElementById('inputlastName').value = getUser.lastName;
+      document.getElementById('inputemail').value = getUser.email;
+      document.getElementById('inputpassword').value = getUser.password;
   } catch (error) {
       console.error('Error fetching user data:', error);
   }
@@ -80,17 +80,12 @@ document.getElementById('profileForm').addEventListener('submit', async function
     console.error('No userId found in localStorage');
     return;
   }
-  const firstName = document.getElementById('firstName').value;
-  const lastName = document.getElementById('lastName').value;
-  const username = document.getElementById('username').value;
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
-  const newUserData = { firstName, lastName, username, email, password };
-
-  if (!newUserData.username || !newUserData.email || !newUserData.firstName || !newUserData.lastName || !newUserData.password) {
-    alert('Please enter updated user details');
-    return;
-  }
+  const username = document.getElementById('inputusername').value;
+  const firstName = document.getElementById('inputfirstName').value;
+  const lastName = document.getElementById('inputlastName').value;
+  const email = document.getElementById('inputemail').value;
+  const password = document.getElementById('inputpassword').value;
+  const newUserData = { username, firstName, lastName, email, password };
 
   try {
     const response = await fetch(`/updateuser/${userId}`, {
@@ -98,7 +93,7 @@ document.getElementById('profileForm').addEventListener('submit', async function
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({newUserData}),
+      body: JSON.stringify({ newUserData }),
     });
 
     if (response.ok) {
@@ -106,11 +101,11 @@ document.getElementById('profileForm').addEventListener('submit', async function
       console.log('Details updated');
       // update the displayed user details in the UI
       const updatedUser = await response.json();
-      localStorage.setItem('firstName', newUserData.firstName);
-      localStorage.setItem('lastName', newUserData.lastName);
-      localStorage.setItem('email', newUserData.email);
-      localStorage.setItem('password', newUserData.password);
-      localStorage.setItem('username', newUserData.username);
+      localStorage.setItem('inputusername', newUserData.username);
+      localStorage.setItem('inputfirstName', newUserData.firstName);
+      localStorage.setItem('inputlastName', newUserData.lastName);
+      localStorage.setItem('inputemail', newUserData.email);
+      localStorage.setItem('inputpassword', newUserData.password);
       location.reload();
     } else {
       alert('Failed to update details');
@@ -118,6 +113,6 @@ document.getElementById('profileForm').addEventListener('submit', async function
     }
   } catch (error) {
     console.error('Error:', error);
-    alert("An error occured")
+    alert("An error occurred");
   }
 });

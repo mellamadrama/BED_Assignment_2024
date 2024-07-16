@@ -30,12 +30,12 @@ const getAllUsersById = async (req, res) => {
 };
 
 
-const updateUserAccount = async(req, res) => {
+const updateUserAccount = async (req, res) => {
     const userId = req.params.userId;
-    const { username, email, firstName, lastName, password } = req.body.newUserData;
+    const { username, firstName, lastName, email, password } = req.body.newUserData;
 
     try {
-        const updatedUser = await User.updateUserAccount(userId, username, email, firstName, lastName, password);
+        const updatedUser = await User.updateUserAccount(userId, username, firstName, lastName, email, password);
         if (!updatedUser) {
             return res.status(404).send("User not found");
         }
@@ -45,6 +45,7 @@ const updateUserAccount = async(req, res) => {
         res.status(500).send("Error updating user");
     }
 };
+
 
 module.exports = {
     getAllUsers,
