@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
     let userId = null;
-    let admin = localStorage.getItem('userId');
+    //let admin = localStorage.getItem('userId');
 
     function getQueryParams() {
         const params = new URLSearchParams(window.location.search);
@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         document.getElementById("approve-location-name").textContent = data.name;
         document.getElementById("approve-location-address").textContent = data.address;
         document.getElementById("approve-location-weblink").value = data.websiteLink || '';
-        document.querySelector("select").value = data.status === 'A' ? 'Approved' : data.status === 'R' ? 'Rejected' : 'Pending';
+        document.querySelector("select").value = data.status === 'A' ? 'A' : data.status === 'R' ? 'R' : 'P';
         userId = data.userId;
     }
 
@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             status: document.getElementById("location-status").value,
             websiteLink: document.getElementById("approve-location-weblink").value,
             userId: userId,
-            adminId: admin
+            adminId: null//admin
         };
 
         async function updateLocation(locationReqId) {
@@ -72,8 +72,38 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
         if (params.locationReqId) {
-            console.log('location req id: ', params.locationReqId);
             await updateLocation(params.locationReqId);
         }
     });
+
+    document.getElementById("delete-btn").addEventListener("click", async (event) => {
+        event.preventDefault();
+    
+        async function deleteLocation(locationReqId) {
+            try {
+                console.log(`Attempting to delete location with ID: ${locationReqId}`); // Add logging
+                const response = await fetch(`/dellocations/${locationReqId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+        
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+        
+                // Redirect or update UI on success
+                alert('Location deleted successfully');
+                window.location.href = 'adminLocationRequest.html';
+            } catch (error) {
+                console.error('Error deleting location:', error);
+            }
+        }        
+    
+        if (params.locationReqId) {
+            await deleteLocation(params.locationReqId);
+        }
+    });
+    
 });
