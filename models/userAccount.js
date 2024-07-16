@@ -91,6 +91,34 @@ class User {
         return result.recordset[0];
     }
 
+    static async deleteUserAccount(userId) {
+        try {
+            const connection = await sql.connect(dbConfig);
+            const request = connection.request();
+            request.input("userId", sql.Char(10), userId); 
+
+            const sqlQuery = `
+                DELETE FROM UserWeeklyChallenges WHERE userId = @userId;
+                DELETE FROM LocationReq WHERE userId = @userId;
+                DELETE FROM MonthlyPoints WHERE userId = @userId;
+                DELETE FROM WeeklyPoints WHERE userId = @userId;
+                DELETE FROM CatDataInput WHERE userId = @userId;
+                DELETE FROM CatWeek WHERE userId = @userId;
+                DELETE FROM UserAcc WHERE userId = @userId;
+                DELETE FROM Account WHERE accId = @userId;
+            `;
+   
+            const result = await request.query(sqlQuery);
+  
+            connection.close();
+            
+            return result;
+        } catch (error) {
+            console.error("Error deleting user account: ", error);
+            throw error;
+        }
+    }
+
 }
 
 module.exports = User;

@@ -29,7 +29,6 @@ document.addEventListener('DOMContentLoaded', async function () {
       console.error('Error fetching user data:', error);
   }
 
-
   // add event listeners for delete button
   const deleteBtn = document.getElementById('deleteAccountBtn');
   if (deleteBtn) {
@@ -46,18 +45,6 @@ document.addEventListener('DOMContentLoaded', async function () {
     });
   }
 
-  // add event listeners for delete btn
-  const comfirmDeleteBtn = document.getElementById('comfirmDeleteBtn');
-  if (comfirmDeleteBtn) {
-    comfirmDeleteBtn.addEventListener('click', function() {
-
-      // in progress
-      alert('Account deleted! ');
-      document.getElementById('deleteModal').classList.add('hidden');
-      window.location.href = 'index.html';
-    });
-  }
-
   // add event listeners for log out
   const logoutBtn = document.getElementById('logoutBtn');
   if (logoutBtn) {
@@ -65,8 +52,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       alert('Logging out')
       localStorage.removeItem('userId');
       window.location.href = 'index.html';
-    })
-    
+    });
   }
 
   const updateAccount = document.getElementById('profileForm');
@@ -113,7 +99,35 @@ document.addEventListener('DOMContentLoaded', async function () {
         console.error('Error:', error);
         alert("An error occurred");
       }
-    })
+    });
+  }
+
+  const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+  if (confirmDeleteBtn) {
+    confirmDeleteBtn.addEventListener('click', async function() {
+      const userId = localStorage.getItem('userId');
+      if (!userId) {
+        alert('UserID not found');
+        return;
+      }
+      
+      try {
+        const response = await fetch(`deleteuser/${userId}`, {
+          method: 'DELETE',
+        });
+
+        if (response.ok) {
+          alert('Account deleted successfully');
+          window.location.href = 'index.html';
+        } else {
+          alert('Failed to delete account');
+          console.log("Failed to delete account");
+        }
+      } catch (error) {
+        console.error('Error: ', error);
+        alert("An error occured");
+      }
+    });
   }
 
 });

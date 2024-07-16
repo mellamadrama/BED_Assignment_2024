@@ -46,9 +46,22 @@ const updateUserAccount = async (req, res) => {
     }
 };
 
+const deleteUserAccount = async (req, res) => {
+    const userId = req.params.userId;
+
+    try {
+        await User.deleteUserAccount(userId);
+        res.status(200).send("Account deleted successfully");
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error deleting account");
+    }
+}
+
 
 module.exports = {
     getAllUsers,
     getAllUsersById,
-    updateUserAccount
+    updateUserAccount,
+    deleteUserAccount
 };

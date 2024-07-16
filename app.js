@@ -80,6 +80,7 @@ app.put("/usermonthlypoints/:userId", monthlyPointsController.getUserMonthlyPoin
 app.get("/getuser", userAccController.getAllUsers);
 app.get("/getuser/:userId", userAccController.getAllUsersById);
 app.put("/updateuser/:userId", userAccController.updateUserAccount);
+app.delete("/deleteuser/:userId", userAccController.deleteUserAccount);
 
 app.listen(port, async () => {
   try {
