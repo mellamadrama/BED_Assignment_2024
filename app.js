@@ -6,6 +6,7 @@ const locationController = require("./controllers/locationController");
 const loginController = require("./controllers/loginController");
 const adminLoginController = require("./controllers/adminLoginController")
 const challengeController = require("./controllers/challengeController");
+const userWeeklyChallengeController = require("./controllers/userChallengeController");
 const weeklyPointsController = require("./controllers/weeklyPointsController");
 const monthlyPointsController = require("./controllers/monthlyPointsController");
 const userAccController = require("./controllers/userAccController");
@@ -41,7 +42,6 @@ const staticMiddleware = express.static("public");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
 app.use(staticMiddleware);
 
 //login
@@ -78,11 +78,17 @@ app.post("/createlocations", validateLocation, locationController.createLocation
 app.put("/updlocations/:locationReqId", validateLocation, locationController.updateLocation);
 app.delete("/dellocations/:locationReqId", locationController.deleteLocation);
 
-// challenge
+// challenges
 app.get("/challenges", challengeController.getAllChallenges);
-app.get("/challenges/:userId", challengeController.getAllChallengesByUserID);
-app.get("/challenges/:challengeID/:userId", challengeController.getAllChallengesByChallengeID);
-app.put("/updatechallenges/:challengeID/:userId", challengeController.updateChallengeCompleted);
+app.get("/challenges/:id", challengeController.getChallengeByID);
+app.post("/challenges", validateChallenge, challengeController.createChallenge);
+app.delete("/challenges/:id", challengeController.deleteChallenge);
+
+// user weekly challenges
+app.get("/userchallenges/:userId", userWeeklyChallengeController.getAllChallengesByUserID);
+app.put("/updateuserchallenges/:challengeId/:userId", userWeeklyChallengeController.updateChallengeCompleted);
+app.delete("/deleteuserchallenges/:challengeId", userWeeklyChallengeController.deleteChallengeForEachUser);
+app.post("/createuserchallenges", validateChallenge, userWeeklyChallengeController.createChallengeForEachUser);
 
 // points
 app.get("/weeklypoints", weeklyPointsController.getAllWeeklyPoints);

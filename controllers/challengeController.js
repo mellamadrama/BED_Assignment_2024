@@ -4,110 +4,43 @@ const getAllChallenges = async (req, res) => {
     try {
         const challenges = await Challenge.getAllChallenges();
         res.json(challenges);
-    } catch(error) {
-        console.error(error);
-        res.status(500).send("Error retrieving challenges");
-    }
-};
-
-const getAllChallengesByUserID = async (req, res) => {
-    const userId = req.params.userId;
-    try {
-        const challenges = await Challenge.getAllChallengesByUserID(userId);
-        res.json(challenges);
     } catch (error) {
         console.error("Error fetching challenges:", error);
         res.status(500).send("Internal Server Error");
     }
 };
 
-const getAllChallengesByChallengeID = async (req, res) => {
-    const ChallengeID = req.params.challengeID;
+const getChallengeByID = async (req, res) => {
     try {
-        const challenges = await Challenge.getAllChallengesByChallengeID(ChallengeID);
-        res.json(challenges);
+        const challenge = await Challenge.getChallengeByChallengeID(req.params.id);
+        res.json(challenge);
     } catch (error) {
-        console.error("Error fetching challenges:", error);
-        res.status(500).send("Internal Server Error");
-    }
-};
-
-const updateChallengeCompleted = async (req, res) => {
-    const userId = req.params.userId;
-    const challengeId = req.params.ChallengeID;
-    const newChallenge = req.body;
-
-    try {
-        const updatedChallenge = await Challenge.updateChallengeCompleted(challengeId, userId, newChallenge);
-        if (!updatedChallenge) {
-            return res.status(404).send("Challenge not found");
-        }
-        res.json(updatedChallenge);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send("Error updating completion status");
-    }
-};
-
-const deleteChallenge = async (req, res) => {
-    const challengeId = req.params.ChallengeID;
-
-    try {
-        const success = await Challenge.deleteChallenge(challengeId);
-        if (!success) {
-            return res.status(404).send("Challenge not found!");
-        }
-        res.status(204).send();
-    } catch (error) {
-        console.error(error);
-        res.status(500).send("Error deleting challenge");
-    }
-};
-
-const deleteChallengeForEachUser = async (req, res) => {
-    const challengeId = req.params.ChallengeID;
-
-    try {
-        const success = await Challenge.deleteChallengeForEachUser(challengeId);
-        if (!success) {
-            return res.status(404).send("Challenge not found!");
-        }
-        res.status(204).send();
-    } catch (error) {
-        console.error(error);
-        res.status(500).send("Error deleting challenge for each user");
+        res.status(500).send(error.message);
     }
 };
 
 const createChallenge = async (req, res) => {
-    const newChallenge = req.body;
     try {
-        const createdChallenge = await Challenge.createChallenge(newChallenge);
-        res.status(201).json(createdChallenge);
+        const { ChallengeID, ChallengeDesc, Points } = req.body;
+        await Challenge.createChallenge(ChallengeID, ChallengeDesc, Points);
+        res.status(201).send('Challenge created successfully');
     } catch (error) {
-        console.error(error);
-        res.status(500).send("Error creating challenge");
+        res.status(500).send(error.message);
     }
 };
 
-const createChallengeForEachUser = async (req, res) => {
-    const newChallenge = req.body;
+const deleteChallenge = async (req, res) => {
     try {
-        const createdChallenge = await Challenge.createChallengeForEachUser(newChallenge);
-        res.status(201).json(createdChallenge);
+        await Challenge.deleteChallenge(req.params.id);
+        res.status(200).send('Challenge deleted successfully');
     } catch (error) {
-        console.error(error);
-        res.status(500).send("Error creating challenge for each user");
+        res.status(500).send(error.message);
     }
 };
 
 module.exports = {
     getAllChallenges,
-    getAllChallengesByUserID, 
-    getAllChallengesByChallengeID,
-    updateChallengeCompleted,
-    deleteChallenge,
-    deleteChallengeForEachUser,
+    getChallengeByID,
     createChallenge,
-    createChallengeForEachUser,
+    deleteChallenge
 };
