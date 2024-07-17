@@ -10,15 +10,18 @@ const getAllChallengesByUserID = async (req, res) => {
 };
 
 const updateChallengeCompleted = async (req, res) => {
+    const { challengeId, userId } = req.params;
+    const { challengeCompleted } = req.body;
+
     try {
-        const { ChallengeCompleted } = req.body;
-        const newChallenge = { ChallengeCompleted };
-        const challenges = await UserWeeklyChallenge.updateChallengeCompleted(req.params.challengeId, req.params.userId, newChallenge);
-        res.json(challenges);
+        const updatedChallenges = await UserWeeklyChallenge.updateChallengeCompleted(challengeId, userId, challengeCompleted);
+        res.status(200).json(updatedChallenges);
     } catch (error) {
-        res.status(500).send(error.message);
+        console.error("Error updating user weekly challenge:", error);
+        res.status(500).json({ message: "Error updating user weekly challenge", error });
     }
 };
+
 
 const deleteChallengeForEachUser = async (req, res) => {
     try {

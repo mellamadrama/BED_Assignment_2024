@@ -25,17 +25,17 @@ class UserWeeklyChallenge {
         }
     }
 
-    static async updateChallengeCompleted(cId, uId, newChallenge) {
+    static async updateChallengeCompleted(cId, uId, ChallengeCompleted) {
         try {
             const connection = await sql.connect(dbConfig);
             const sqlQuery = `
                 UPDATE UserWeeklyChallenges 
-                SET ChallengeCompleted = @ChallengeCompleted 
+                SET challengeCompleted = @ChallengeCompleted 
                 WHERE ChallengeID = @ChallengeID AND userId = @userId`;
             const request = connection.request();
             request.input("ChallengeID", sql.NVarChar, cId);
             request.input("userId", sql.NVarChar, uId);
-            request.input("ChallengeCompleted", sql.Char, newChallenge.ChallengeCompleted);
+            request.input("ChallengeCompleted", sql.NVarChar, ChallengeCompleted); // Ensure ChallengeCompleted is passed as string
             await request.query(sqlQuery);
             connection.close();
             return this.getAllChallengesByUserID(uId);
@@ -44,6 +44,7 @@ class UserWeeklyChallenge {
             throw error;
         }
     }
+    
 
     static async deleteChallengeForEachUser(cId) {
         const connection = await sql.connect(dbConfig);

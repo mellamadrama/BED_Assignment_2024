@@ -1,4 +1,21 @@
 document.addEventListener("DOMContentLoaded", async () => {
+    async function updateUserChallenge(ChallengeID, userId, newCompletedStatus) {
+        try {
+            const updateResponse = await fetch(`/updateuserchallenges/${ChallengeID}/${userId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ challengeCompleted: newCompletedStatus })
+            });
+            if (!updateResponse.ok) {
+                throw new Error(`HTTP error! Status: ${updateResponse.status}`);
+            }
+        } catch (updateError) {
+            console.error(`Error updating challenge ${ChallengeID}:`, updateError);
+        }
+    }
+
     async function getAllChallengesByChallengeID(challengeID, completed) {
         try {
             const userId = localStorage.getItem('userId');
@@ -42,6 +59,30 @@ document.addEventListener("DOMContentLoaded", async () => {
                 checkbox.id = `challenge-${ChallengeID}`;
                 checkbox.checked = completed;
                 checkbox.classList.add("form-checkbox", "h-5", "w-5", "text-blue-600", "mr-2");
+
+                checkbox.addEventListener("change", async (event) => {
+                    const newCompletedStatus = event.target.checked ? 'Y' : 'N';
+                
+                    try {
+                        const userId = localStorage.getItem('userId');
+                        if (!userId) {
+                            throw new Error("No userId found in localStorage");
+                        }
+                
+                        await updateUserChallenge(ChallengeID, userId, newCompletedStatus);
+                
+                        if (newCompletedStatus === 'Y') {
+                            label.classList.remove("text-gray-400");
+                            label.classList.add("text-gray-700");
+                        } else {
+                            label.classList.remove("text-gray-700");
+                            label.classList.add("text-gray-400");
+                        }
+                
+                    } catch (updateError) {
+                        console.error(`Error updating challenge ${ChallengeID}:`, updateError);
+                    }
+                });                
 
                 labelContainer.appendChild(label);
                 labelContainer.appendChild(pointsSpan);
