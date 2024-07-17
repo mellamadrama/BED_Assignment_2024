@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", async () => {
+
     async function addWeeklyPoints(userId, pointsChange) {
         try {
             const addPointsResponse = await fetch(`/addweekly/${userId}`, {
@@ -13,7 +14,25 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
         } catch (error) {
             console.error('Error adding weekly points:', error);
-            throw error; 
+            throw error;
+        }
+    }
+
+    async function addMonthlyPoints(userId, pointsChange) {
+        try {
+            const addMonthlyPointsResponse = await fetch(`/addmonthly/${userId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ points: pointsChange })
+            });
+            if (!addMonthlyPointsResponse.ok) {
+                throw new Error(`HTTP error! Status: ${addMonthlyPointsResponse.status}`);
+            }
+        } catch (error) {
+            console.error('Error adding monthly points:', error);
+            throw error;
         }
     }
 
@@ -36,16 +55,17 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
             const challenges = await challengeResponse.json();
 
-            challenges.forEach(async (challenge) => {
+            for (const challenge of challenges) {
                 const { ChallengeID, ChallengeDesc, Points } = challenge;
 
                 const pointsChange = (newCompletedStatus === 'Y') ? parseInt(Points) : -parseInt(Points);
 
                 await addWeeklyPoints(userId, pointsChange);
+                await addMonthlyPoints(userId, pointsChange);
 
-                const label = document.querySelector(`label[for="challenge-${challengeID}"]`);
+                const label = document.querySelector(`label[for="challenge-${ChallengeID}"]`);
                 if (!label) {
-                    throw new Error(`Label element not found for challenge ${challengeID}`);
+                    throw new Error(`Label element not found for challenge ${ChallengeID}`);
                 }
 
                 if (newCompletedStatus === 'Y') {
@@ -55,16 +75,17 @@ document.addEventListener("DOMContentLoaded", async () => {
                     label.classList.remove("text-gray-700");
                     label.classList.add("text-gray-400");
                 }
-            });
+            }
 
         } catch (updateError) {
             console.error(`Error updating challenge ${challengeID}:`, updateError);
             throw updateError;
         }
+
         await fetchAndDisplayWeeklyPoints();
+        await fetchAndDisplayMonthlyPoints();
     }
 
-    // Function to fetch and display all challenges by challengeID
     async function getAllChallengesByChallengeID(challengeID, completed) {
         try {
             const userId = localStorage.getItem('userId');
@@ -189,7 +210,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             const points = await response.json();
 
             const userPoints = document.getElementById("weeklyPoints");
-            userPoints.innerHTML = `This week’s points: <span class="font-semibold">${points.userWeeklyPoints}</span>`;
+                userPoints.innerHTML = `This week’s points: <span class="font-semibold">${points.userWeeklyPoints}</span>`;
 
         } catch (error) {
             console.error("Error fetching points:", error);
