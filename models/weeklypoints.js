@@ -47,7 +47,7 @@ class WeeklyPoints {
         const sqlQuery = `SELECT * FROM WeeklyPoints WHERE userId = @uId`;
 
         const request = connection.request();
-        request.input("uId", sql.Int, uId);
+        request.input("uId", sql.NVarChar, uId);
         const result = await request.query(sqlQuery);
 
         connection.close();

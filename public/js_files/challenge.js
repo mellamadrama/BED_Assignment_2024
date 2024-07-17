@@ -10,8 +10,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
             const challenges = await response.json();
-            console.log(`Challenges for challengeID ${challengeID} and userId ${userId}:`);
-            console.log(challenges);
 
             const challengeList = document.getElementById("challenge-list");
 
@@ -42,7 +40,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 const checkbox = document.createElement("input");
                 checkbox.type = "checkbox";
                 checkbox.id = `challenge-${ChallengeID}`;
-                checkbox.checked = completed; // if true, box check, else, empty
+                checkbox.checked = completed;
                 checkbox.classList.add("form-checkbox", "h-5", "w-5", "text-blue-600", "mr-2");
 
                 labelContainer.appendChild(label);
@@ -70,8 +68,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
             const challenges = await response.json();
-            console.log(`Challenges for userId ${userId}:`);
-            console.log(challenges);
 
             const challengeStatus = [];
 
@@ -85,13 +81,60 @@ document.addEventListener("DOMContentLoaded", async () => {
                 await getAllChallengesByChallengeID(challenge.ChallengeID, challenge.challengeCompleted === 'Y');
             }
 
-            console.log("Challenge Info:");
-            console.log(challengeStatus);
-
         } catch (error) {
             console.error("Error fetching challenges:", error);
         }
     }
 
+    async function fetchAndDisplayWeeklyPoints() {
+        try {
+            const userId = localStorage.getItem('userId');
+            if (!userId) {
+                throw new Error("No userId found in localStorage");
+            }
+            const response = await fetch(`/userweeklypoints/${userId}`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            const points = await response.json();
+            console.log(`WeeklyPoints for userId ${userId}:`);
+            console.log(points);
+
+            const userPoints = document.getElementById("weeklyPoints");
+            userPoints.innerHTML = `This week’s points: <span class="font-semibold">${points.userWeeklyPoints}</span>`;
+
+        } catch (error) {
+            console.error("Error fetching points:", error);
+        }
+    }
+
+    async function fetchAndDisplayMonthlyPoints() {
+        try {
+            const userId = localStorage.getItem('userId');
+            if (!userId) {
+                throw new Error("No userId found in localStorage");
+            }
+            const response = await fetch(`/usermonthlypoints/${userId}`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            const points = await response.json();
+            console.log(`MonthlyPoints for userId ${userId}:`);
+            console.log(points);
+
+            const monthlyPoints = document.getElementById("monthlyPoints");
+            if (monthlyPoints) {
+                monthlyPoints.innerHTML = `This month’s points: <span class="font-semibold">${points.userMonthlyPoints}</span>`;
+            } else {
+                console.error("Element with ID 'monthlyPoints' not found in the DOM.");
+            }
+
+        } catch (error) {
+            console.error("Error fetching points:", error);
+        }
+    }
+
     fetchAndDisplayChallenges();
+    await fetchAndDisplayWeeklyPoints();
+    await fetchAndDisplayMonthlyPoints();
 });

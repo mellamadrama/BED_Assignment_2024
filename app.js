@@ -89,8 +89,8 @@ app.get("/weeklypoints", weeklyPointsController.getAllWeeklyPoints);
 app.get("/monthlypoints", monthlyPointsController.getAllMonthlyPoints);
 app.put("/resetweekly", weeklyPointsController.resetWeeklyPoints);
 app.put("/resetmonthly", monthlyPointsController.resetMonthlyPoints);
-app.put("/userweeklypoints/:userId", weeklyPointsController.getUserWeeklyPoints);
-app.put("/usermonthlypoints/:userId", monthlyPointsController.getUserMonthlyPoints);
+app.get("/userweeklypoints/:userId", weeklyPointsController.getUserWeeklyPoints);
+app.get("/usermonthlypoints/:userId", monthlyPointsController.getUserMonthlyPoints);
 
 // user account
 app.get("/getuser", userAccController.getAllUsers);

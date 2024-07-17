@@ -6,7 +6,7 @@ const getAllMonthlyPoints = async (req, res) => {
         res.json(points);
     } catch(error) {
         console.error(error);
-        res.status(500).send("WHY ERROR");
+        res.status(500).send("Error retrieving weekly points");
     }
 };
 
@@ -25,14 +25,14 @@ const resetMonthlyPoints = async (req, res) => {
 
 const getUserMonthlyPoints = async (req, res) => {
     try {
-        const user = await MonthlyPoints.getUserMonthlyPoints();
+        const user = await MonthlyPoints.getUserMonthlyPoints(req.params.userId);
         if (!user) {
-            return res.status(404).send("Unable to get user");
+            return res.status(404).json({ message: "Unable to get user points" });
         }
-        res.json(reset);
+        res.json(user);
     } catch (error) {
         console.error(error);
-        res.status(500).send("Error getting points");
+        res.status(500).json({ message: "Error getting user points" });
     }
 };
 

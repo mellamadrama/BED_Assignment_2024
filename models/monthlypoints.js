@@ -2,7 +2,7 @@ const sql = require("mssql");
 const dbConfig = require("../dbConfig");
 
 class MonthlyPoints {
-    constructor(userId, username, userMonthlyPoints) {
+    constructor(userId, userMonthlyPoints) {
         this.userId = userId;
         this.userMonthlyPoints = userMonthlyPoints;
     }
@@ -18,7 +18,7 @@ class MonthlyPoints {
         connection.close();
     
         return result.recordset.map(
-            (row) => new MonthlyPoints(row.userId, row.username, row.userMonthlyPoints)
+            (row) => new MonthlyPoints(row.userId, row.userMonthlyPoints)
         );
     }
 
@@ -41,19 +41,19 @@ class MonthlyPoints {
         }
     }
 
-    static async getMonthlyUserPoints(uId) {
+    static async getUserMonthlyPoints(uId) {
         const connection = await sql.connect(dbConfig);
-    
-        const sqlQuery = `SELECT * FROM MonthlyPoints WHERE userId = @uId`; 
-    
+
+        const sqlQuery = `SELECT * FROM MonthlyPoints WHERE userId = @uId`;
+
         const request = connection.request();
-        request.input("userId", uId);
+        request.input("uId", sql.NVarChar, uId);
         const result = await request.query(sqlQuery);
-    
+
         connection.close();
-    
+
         return result.recordset[0]
-            ? new Points(
+            ? new MonthlyPoints(
                 result.recordset[0].userId,
                 result.recordset[0].userMonthlyPoints
             )
