@@ -1,7 +1,25 @@
 document.addEventListener("DOMContentLoaded", async () => {
-    async function updateUserChallenge(ChallengeID, userId, newCompletedStatus) {
+    async function addWeeklyPoints(userId, pointsChange) {
         try {
-            const updateResponse = await fetch(`/updateuserchallenges/${ChallengeID}/${userId}`, {
+            const addPointsResponse = await fetch(`/addweekly/${userId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ points: pointsChange })
+            });
+            if (!addPointsResponse.ok) {
+                throw new Error(`HTTP error! Status: ${addPointsResponse.status}`);
+            }
+        } catch (error) {
+            console.error('Error adding weekly points:', error);
+            throw error; 
+        }
+    }
+
+    async function updateUserChallenge(challengeID, userId, newCompletedStatus) {
+        try {
+            const updateResponse = await fetch(`/updateuserchallenges/${challengeID}/${userId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -11,11 +29,42 @@ document.addEventListener("DOMContentLoaded", async () => {
             if (!updateResponse.ok) {
                 throw new Error(`HTTP error! Status: ${updateResponse.status}`);
             }
+
+            const challengeResponse = await fetch(`/challenges/${challengeID}`);
+            if (!challengeResponse.ok) {
+                throw new Error(`HTTP error! Status: ${challengeResponse.status}`);
+            }
+            const challenges = await challengeResponse.json();
+
+            challenges.forEach(async (challenge) => {
+                const { ChallengeID, ChallengeDesc, Points } = challenge;
+
+                const pointsChange = (newCompletedStatus === 'Y') ? parseInt(Points) : -parseInt(Points);
+
+                await addWeeklyPoints(userId, pointsChange);
+
+                const label = document.querySelector(`label[for="challenge-${challengeID}"]`);
+                if (!label) {
+                    throw new Error(`Label element not found for challenge ${challengeID}`);
+                }
+
+                if (newCompletedStatus === 'Y') {
+                    label.classList.remove("text-gray-400");
+                    label.classList.add("text-gray-700");
+                } else {
+                    label.classList.remove("text-gray-700");
+                    label.classList.add("text-gray-400");
+                }
+            });
+
         } catch (updateError) {
-            console.error(`Error updating challenge ${ChallengeID}:`, updateError);
+            console.error(`Error updating challenge ${challengeID}:`, updateError);
+            throw updateError;
         }
+        await fetchAndDisplayWeeklyPoints();
     }
 
+    // Function to fetch and display all challenges by challengeID
     async function getAllChallengesByChallengeID(challengeID, completed) {
         try {
             const userId = localStorage.getItem('userId');

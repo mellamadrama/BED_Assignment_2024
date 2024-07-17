@@ -59,6 +59,33 @@ class WeeklyPoints {
             )
             : null;
     }
+    
+    static async addPointsToWeekly(points, userId) {
+        try {
+            const connection = await sql.connect(dbConfig);
+    
+            const sqlQuery = `
+                UPDATE WeeklyPoints 
+                SET userWeeklyPoints = userWeeklyPoints + @points
+                WHERE userId = @userId
+            `;
+    
+            const request = connection.request();
+            request.input('points', sql.Int, points);  
+            request.input('userId', sql.NVarChar, userId);
+    
+            const result = await request.query(sqlQuery);
+    
+            connection.close();
+    
+            return result.rowsAffected[0] > 0;
+        } catch (error) {
+            console.error("Database error in addPointsToWeekly:", error);
+            throw error;
+        }
+    }
+    
+    
 }
 
 module.exports = WeeklyPoints;
