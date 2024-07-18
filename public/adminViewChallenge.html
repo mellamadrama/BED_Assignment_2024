@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
 </head>
 
-<body class="bg-[#f3e1c9] h-screen flex flex-col items-center">
+<body class="bg-[#f3e1c9] h-screen items-center">
     <header class="bg-[#baab76] text-center py-4 shadow-md w-full">
         <h1 class="text-3xl font-bold text-[#493d2c] pb-4 border-b-2 border-black">SustainableMe</h1>
         <div class="flex justify-around mt-6">
@@ -27,21 +27,24 @@
     </div>
 
     <div class="leaderboard-container flex justify-center items-center mt-6">
-        <div class="leaderboard w-full max-w-5xl bg-white shadow-md rounded-lg overflow-hidden my-10">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-[#25190D]">
-                    <tr>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-[#FFFFFF] uppercase tracking-wider border">ChallengeID</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-[#FFFFFF] uppercase tracking-wider border">ChallengeDescription</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-[#FFFFFF] uppercase tracking-wider border">Points</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200" id="challenge-list">
-                    <!-- Your table rows will go here -->
-                </tbody>
-            </table>
+            <div class="leaderboard w-full max-w-5xl bg-white shadow-md rounded-lg overflow-hidden my-10 mx-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-[#25190D]">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-[#FFFFFF] uppercase tracking-wider border">ChallengeID</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-[#FFFFFF] uppercase tracking-wider border">ChallengeDescription</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-[#FFFFFF] uppercase tracking-wider border">Points</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200" id="challenge-list">
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
+
+    <script src="js_files/adminViewChallenge.js"></script>
+
 </body>
 
 
