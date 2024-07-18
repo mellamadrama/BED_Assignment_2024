@@ -81,7 +81,7 @@ app.delete("/dellocations/:locationReqId", locationController.deleteLocation);
 // challenges
 app.get("/challenges", challengeController.getAllChallenges);
 app.get("/challenges/:id", challengeController.getChallengeByID);
-app.post("/challenges", validateChallenge, challengeController.createChallenge);
+app.post("/createchallenges", validateChallenge, challengeController.createChallenge);
 app.delete("/challenges/:id", challengeController.deleteChallenge);
 
 // user weekly challenges
