@@ -236,3 +236,24 @@ VALUES
   ('Unpackt', '20 Mandai Lake Rd, #02-09 Mandai Wildlife WEST, Singapore 729825', 'A', 'https://unpackt.com.sg/', 'Acc0000009', 'Acc0000010'),
   ('H&M', '345 Main St', 'P', NULL, 'Acc0000002', NULL),
   ('Shein', '678 Main St', 'R', NULL, 'Acc0000005', 'Acc0000001');
+
+CREATE TABLE Events (
+  eventId INT PRIMARY KEY IDENTITY(1,1),
+  name VARCHAR(100) NOT NULL,
+  description VARCHAR(250) NOT NULL,
+  address VARCHAR(250),
+  date DATETIME,
+  price DECIMAL(10, 2),
+  adminId CHAR(10),
+  CONSTRAINT FK_Events_adminId FOREIGN KEY (adminId) REFERENCES Admin(adminId)
+);
+
+INSERT INTO Events (name, description, address, date, price, adminId)
+VALUES 
+  ('Great Green Run 2024', 'A trailblazing event designed to redefine the essence of eco-friendly and aspirational runs, presented by CIMB Singapore.', 'Marina Barrage, 8 Marina Gardens Drive Singapore, 018951', '2024-10-12 18:30:00', NULL, 'Acc0000010'),
+  ('Race For Good 2024', 'Get ready to lace up your sneakers and join us for Race For Good 2024, where we will run, walk, and raise money for our beneficiaries.', 'Angsana Green East Coast Parkway Singapore, Singapore', '2024-09-14 13:00:00', 70, 'Acc0000010'),
+  ('Upcycled with Plastic: Accessories @ CLSF 2024', 'Make your own blings using plastic!', 'Tzu Chi Humanistic Youth Centre 慈济人文青年中心, 30A Yishun Central 1 Singapore, 768796', '2024-07-20 10:00:00', 30, 'Acc0000001'),
+  ('Nature and Sustainability Tour: Urban Wetlands', 'Join us for free guided walks to learn about climate change, biodiversity and sustainable features in the Gardens!', 'Satay by the Bay, Tables outside toilet and next to western food, 12 Marina Gardens Drive Singapore, 018952', '2024-08-03 10:30:00', NULL, 'Acc0000007'),
+  ('Net Zero Carbon Cities: Dream or Reality - A RICS & REDAS SEA Conference', 'Navigating the Net Zero Challenge: Practical Solutions for a Sustainable South East Asia', 'Singapore Marriott Tang Plaza Hotel, 320 Orchard Road Singapore, 238865', '2024-10-23 08:30:00', 163.50, 'Acc0000007'),
+  ('Plastic Collage - Explore Plastic Issues Today & Solutions for Tomorrow', 'Learn about Plastics (Trends, Waste, Recycling etc.) issues & challenges + solutions to beat Plastic Pollution in Asia! Fun science evening!', 'PALO IT Singapore, 11 Beach Road ##06-01 Singapore, Singapore 189675', '2024-09-23 18:15:00', NULL, 'Acc0000004'),
+  ('Coffee Scrub Upcycling Workshop @ CLSF 2024', 'Discover the beauty of coffee grounds, how to upcycle them, and bring home a coffee ground body scrub!', 'Tzu Chi Humanistic Youth Centre 慈济人文青年中心, 30A Yishun Central 1 Singapore, 768796', '2024-07-20 15:30:00', NULL, 'Acc0000004');

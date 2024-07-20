@@ -3,6 +3,7 @@ const categoryController = require("./controllers/categoryController");
 const weekController = require("./controllers/weekController");
 const dataInputController = require("./controllers/dataInputController");
 const locationController = require("./controllers/locationController");
+const eventController = require("./controllers/eventController");
 const loginController = require("./controllers/loginController");
 const adminLoginController = require("./controllers/adminLoginController")
 const challengeController = require("./controllers/challengeController");
@@ -23,6 +24,7 @@ const bodyParser = require("body-parser");
 const { validateWeek, validateUpdateWeekName } = require('./middlewares/validateWeek');
 const { validateDataInput, validateDataInputs } = require('./middlewares/validateDataInput');
 const validateLocation = require('./middlewares/validateLocation');
+const validateEvent = require('./middlewares/validateEvent');
 const validateLogin = require("./middlewares/validateLogin");
 const validateUserSignup = require('./middlewares/validateUserSignup');
 const validateAdminLogin = require("./middlewares/validateAdminLogin");
@@ -77,6 +79,13 @@ app.get("/locations/:locationReqId", locationController.getLocationById);
 app.post("/createlocations", validateLocation, locationController.createLocation);
 app.put("/updlocations/:locationReqId", validateLocation, locationController.updateLocation);
 app.delete("/dellocations/:locationReqId", locationController.deleteLocation);
+
+//events
+app.get("/events", eventController.getAllEvents);
+app.get("/events/:eventId", eventController.getEventById);
+app.post("/createevents", validateEvent, eventController.createEvent);
+app.put("/updateevents/:eventId", validateEvent, eventController.updateEvent);
+app.delete("/deleteevents/:eventId", eventController.deleteEvent);
 
 // challenge
 app.get("/challenges", challengeController.getAllChallenges);
