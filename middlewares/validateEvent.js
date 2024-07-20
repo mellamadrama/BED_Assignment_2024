@@ -6,7 +6,7 @@ const validateEvent = (req, res, next) => {
     description: Joi.string().max(250).required(),
     address: Joi.string().max(250).allow(null, ''), 
     date: Joi.date().allow(null), // Allow null for date
-    price: Joi.number().precision(2).allow(null), // Allow null for price
+    price: Joi.number().precision(2).allow(null, ''), // Allow null for price
     adminId: Joi.string().max(10).allow(null, '') // Allow null for adminId
   });
 

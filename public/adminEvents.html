@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>SustainableMe - Admin Location Request</title>
+    <title>SustainableMe - Admin Events</title>
     <meta charset="UTF-8">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,8 +14,8 @@
     <header class="bg-[#baab76] text-center py-4 shadow-md">
         <h1 class="text-3xl font-bold text-[#493d2c] pb-4 border-b-2 border-black">SustainableMe</h1>
         <div class="flex justify-around mt-6">
-            <div class="nav-item"><a href="#" class="hover:underline">Location Request</a></div>
-            <div class="nav-item"><a href="adminEvents.html" class="font-semibold hover:underline">Events List</a></div>
+            <div class="nav-item"><a href="adminLocationRequest.html" class="font-semibold hover:underline">Location Request</a></div>
+            <div class="nav-item"><a href="#" class="hover:underline">Events List</a></div>
             <div class="nav-item"><a href="adminViewChallenge.html" class="font-semibold hover:underline">Challenges</a></div>
             <div class="nav-item"><a href="adminaccount.html" class="font-semibold hover:underline">Account</a></div>
         </div>
@@ -27,15 +27,16 @@
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-[#25190D]">
                         <tr>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-[#FFFFFF] uppercase tracking-wider border">LocationReqID</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-[#FFFFFF] uppercase tracking-wider border">MemberID</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-[#FFFFFF] uppercase tracking-wider border">Content</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-[#FFFFFF] uppercase tracking-wider border">Approval Status</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-[#FFFFFF] uppercase tracking-wider border">EventID</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-[#FFFFFF] uppercase tracking-wider border">Name</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-[#FFFFFF] uppercase tracking-wider border">Description</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-[#FFFFFF] uppercase tracking-wider border">Date</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-[#FFFFFF] uppercase tracking-wider border">Price</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-[#FFFFFF] uppercase tracking-wider border">Update</th>
                         </tr>
                     </thead>
-                    <tbody class="bg-white divide-y divide-gray-200" id="location-request-list">
-                        <!-- td of each location request will be added here -->
+                    <tbody class="bg-white divide-y divide-gray-200" id="event-list">
+                        <!-- td of each event will be added here -->
                     </tbody>
                 </table>
             </div>
@@ -43,6 +44,6 @@
     </div>
 
     <!-- Reference to the external JavaScript file -->
-    <script src="js_files/adminLocationRequest.js"></script>
+    <script src="js_files/adminEvents.js"></script>
 </body>
 </html>

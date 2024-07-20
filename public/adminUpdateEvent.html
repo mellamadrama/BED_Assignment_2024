@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>SustainableMe - Admin Account</title>
+    <title>SustainableMe - Admin Update Event</title>
     <meta charset="UTF-8">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,73 +14,79 @@
     <header class="bg-[#baab76] text-center py-4 shadow-md">
         <h1 class="text-3xl font-bold text-[#493d2c] pb-4 border-b-2 border-black">SustainableMe</h1>
         <div class="flex justify-around mt-6">
-            <div class="nav-item"><a href="#" class="hover:underline">Location Request</a></div>
-            <div class="nav-item"><a href="adminEvents.html" class="font-semibold hover:underline">Events List</a></div>
+            <div class="nav-item"><a href="adminLocationRequest.html" class="font-semibold hover:underline">Location Request</a></div>
+            <div class="nav-item"><a href="#" class="hover:underline">Events List</a></div>
             <div class="nav-item"><a href="adminViewChallenge.html" class="font-semibold hover:underline">Challenges</a></div>
             <div class="nav-item"><a href="adminaccount.html" class="font-semibold hover:underline">Account</a></div>
         </div>
     </header>
 
     <div class="p-30">
-        <form action="adminLocationRequest.html" method="get">
+        <form action="adminEvents.html" method="get">
             <button class="ml-10 mt-6 rounded-full px-3 py-2 bg-[#908660] text-sm font-bold text-black shadow-sm hover:border-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black-600"><</button>
         </form>
     </div>
     <div class="ml-40 mr-40 mt-10 mb-10">
-        <form id="updateLocationForm">
+        <form id="updateEventForm">
             <div class="space-y-12 ml-40 mr-40">
-                <h2 class="text-base font-bold leading-7 text-gray-900 underline">Update Location Request</h2>
-                <div class="pl-5 pr-5">            
+                <h2 class="text-base font-bold leading-7 text-gray-900 underline">Update Event</h2>
+                <div class="pl-5 pr-5">
                     <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                         <div class="sm:col-span-4">
-                            <label for="approve-locationReqID" class="block text-sm font-medium leading-6 text-gray-900">LocationReqID:</label>
+                            <label for="event-id" class="block text-sm font-medium leading-6 text-gray-900">Event ID:</label>
                             <div class="mt-2">
                                 <div class="flex rounded-md sm:max-w-md">
-                                    <h3 id="approve-locationReqID">xxxxx</h3>
+                                    <input type="text" id="event-id" class="block flex-1 rounded-md border-0 py-1.5 pl-1 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6 bg-[#908660] text-white" readonly>
                                 </div>
                             </div>
                         </div>
 
                         <div class="sm:col-span-4">
-                            <label for="approve-location-name" class="block text-sm font-medium leading-6 text-gray-900">Location Name:</label>
+                            <label for="event-name" class="block text-sm font-medium leading-6 text-gray-900">Event Name:</label>
                             <div class="mt-2">
                                 <div class="flex rounded-md sm:max-w-md">
-                                    <h3 id="approve-location-name">xxxxxxxxxxxx</h3>
+                                    <input type="text" id="event-name" class="block flex-1 rounded-md border-0 py-1.5 pl-1 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6 bg-[#908660] text-white">
                                 </div>
                             </div>
                         </div>
                         
                         <div class="sm:col-span-4">
-                            <label for="approve-location-address" class="block text-sm font-medium leading-6 text-gray-900">Location Address:</label>
+                            <label for="event-description" class="block text-sm font-medium leading-6 text-gray-900">Event Description:</label>
                             <div class="mt-2">
                                 <div class="flex rounded-md sm:max-w-md">
-                                    <h3 id="approve-location-address">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</h3>
+                                    <textarea id="event-description" class="block flex-1 rounded-md border-0 py-1.5 pl-1 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6 bg-[#908660] text-white"></textarea>
                                 </div>
                             </div>
                         </div>
-            
+
                         <div class="sm:col-span-4">
-                            <label for="location-status" class="block text-sm font-medium leading-6 text-gray-900">Status:</label>
-                            <div class="relative mt-2">
-                                <select class="bg-[#908660] text-white pl-1 pr-4" id="location-status">
-                                    <option value="P">Pending</option>
-                                    <option value="A">Approved</option>
-                                    <option value="R">Rejected</option>
-                                </select>
+                            <label for="event-address" class="block text-sm font-medium leading-6 text-gray-900">Event Address:</label>
+                            <div class="mt-2">
+                                <div class="flex rounded-md sm:max-w-md">
+                                    <textarea id="event-address" class="block flex-1 rounded-md border-0 py-1.5 pl-1 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6 bg-[#908660] text-white"></textarea>
+                                </div>
                             </div>
-                            <p class="mt-3 text-sm leading-6 text-gray-600"></p>
+                        </div>
+                        
+                        <div class="sm:col-span-4">
+                            <label for="event-date" class="block text-sm font-medium leading-6 text-gray-900">Event Date:</label>
+                            <div class="mt-2">
+                                <div class="flex rounded-md sm:max-w-md">
+                                    <input type="date" id="event-date" class="block flex-1 rounded-md border-0 py-1.5 pl-1 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6 bg-[#908660] text-white">
+                                </div>
+                            </div>
                         </div>
 
                         <div class="sm:col-span-4">
-                            <label for="approve-location-weblink" class="block text-sm font-medium leading-6 text-gray-900">Website Link:</label>
+                            <label for="event-price" class="block text-sm font-medium leading-6 text-gray-900">Event Price:</label>
                             <div class="mt-2">
                                 <div class="flex rounded-md sm:max-w-md">
-                                    <input type="text" name="approve-location-weblink" id="approve-location-weblink" class="block flex-1 rounded-md border-0 py-1.5 pl-1 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6 bg-[#908660] text-white">
+                                    <input type="number" id="event-price" class="block flex-1 rounded-md border-0 py-1.5 pl-1 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6 bg-[#908660] text-white">
                                 </div>
                             </div>
                         </div>
                     </div>
-            
+
                     <div class="mt-10 flex items-center gap-x-6">
                         <button id="submit-btn" type="submit" class="rounded-md bg-[#908660] px-3 py-2 text-sm font-semibold text-white shadow-sm hover:border-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black-600">Submit</button>
                         <button id="delete-btn" class="rounded-md bg-[#baab76] px-3 py-2 text-sm font-semibold text-white hover:border-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black-600">Delete</button>
@@ -90,7 +96,7 @@
         </form>
     </div>
 
-    <!-- This is the JavaScript-->
-    <script src="js_files/adminApproveLocation.js"></script>
+    <!-- JavaScript to populate form fields and handle submission -->
+    <script src="js_files/adminUpdateEvent.js"></script>
 </body>
 </html>

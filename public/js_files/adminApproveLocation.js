@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
     let userId = null;
-    //let admin = localStorage.getItem('userId');
+    let admin = localStorage.getItem('adminId');
 
     function getQueryParams() {
         const params = new URLSearchParams(window.location.search);
@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             status: document.getElementById("location-status").value,
             websiteLink: document.getElementById("approve-location-weblink").value,
             userId: userId,
-            adminId: null//admin
+            adminId: admin
         };
 
         async function updateLocation(locationReqId) {
