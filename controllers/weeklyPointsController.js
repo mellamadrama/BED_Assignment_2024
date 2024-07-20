@@ -36,8 +36,25 @@ const getUserWeeklyPoints = async (req, res) => {
     }
 };
 
+const addPointsToWeekly = async (req, res) => {
+    try {
+        const { points } = req.body; 
+        const userId = req.params.userId; 
+        
+        const success = await WeeklyPoints.addPointsToWeekly(points, userId);
+        if (!success) {
+            return res.status(404).json({ message: "Unable to add points to weekly total" });
+        }
+        res.json({ message: "Points added to weekly total successfully" });
+    } catch (error) {
+        console.error("Error adding points to weekly total:", error);
+        res.status(500).json({ message: "Error adding points to weekly total" });
+    }
+};
+
 module.exports = {
     getAllWeeklyPoints,
     resetWeeklyPoints,
     getUserWeeklyPoints,
+    addPointsToWeekly,
 };

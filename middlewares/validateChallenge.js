@@ -2,9 +2,9 @@ const Joi = require("joi");
 
 const validateChallenge = (req, res, next) => {
   const schema = Joi.object({
-    ChallengeID: Joi.string().lenght(10).required(),
+    ChallengeID: Joi.string().length(10).required(),
     ChallengeDesc: Joi.string().min(1).max(200).required(),
-    Points: Joi.int().min(1).max(20).required(),
+    Points: Joi.number().integer().required(),
   });
 
   const validation = schema.validate(req.body, { abortEarly: false }); 
