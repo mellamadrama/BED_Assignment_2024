@@ -34,10 +34,16 @@ const deleteChallengeForEachUser = async (req, res) => {
 
 const createChallengeForEachUser = async (req, res) => {
     try {
-        const { ChallengeID, ChallengeDesc, Points } = req.body;
-        await UserWeeklyChallenge.createChallengeForEachUser(ChallengeID, ChallengeDesc, Points);
+        const { ChallengeID } = req.body;
+
+        if (!ChallengeID) {
+            return res.status(400).send('ChallengeID is required');
+        }
+
+        await UserWeeklyChallenge.createChallengeForEachUser(ChallengeID);
         res.status(201).send('Challenge created for each user successfully');
     } catch (error) {
+        console.error("Error creating challenge for each user:", error.message);
         res.status(500).send(error.message);
     }
 };

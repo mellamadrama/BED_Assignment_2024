@@ -97,7 +97,7 @@ app.delete("/challenges/:id", challengeController.deleteChallenge);
 app.get("/userchallenges/:userId", userWeeklyChallengeController.getAllChallengesByUserID);
 app.put("/updateuserchallenges/:challengeId/:userId", userWeeklyChallengeController.updateChallengeCompleted);
 app.delete("/deleteuserchallenges/:challengeId", userWeeklyChallengeController.deleteChallengeForEachUser);
-app.post("/createuserchallenges", validateChallenge, userWeeklyChallengeController.createChallengeForEachUser);
+app.post("/createuserchallenges", userWeeklyChallengeController.createChallengeForEachUser);
 
 // points
 app.get("/weeklypoints", weeklyPointsController.getAllWeeklyPoints);
