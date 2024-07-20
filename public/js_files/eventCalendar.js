@@ -1,7 +1,11 @@
+let currentMonth = new Date().getMonth();
+let currentYear = new Date().getFullYear();
+let eventsData = [];
+
 document.addEventListener('DOMContentLoaded', () => {
     fetchEvents();
 });
-  
+
 const fetchEvents = async () => {
     try {
         const response = await fetch('/events');
@@ -9,20 +13,20 @@ const fetchEvents = async () => {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const events = await response.json();
-        renderCalendar(events);
+        eventsData = events; // Store events globally
+        renderCalendar(eventsData, currentMonth, currentYear);
     } catch (error) {
         console.error('Error fetching events:', error);
         document.getElementById('calendar').innerHTML = '<p class="text-red-500">Failed to load events. Please try again later.</p>';
     }
 };
 
-const renderCalendar = (events) => {
+const renderCalendar = (events, month, year) => {
     const calendarEl = document.getElementById('calendar');
-
-    // Assume we're rendering for the current month
-    const today = new Date();
-    const month = today.getMonth(); // Current month (0-based)
-    const year = today.getFullYear(); // Current year
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    
+    // Update the month display
+    document.getElementById('current-month').textContent = `${monthNames[month]} ${year}`;
 
     const firstDayOfMonth = new Date(year, month, 1);
     const lastDayOfMonth = new Date(year, month + 1, 0);
@@ -35,53 +39,45 @@ const renderCalendar = (events) => {
 
     // Calendar grid header
     const header = document.createElement('div');
-    header.className = 'grid grid-cols-7 gap-1 mb-4';
+    header.className = 'grid grid-cols-7 gap-2 mb-4';
     header.innerHTML = `
-        <div class="flex gap-20">
-            <div class="font-bold text-center py-2">Sun</div>
-            <div class="font-bold text-center py-2">Mon</div>
-            <div class="font-bold text-center py-2">Tue</div>
-            <div class="font-bold text-center py-2">Wed</div>
-            <div class="font-bold text-center py-2">Thu</div>
-            <div class="font-bold text-center py-2">Fri</div>
-            <div class="font-bold text-center py-2">Sat</div>
-        </div>
+        <div class="font-bold text-center py-2">Sun</div>
+        <div class="font-bold text-center py-2">Mon</div>
+        <div class="font-bold text-center py-2">Tue</div>
+        <div class="font-bold text-center py-2">Wed</div>
+        <div class="font-bold text-center py-2">Thu</div>
+        <div class="font-bold text-center py-2">Fri</div>
+        <div class="font-bold text-center py-2">Sat</div>
     `;
     calendarEl.appendChild(header);
 
     // Create calendar days
     const days = document.createElement('div');
-    days.className = 'grid grid-cols-7 gap-20';
+    days.className = 'grid grid-cols-7 gap-2';
 
     // Add blank cells for days before the first day of the month
     for (let i = 0; i < firstDayOfWeek; i++) {
         const emptyCell = document.createElement('div');
-        emptyCell.className = 'border p-10'; // Adjust padding for spacing
+        emptyCell.className = 'border p-2'; // Reduced padding
         days.appendChild(emptyCell);
     }
 
     // Add actual days
     for (let i = 1; i <= daysInMonth; i++) {
         const dayEl = document.createElement('div');
-        dayEl.className = 'border p-4 text-center relative'; // Adjust padding and set relative positioning
-        dayEl.innerHTML = `
-            <div>${i}</div>
-        `;
+        dayEl.className = 'border p-2 text-center relative cursor-pointer'; // Adjusted padding and set relative positioning
+        dayEl.innerHTML = `<div>${i}</div>`;
 
         // Add events to specific days
-        const dayEvents = events.filter(event => new Date(event.date).getDate() === i);
-        if (dayEvents.length > 0) {
-        dayEl.classList.add('bg-green-100');
-        const eventsList = document.createElement('ul');
-        eventsList.className = 'absolute top-0 left-0 w-full bg-white border border-gray-200 rounded shadow-lg p-2 text-sm'; // Styling for events list
-        dayEvents.forEach(event => {
-            const eventItem = document.createElement('li');
-            eventItem.className = 'text-gray-700 truncate'; // Ensure text does not overflow
-            eventItem.textContent = event.name; // Display event name
-            eventsList.appendChild(eventItem);
+        const dayEvents = events.filter(event => {
+            const eventDate = new Date(event.date);
+            return eventDate.getDate() === i && eventDate.getMonth() === month && eventDate.getFullYear() === year;
         });
-        dayEl.appendChild(eventsList);
+        if (dayEvents.length > 0) {
+            dayEl.classList.add('bg-[#baab76]');
         }
+
+        dayEl.addEventListener('click', () => updateEventDetails(i, dayEvents));
 
         days.appendChild(dayEl);
     }
@@ -89,10 +85,51 @@ const renderCalendar = (events) => {
     // Add blank cells to complete the last week
     for (let i = daysInMonth + firstDayOfWeek; i < totalDays; i++) {
         const emptyCell = document.createElement('div');
-        emptyCell.className = 'border p-4'; // Adjust padding for spacing
+        emptyCell.className = 'border p-2'; // Reduced padding
         days.appendChild(emptyCell);
     }
 
     // Append the days container to the calendar element
     calendarEl.appendChild(days);
 }
+
+const updateEventDetails = (day, events) => {
+    const eventListEl = document.getElementById('event-list');
+    eventListEl.innerHTML = ''; // Clear previous content
+
+    if (events.length === 0) {
+        eventListEl.innerHTML = '<p>No events for this day.</p>';
+    } else {
+        events.forEach(event => {
+            const eventItem = document.createElement('div');
+            eventItem.className = 'p-2 border-t bg-[#908660] rounded-lg';
+            eventItem.innerHTML = `
+                <h3 class="text-lg font-bold">${event.name}</h3>
+                <p>${event.description}</p>
+                <p class="text-sm text-black-600">${new Date(event.date).toLocaleString()}</p>
+            `;
+            eventListEl.appendChild(eventItem);
+        });
+    }
+}
+
+// Event listeners for the next and previous month buttons
+document.getElementById('next-month').addEventListener('click', () => {
+    if (currentMonth === 11) {
+        currentMonth = 0;
+        currentYear++;
+    } else {
+        currentMonth++;
+    }
+    renderCalendar(eventsData, currentMonth, currentYear);
+});
+
+document.getElementById('prev-month').addEventListener('click', () => {
+    if (currentMonth === 0) {
+        currentMonth = 11;
+        currentYear--;
+    } else {
+        currentMonth--;
+    }
+    renderCalendar(eventsData, currentMonth, currentYear);
+});

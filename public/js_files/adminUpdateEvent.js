@@ -11,11 +11,11 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
             const event = await response.json();
 
-            document.getElementById("event-id").value = event.eventId;
+            document.getElementById("event-id").textContent = event.eventId;
             document.getElementById("event-name").value = event.name;
             document.getElementById("event-description").value = event.description;
             document.getElementById("event-address").value = event.address; // Ensure address is included
-            document.getElementById("event-date").value = new Date(event.date).toISOString().substr(0, 10);
+            document.getElementById("event-date").value = new Date(event.date).toISOString();
             document.getElementById("event-price").value = event.price;
         } catch (error) {
             console.error('Error fetching event details:', error);

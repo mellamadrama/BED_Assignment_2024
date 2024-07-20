@@ -58,15 +58,18 @@ class Event {
     static async createEvent(newEventData) {
         const connection = await sql.connect(dbConfig);
 
+        // Convert empty strings to null for numeric fields
+        const price = newEventData.price ? parseFloat(newEventData.price) : null;
+
         const sqlQuery = `INSERT INTO Events (name, description, address, date, price, adminId) VALUES (@name, @description, @address, @date, @price, @adminId); SELECT SCOPE_IDENTITY() AS eventId;`; // Parameterized query
 
         const request = connection.request();
-        request.input("name", newEventData.name);
-        request.input("description", newEventData.description);
-        request.input("address", newEventData.address);
-        request.input("date", newEventData.date);
-        request.input("price", newEventData.price);
-        request.input("adminId", newEventData.adminId);
+        request.input("name", sql.VarChar, newEventData.name);
+        request.input("description", sql.VarChar, newEventData.description);
+        request.input("address", sql.VarChar, newEventData.address);
+        request.input("date", sql.DateTime, newEventData.date);
+        request.input("price", sql.Decimal(18, 2), price); // Use the converted price
+        request.input("adminId", sql.VarChar, newEventData.adminId);
 
         const result = await request.query(sqlQuery);
 

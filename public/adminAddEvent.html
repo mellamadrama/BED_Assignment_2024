@@ -29,18 +29,9 @@
     <div class="ml-40 mr-40 mt-10 mb-10">
         <form id="updateEventForm">
             <div class="space-y-12 ml-40 mr-40">
-                <h2 class="text-base font-bold leading-7 text-gray-900 underline">Update Event</h2>
+                <h2 class="text-base font-bold leading-7 text-gray-900 underline">Add Event</h2>
                 <div class="pl-5 pr-5">
                     <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                        <div class="sm:col-span-4">
-                            <label for="event-id" class="block text-sm font-medium leading-6 text-gray-900">Event ID:</label>
-                            <div class="mt-2">
-                                <div class="flex rounded-md sm:max-w-md">
-                                    <h3 id="event-id">xx</h3>
-                                </div>
-                            </div>
-                        </div>
-
                         <div class="sm:col-span-4">
                             <label for="event-name" class="block text-sm font-medium leading-6 text-gray-900">Event Name:</label>
                             <div class="mt-2">
@@ -72,7 +63,7 @@
                             <label for="event-date" class="block text-sm font-medium leading-6 text-gray-900">Event Date:</label>
                             <div class="mt-2">
                                 <div class="flex rounded-md sm:max-w-md">
-                                    <input type="date" id="event-date" class="block flex-1 rounded-md border-0 py-1.5 pl-1 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6 bg-[#908660] text-white">
+                                    <input type="datetime-local" id="event-date" class="block flex-1 rounded-md border-0 py-1.5 pl-1 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6 bg-[#908660] text-white">
                                 </div>
                             </div>
                         </div>
@@ -88,8 +79,7 @@
                     </div>
 
                     <div class="mt-10 flex items-center gap-x-6">
-                        <button id="submit-btn" type="submit" class="rounded-md bg-[#908660] px-3 py-2 text-sm font-semibold text-white shadow-sm hover:border-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black-600">Submit</button>
-                        <button id="delete-btn" class="rounded-md bg-[#baab76] px-3 py-2 text-sm font-semibold text-white hover:border-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black-600">Delete</button>
+                        <button id="submit-btn" type="submit" class="rounded-md bg-[#908660] px-3 py-2 text-sm font-semibold text-white shadow-sm hover:border-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black-600">Create</button>
                     </div>
                 </div>
             </div>
@@ -97,6 +87,6 @@
     </div>
 
     <!-- JavaScript to populate form fields and handle submission -->
-    <script src="js_files/adminUpdateEvent.js"></script>
+    <script src="js_files/adminAddEvent.js"></script>
 </body>
 </html>
