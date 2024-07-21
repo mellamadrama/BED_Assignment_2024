@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         return;
     }
     try {
+        const userId = localStorage.getItem('userId');
         const response = await fetch(`/getuser/${userId}`);
         if (!response.ok) {
             throw new Error('Failed to fetch user data');
@@ -83,11 +84,18 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     const trackerContainer = document.querySelector('.overflow-x-auto');
     try {
+        const userId = localStorage.getItem('userId');
+        if (!userId) {
+            console.error("User ID not found in localStorage");
+            return;
+        }
+
         const response = await fetch(`/usertracker/${userId}`);
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
         const data = await response.json();
+
         renderTrackerData(data);
     } catch (error) {
         console.error('Error fetching tracker data:', error);

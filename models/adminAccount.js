@@ -91,7 +91,7 @@ class Admin {
         return result.recordset[0];
     }
 
-    static async deleteAdminAccount(userId) {
+    static async deleteAdminAccount(adminId) {
         try {
             const connection = await sql.connect(dbConfig);
             const request = connection.request();
@@ -99,6 +99,7 @@ class Admin {
 
             const sqlQuery = `
                 DELETE FROM LocationReq WHERE adminId = @adminId;
+                DELETE FROM Events WHERE adminId = @adminId;
                 DELETE FROM Admin WHERE adminId = @adminId;
                 DELETE FROM Account WHERE accId = @adminId;
             `;

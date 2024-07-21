@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", async function() {
     }
 
     try {
+        const adminId = localStorage.getItem('adminId');
         const response = await fetch(`/getadmin/${adminId}`);
         if (!response.ok) {
             throw new Error('Failed to fetch admin data');
@@ -31,20 +32,19 @@ document.addEventListener("DOMContentLoaded", async function() {
 
     const fetchApprovedLocations = async () => {
         try {
-            const adminId = 'Acc0000004'; // Replace with actual adminId or get it dynamically
-            const response = await fetch(`/adminhistory/${adminId}`); // Adjust the endpoint as per your backend setup
+            const adminId = localStorage.getItem('adminId');
+            const response = await fetch(`/adminhistory/${adminId}`); 
             if (!response.ok) {
                 throw new Error('Failed to fetch locations');
             }
             const locations = await response.json();
     
-            // Select the container where you want to append location details
             const locationContainer = document.querySelector('.overflow-x-auto');
     
-            // Clear existing content (optional, if needed)
+            // Clear existing content
             locationContainer.innerHTML = '';
     
-            // Loop through each location and create HTML elements dynamically
+            // Loop through each location
             locations.forEach(location => {
                 const locationDiv = document.createElement('div');
                 locationDiv.className = 'inline-block rounded-lg border border-gray-200 p-4 mr-4 bg-white';

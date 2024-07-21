@@ -93,11 +93,10 @@ document.addEventListener('DOMContentLoaded', async function () {
             location.reload();
           } else {
             alert('Failed to update details');
-            console.error('Failed to update details');
+            console.log('Failed to update details');
           }
         } catch (error) {
           console.error('Error:', error);
-          alert("An error occurred");
         }
       });
     }
@@ -106,7 +105,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     if (confirmDeleteBtn) {
       confirmDeleteBtn.addEventListener('click', async function() {
         const adminId = localStorage.getItem('adminId');
-        if (!userId) {
+        if (!adminId) {
           alert('adminId not found');
           return;
         }
@@ -125,7 +124,6 @@ document.addEventListener('DOMContentLoaded', async function () {
           }
         } catch (error) {
           console.error('Error: ', error);
-          alert("An error occured");
         }
       });
     }

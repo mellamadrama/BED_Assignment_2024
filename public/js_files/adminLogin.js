@@ -18,7 +18,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         if (response.ok) {
             // Save adminId to local storage
             localStorage.setItem('adminId', result.adminId);
-            document.getElementById('message').textContent = 'Login successful!';
+            alert('Login Successful');
             
             window.location.href = 'homeAdmin.html';
         } else {
