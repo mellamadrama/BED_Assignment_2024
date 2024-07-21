@@ -2,13 +2,12 @@ const Joi = require('joi');
 
 async function validateAdminSignup(req, res, next) {
     const schema = Joi.object({
-        adminId: Joi.string().length(10).required(),
         username: Joi.string().min(1).max(100).required(),
         firstName: Joi.string().min(1).max(50).required(),
         lastName: Joi.string().min(1).max(50).required(),
-        email: Joi.string().min(1).max(100).required(),
+        email: Joi.string().email().required(),
         password: Joi.string().min(1).max(250).required(),
-    })
+    });
 
     const validation = schema.validate(req.body, { abortEarly: false });
 

@@ -2,7 +2,6 @@ const Admin = require("../models/adminSignup");
 
 const createAdminAccount = async (req, res) => {
     const adminDetails = {
-        adminId: req.body.adminId,
         username: req.body.username,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
