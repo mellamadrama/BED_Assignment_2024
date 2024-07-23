@@ -37,6 +37,8 @@ const validateAdminAccount = require("./middlewares/validateAdminAccount");
 const validateUserLocation = require("./middlewares/validateUserLocation");
 const validateUserTracker = require("./middlewares/validateUserTracker");
 const validateAdminHistory = require("./middlewares/validateAdminHistory");
+const verifyJWT = require("./middlewares/verifyJWT");
+
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -47,86 +49,86 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(staticMiddleware);
 
 //login
-app.post('/login', validateLogin, loginController.loginUser);
-app.post('/loginAdmin', validateAdminLogin, adminLoginController.loginAdmin);
+app.post('/login', validateLogin, verifyJWT, loginController.loginUser);
+app.post('/loginAdmin', validateAdminLogin, verifyJWT, adminLoginController.loginAdmin);
 
 //signup
 app.post('/signup', validateUserSignup, userSignupController.createUserAccount);
 app.post('/adminsignup', validateAdminSignup, adminSignupController.createAdminAccount);
 
 // categories
-app.get("/categories", categoryController.getAllCategories);
-app.get('/categories/:catId', categoryController.getCategoryById);
+app.get("/categories", verifyJWT, categoryController.getAllCategories);
+app.get('/categories/:catId', verifyJWT, categoryController.getCategoryById);
 
 // weeks
-app.get("/weeks", weekController.getAllWeeks);
-app.get("/weeks/:catId/:userId", weekController.getWeekByUserCatId);
-app.post("/weeks", validateWeek, weekController.createWeek);
-app.put("/weeks/:weekName/:catId/:userId", validateUpdateWeekName, weekController.updateWeekAndData);
-app.delete('/weeks/:weekName/:catId/:userId', weekController.deleteWeekAndData);
+app.get("/weeks", verifyJWT, weekController.getAllWeeks);
+app.get("/weeks/:catId/:userId", verifyJWT, weekController.getWeekByUserCatId);
+app.post("/weeks", verifyJWT, validateWeek, weekController.createWeek);
+app.put("/weeks/:weekName/:catId/:userId", verifyJWT, validateUpdateWeekName, weekController.updateWeekAndData);
+app.delete('/weeks/:weekName/:catId/:userId', verifyJWT, weekController.deleteWeekAndData);
 
 // datainput
-app.get("/datainput", dataInputController.getAllCatDataInput);
-app.get("/datainput/:weekName/:catId/:userId/:dataId", dataInputController.getCatDataInputByIds);
-app.get("/datainput/:weekName/:catId/:userId", dataInputController.getCatDataInputById);
-app.post("/datainput", validateDataInput, dataInputController.createDataInput);
-app.put("/datainput/:weekName/:catId/:userId/:dataId", validateDataInputs, dataInputController.updateCatDataInput);
-app.delete('/datainput/:weekName/:catId/:userId/:dataId', dataInputController.deleteCatDataInput);
+app.get("/datainput", verifyJWT, dataInputController.getAllCatDataInput);
+app.get("/datainput/:weekName/:catId/:userId/:dataId", verifyJWT, dataInputController.getCatDataInputByIds);
+app.get("/datainput/:weekName/:catId/:userId", verifyJWT, dataInputController.getCatDataInputById);
+app.post("/datainput", verifyJWT, validateDataInput, dataInputController.createDataInput);
+app.put("/datainput/:weekName/:catId/:userId/:dataId", verifyJWT, validateDataInputs, dataInputController.updateCatDataInput);
+app.delete('/datainput/:weekName/:catId/:userId/:dataId', verifyJWT, dataInputController.deleteCatDataInput);
 
 // locations
-app.get("/locations", locationController.getAllLocations);
-app.get("/locations/:locationReqId", locationController.getLocationById);
-app.post("/createlocations", validateLocation, locationController.createLocation);
-app.put("/updlocations/:locationReqId", validateLocation, locationController.updateLocation);
-app.delete("/dellocations/:locationReqId", locationController.deleteLocation);
+app.get("/locations", verifyJWT, locationController.getAllLocations);
+app.get("/locations/:locationReqId", verifyJWT, locationController.getLocationById);
+app.post("/createlocations", verifyJWT, validateLocation, locationController.createLocation);
+app.put("/updlocations/:locationReqId", verifyJWT, validateLocation, locationController.updateLocation);
+app.delete("/dellocations/:locationReqId", verifyJWT, locationController.deleteLocation);
 
 //events
-app.get("/events", eventController.getAllEvents);
-app.get("/events/:eventId", eventController.getEventById);
-app.post("/createevents", validateEvent, eventController.createEvent);
-app.put("/updateevents/:eventId", validateEvent, eventController.updateEvent);
-app.delete("/deleteevents/:eventId", eventController.deleteEvent);
+app.get("/events", verifyJWT, eventController.getAllEvents);
+app.get("/events/:eventId", verifyJWT, eventController.getEventById);
+app.post("/createevents", verifyJWT, validateEvent, eventController.createEvent);
+app.put("/updateevents/:eventId", verifyJWT, validateEvent, eventController.updateEvent);
+app.delete("/deleteevents/:eventId", verifyJWT, eventController.deleteEvent);
 
 // challenges
-app.get("/challenges", challengeController.getAllChallenges);
-app.get("/challenges/:id", challengeController.getChallengeByID);
-app.post("/createchallenges", validateChallenge, challengeController.createChallenge);
-app.delete("/challenges/:id", challengeController.deleteChallenge);
+app.get("/challenges", verifyJWT, challengeController.getAllChallenges);
+app.get("/challenges/:id", verifyJWT, challengeController.getChallengeByID);
+app.post("/createchallenges", verifyJWT, validateChallenge, challengeController.createChallenge);
+app.delete("/challenges/:id", verifyJWT, challengeController.deleteChallenge);
 
 // user weekly challenges
-app.get("/userchallenges/:userId", userWeeklyChallengeController.getAllChallengesByUserID);
-app.put("/updateuserchallenges/:challengeId/:userId", userWeeklyChallengeController.updateChallengeCompleted);
-app.delete("/deleteuserchallenges/:challengeId", userWeeklyChallengeController.deleteChallengeForEachUser);
-app.post("/createuserchallenges", userWeeklyChallengeController.createChallengeForEachUser);
+app.get("/userchallenges/:userId", verifyJWT, userWeeklyChallengeController.getAllChallengesByUserID);
+app.put("/updateuserchallenges/:challengeId/:userId", verifyJWT, userWeeklyChallengeController.updateChallengeCompleted);
+app.delete("/deleteuserchallenges/:challengeId", verifyJWT, userWeeklyChallengeController.deleteChallengeForEachUser);
+app.post("/createuserchallenges", verifyJWT, userWeeklyChallengeController.createChallengeForEachUser);
 
 // points
-app.get("/weeklypoints", weeklyPointsController.getAllWeeklyPoints);
-app.get("/monthlypoints", monthlyPointsController.getAllMonthlyPoints);
-app.put("/resetweekly", weeklyPointsController.resetWeeklyPoints);
-app.put("/resetmonthly", monthlyPointsController.resetMonthlyPoints);
-app.put("/addweekly/:userId", weeklyPointsController.addPointsToWeekly);
-app.put("/addmonthly/:userId", monthlyPointsController.addPointsToMonthly);
-app.get("/userweeklypoints/:userId", weeklyPointsController.getUserWeeklyPoints);
-app.get("/usermonthlypoints/:userId", monthlyPointsController.getUserMonthlyPoints);
+app.get("/weeklypoints", verifyJWT, weeklyPointsController.getAllWeeklyPoints);
+app.get("/monthlypoints", verifyJWT, monthlyPointsController.getAllMonthlyPoints);
+app.put("/resetweekly", verifyJWT, weeklyPointsController.resetWeeklyPoints);
+app.put("/resetmonthly", verifyJWT, monthlyPointsController.resetMonthlyPoints);
+app.put("/addweekly/:userId", verifyJWT, weeklyPointsController.addPointsToWeekly);
+app.put("/addmonthly/:userId", verifyJWT, monthlyPointsController.addPointsToMonthly);
+app.get("/userweeklypoints/:userId", verifyJWT, weeklyPointsController.getUserWeeklyPoints);
+app.get("/usermonthlypoints/:userId", verifyJWT, monthlyPointsController.getUserMonthlyPoints);
 
 // user account
-app.get("/getuser", userAccController.getAllUsers);
-app.get("/getuser/:userId", userAccController.getAllUsersById);
-app.put("/updateuser/:userId", userAccController.updateUserAccount);
-app.delete("/deleteuser/:userId", userAccController.deleteUserAccount);
+app.get("/getuser", verifyJWT, userAccController.getAllUsers);
+app.get("/getuser/:userId", verifyJWT, userAccController.getAllUsersById);
+app.put("/updateuser/:userId", verifyJWT, userAccController.updateUserAccount);
+app.delete("/deleteuser/:userId", verifyJWT, userAccController.deleteUserAccount);
 
 // user history (request location)
-app.get("/userlocations", userLocationController.getAllLocations);
-app.get("/userlocation/:userId", userLocationController.getLocationByUserId);
-app.get("/usertracker", userTrackerController.getAllCategories)
-app.get("/usertracker/:userId", userTrackerController.getCatDataInputByUserId)
+app.get("/userlocations", verifyJWT, userLocationController.getAllLocations);
+app.get("/userlocation/:userId", verifyJWT, userLocationController.getLocationByUserId);
+app.get("/usertracker", verifyJWT, userTrackerController.getAllCategories)
+app.get("/usertracker/:userId", verifyJWT, userTrackerController.getCatDataInputByUserId)
 
 // admin account
-app.get("/getadmin", adminAccountController.getAllAdmins);
-app.get("/getadmin/:adminId", adminAccountController.getAllAdminsById);
-app.put("/updateadmin/:adminId", adminAccountController.updateAdminAccount);
-app.delete("/deleteadmin/:adminId", adminAccountController.deleteAdminAccount);
-app.get("/adminhistory/:adminId", validateAdminHistory, adminHistoryController.getApprovedLocationsByAdminId);
+app.get("/getadmin", verifyJWT, adminAccountController.getAllAdmins);
+app.get("/getadmin/:adminId", verifyJWT, adminAccountController.getAllAdminsById);
+app.put("/updateadmin/:adminId", verifyJWT, adminAccountController.updateAdminAccount);
+app.delete("/deleteadmin/:adminId", verifyJWT, adminAccountController.deleteAdminAccount);
+app.get("/adminhistory/:adminId", verifyJWT, validateAdminHistory, adminHistoryController.getApprovedLocationsByAdminId);
 
 app.listen(port, async () => {
   try {
