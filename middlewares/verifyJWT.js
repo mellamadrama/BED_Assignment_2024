@@ -15,78 +15,78 @@ function verifyJWT(req, res, next) {
     
         const authorizedRoles = {
             // categories
-            "/categories": ["user"],
-            "/categories/:catId": ["user"], 
+            "/categories": ["User"],
+            "/categories/:catId": ["User"], 
 
             //weeks
-            "/weeks": ["user"],
-            "/weeks/:catId/:userId": ["user"],
-            "/weeks": ["user"],
-            "/weeks/:weekName/:catId/:userId": ["user"],
-            "/weeks/:weekName/:catId/:userId": ["user"],
+            "/weeks": ["User"],
+            "/weeks/:catId/:userId": ["User"],
+            "/weeks": ["User"],
+            "/weeks/:weekName/:catId/:userId": ["User"],
+            "/weeks/:weekName/:catId/:userId": ["User"],
 
             //datainput
-            "/datainput": ["user"],
-            "/datainput/:weekName/:catId/:userId/:dataId": ["user"],
-            "/datainput/:weekName/:catId/:userId": ["user"],
-            "/datainput": ["user"],
-            "/datainput/:weekName/:catId/:userId/:dataId": ["user"],
-            "/datainput/:weekName/:catId/:userId/:dataId": ["user"],
+            "/datainput": ["User"],
+            "/datainput/:weekName/:catId/:userId/:dataId": ["User"],
+            "/datainput/:weekName/:catId/:userId": ["User"],
+            "/datainput": ["User"],
+            "/datainput/:weekName/:catId/:userId/:dataId": ["User"],
+            "/datainput/:weekName/:catId/:userId/:dataId": ["User"],
 
             //locations
-            "/locations": ["user", "admin"],
-            "/locations/:locationReqId": ["user", "admin"],
-            "/createlocations": ["user"],
-            "/updlocations/:locationReqId": ["admin"],
-            "/dellocations/:locationReqId": ["admin"],
+            "/locations": ["User", "Admin"],
+            "/locations/:locationReqId": ["User", "Admin"],
+            "/createlocations": ["User"],
+            "/updlocations/:locationReqId": ["Admin"],
+            "/dellocations/:locationReqId": ["Admin"],
 
             //events
-            "/events": ["user", "admin"],
-            "/events/:eventId": ["user", "admin"],
-            "/createevents": ["admin"],
-            "/updateevents/:eventId": ["admin"],
-            "/deleteevents/:eventId": ["admin"],
+            "/events": ["User", "Admin"],
+            "/events/:eventId": ["User", "Admin"],
+            "/createevents": ["Admin"],
+            "/updateevents/:eventId": ["Admin"],
+            "/deleteevents/:eventId": ["Admin"],
 
             //challenges
-            "/challenges: ": ["user"],
-            "/challenges/:id": ["user"],
-            "/createchallenges": ["admin"],
-            //"/challenges/:id": ["admin"],
+            "/challenges: ": ["User"],
+            "/challenges/:id": ["User"],
+            "/createchallenges": ["Admin"],
+            //"/challenges/:id": ["Admin"],
 
             //user weekly challenges
-            "/userchallenges/:userId": ["user"],
-            "/updateuserchallenges/:challengeId/:userId": ["user"],
-            "/deleteuserchallenges/:challengeId": ["user"],
-            "/createuserchallenges": ["admin"],
+            "/userchallenges/:userId": ["User"],
+            "/updateuserchallenges/:challengeId/:userId": ["User"],
+            "/deleteuserchallenges/:challengeId": ["User"],
+            "/createuserchallenges": ["Admin"],
 
             //points
-            "/weeklypoints": ["user"],
-            "/monthlypoints": ["user"],
-            "/resetweekly": ["admin"],
-            "/resetmonthly": ["admin"],
-            "/addweekly/:userId": ["user"],
-            "/addmonthly/:userId": ["user"],
-            "/userweeklypoints/:userId": ["user"],
-            "/usermonthlypoints/:userId": ["user"],
+            "/weeklypoints": ["User"],
+            "/monthlypoints": ["User"],
+            "/resetweekly": ["Admin"],
+            "/resetmonthly": ["Admin"],
+            "/addweekly/:userId": ["User"],
+            "/addmonthly/:userId": ["User"],
+            "/userweeklypoints/:userId": ["User"],
+            "/usermonthlypoints/:userId": ["User"],
 
             //user account
-            "/getuser": ["user"],
-            "/getuser/:userId": ["user"],
-            "/updateuser/:userId": ["user"],
-            "/deleteuser/:userId": ["user"],
+            "/getuser": ["User"],
+            "/getuser/:userId": ["User"],
+            "/updateuser/:userId": ["User"],
+            "/deleteuser/:userId": ["User"],
 
             //user history
-            "/userlocations": ["user"],
-            "/userlocations/:userId": ["user"],
-            "/usertracker": ["user"],
-            "/usertracker/:userId": ["user"],
+            "/userlocations": ["User"],
+            "/userlocations/:userId": ["User"],
+            "/usertracker": ["User"],
+            "/usertracker/:userId": ["User"],
 
             //admin account
-            "/getadmin": ["admin"],
-            "/getadmin/:adminId": ["admin"],
-            "/updateadmin/:adminId": ["admin"],
-            "/deleteadmin/:adminId": ["admin"],
-            "/adminhistory/:adminId": ["admin"],
+            "/getadmin": ["Admin"],
+            "/getadmin/:adminId": ["Admin"],
+            "/updateadmin/:adminId": ["Admin"],
+            "/deleteadmin/:adminId": ["Admin"],
+            "/adminhistory/:adminId": ["Admin"],
         };
     
         const requestedEndpoint = req.url;

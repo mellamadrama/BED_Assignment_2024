@@ -1,4 +1,6 @@
+const user = require("../models/adminAccount");
 const Joi = require('joi');
+const jwt = require("jsonwebtoken");
 
 const validateAdminLogin = (req, res, next) => {
     const schema = Joi.object({
@@ -13,8 +15,12 @@ const validateAdminLogin = (req, res, next) => {
       res.status(400).json({ message: "Validation error", errors });
       return;
     }
+    const payload = {
+      id: user.id,
+    };
+    const token = jwt.sign(payload, "your_secret_key", { expiresIn: "3600s" });
 
-    next();
+    return res.status(200).json({ token });
 };
 
 module.exports = validateAdminLogin;
