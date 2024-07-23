@@ -2,7 +2,6 @@ const User = require("../models/usersignup");
 
 const createUserAccount = async (req, res) => {
     const userDetails = {
-        userId: req.body.userId,
         username: req.body.username,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -21,4 +20,4 @@ const createUserAccount = async (req, res) => {
 
 module.exports = {
     createUserAccount
-}
+};

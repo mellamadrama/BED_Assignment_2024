@@ -1,4 +1,6 @@
+const user = require("../models/userAccount");
 const Joi = require('joi');
+const jwt = require("jsonwebtoken");
 
 const validateLogin = (req, res, next) => {
     const schema = Joi.object({
@@ -14,7 +16,13 @@ const validateLogin = (req, res, next) => {
       return;
     }
 
-    next();
+    const payload = {
+      id: user.id,
+      role: "User",
+    };
+    const token = jwt.sign(payload, "your_secret_key", { expiresIn: "3600s" });
+
+    return res.status(200).json({ token });
 };
 
 module.exports = validateLogin;

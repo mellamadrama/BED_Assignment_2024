@@ -38,12 +38,12 @@ class User {
         `;
 
         const request = connection.request();
-        request.input("userId", userId); 
-        request.input("username", userDetails.username);
-        request.input("firstName", userDetails.firstName);
-        request.input("lastName", userDetails.lastName);
-        request.input("email", userDetails.email);
-        request.input("password", userDetails.password);
+        request.input("userId", sql.VarChar, userId); 
+        request.input("username", sql.VarChar, userDetails.username);
+        request.input("firstName", sql.VarChar, userDetails.firstName);
+        request.input("lastName", sql.VarChar, userDetails.lastName);
+        request.input("email", sql.VarChar, userDetails.email);
+        request.input("password", sql.VarChar, userDetails.password);
 
         const result = await request.query(sqlQuery);
         connection.close();
