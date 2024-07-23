@@ -257,3 +257,12 @@ VALUES
   ('Net Zero Carbon Cities: Dream or Reality - A RICS & REDAS SEA Conference', 'Navigating the Net Zero Challenge: Practical Solutions for a Sustainable South East Asia', 'Singapore Marriott Tang Plaza Hotel, 320 Orchard Road Singapore, 238865', '2024-10-23 08:30:00', 163.50, 'Acc0000007'),
   ('Plastic Collage - Explore Plastic Issues Today & Solutions for Tomorrow', 'Learn about Plastics (Trends, Waste, Recycling etc.) issues & challenges + solutions to beat Plastic Pollution in Asia! Fun science evening!', 'PALO IT Singapore, 11 Beach Road ##06-01 Singapore, Singapore 189675', '2024-09-23 18:15:00', NULL, 'Acc0000004'),
   ('Coffee Scrub Upcycling Workshop @ CLSF 2024', 'Discover the beauty of coffee grounds, how to upcycle them, and bring home a coffee ground body scrub!', 'Tzu Chi Humanistic Youth Centre 慈济人文青年中心, 30A Yishun Central 1 Singapore, 768796', '2024-07-20 15:30:00', NULL, 'Acc0000004');
+
+CREATE TABLE ChatHistory (
+  chatId INT PRIMARY KEY IDENTITY(1,1),
+  userId CHAR(10) NOT NUL,
+  sender VARCHAR(10) NOT NULL CHECK (sender IN ('user', 'model')),
+  message TEXT NOT NULL,
+  timestamp DATETIME DEFAULT GETDATE(),
+  CONSTRAINT FK_ChatHistory_userId FOREIGN KEY (userId) REFERENCES UserAcc(userId)
+);

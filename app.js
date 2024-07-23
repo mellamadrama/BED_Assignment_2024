@@ -17,6 +17,7 @@ const adminAccountController = require("./controllers/adminAccountController");
 const userLocationController = require("./controllers/userLocationController");
 const userTrackerController = require("./controllers/userTrackerController");
 const adminHistoryController = require("./controllers/adminHistoryController");
+const chatHistoryController = require("./controllers/chatHistoryController");
 
 const sql = require("mssql");
 const dbConfig = require("./dbConfig");
@@ -37,6 +38,8 @@ const validateAdminAccount = require("./middlewares/validateAdminAccount");
 const validateUserLocation = require("./middlewares/validateUserLocation");
 const validateUserTracker = require("./middlewares/validateUserTracker");
 const validateAdminHistory = require("./middlewares/validateAdminHistory");
+const validateSaveChat = require("./middlewares/validateChatHistory");
+
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -72,6 +75,11 @@ app.get("/datainput/:weekName/:catId/:userId", dataInputController.getCatDataInp
 app.post("/datainput", validateDataInput, dataInputController.createDataInput);
 app.put("/datainput/:weekName/:catId/:userId/:dataId", validateDataInputs, dataInputController.updateCatDataInput);
 app.delete('/datainput/:weekName/:catId/:userId/:dataId', dataInputController.deleteCatDataInput);
+
+//chat bot
+app.get("/chathistory/:userId", chatHistoryController.getChatByUserId);
+app.post("/chathistory", validateSaveChat, chatHistoryController.saveChat);
+app.post('/generate-text', chatHistoryController.generateGeminiResponse);
 
 // locations
 app.get("/locations", locationController.getAllLocations);
