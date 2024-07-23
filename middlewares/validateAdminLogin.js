@@ -17,8 +17,9 @@ const validateAdminLogin = (req, res, next) => {
     }
     const payload = {
       id: user.id,
+      role: "Admin",
     };
-    const token = jwt.sign(payload, "your_secret_key", { expiresIn: "3600s" });
+    const token = jwt.sign(payload, "your_secret_key", { expiresIn: 3600 });
 
     return res.status(200).json({ token });
 };

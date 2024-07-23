@@ -14,16 +14,16 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         });
   
         const result = await response.json();
-  
-        if (response.ok) {
-            // Save adminId to local storage
-            localStorage.setItem('adminId', result.adminId);
-            alert('Login Successful');
+        console.log(result)
+        // if (response.ok) {
+        //     // Save adminId to local storage
+        //     localStorage.setItem('adminId', result.adminId);
+        //     alert('Login Successful');
             
-            window.location.href = 'homeAdmin.html';
-        } else {
-            document.getElementById('message').textContent = result.message;
-        }
+        //     window.location.href = 'homeAdmin.html';
+        // } else {
+        //     document.getElementById('message').textContent = result.message;
+        // }
     } catch (error) {
         document.getElementById('message').textContent = 'An error occurred. Please try again.';
     }

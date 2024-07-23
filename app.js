@@ -49,8 +49,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(staticMiddleware);
 
 //login
-app.post('/login', validateLogin, verifyJWT, loginController.loginUser);
-app.post('/loginAdmin', validateAdminLogin, verifyJWT, adminLoginController.loginAdmin);
+app.post('/login', validateLogin, loginController.loginUser);
+app.post('/loginAdmin', validateAdminLogin, adminLoginController.loginAdmin);
 
 //signup
 app.post('/signup', validateUserSignup, userSignupController.createUserAccount);

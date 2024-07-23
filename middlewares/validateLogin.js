@@ -18,6 +18,7 @@ const validateLogin = (req, res, next) => {
 
     const payload = {
       id: user.id,
+      role: "User",
     };
     const token = jwt.sign(payload, "your_secret_key", { expiresIn: "3600s" });
 
