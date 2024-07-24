@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
             const user = await response.json();
-            console.log(user.userId);
+            console.log(user);
             return { [accId]: user.username }; 
         } catch (error) {
             console.error("Error fetching user:", error);

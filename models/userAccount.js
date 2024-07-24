@@ -28,7 +28,7 @@ class User {
         connection.close();
 
         return result.recordset.map(
-            (row) => new User(row.userId, row.username, row.firstName, row.lastName, row.email, row.password)
+            (row) => new User(row.accId, row.username, row.firstName, row.lastName, row.email, row.password)
         );
     }
 
