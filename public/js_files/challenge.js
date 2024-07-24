@@ -135,9 +135,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                 
                     try {
                         const userId = localStorage.getItem('userId');
-                        if (!userId) {
-                            throw new Error("No userId found in localStorage");
-                        }
                 
                         await updateUserChallenge(ChallengeID, userId, newCompletedStatus);
                 
@@ -171,7 +168,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     async function fetchAndDisplayChallenges() {
         try {
             const userId = localStorage.getItem('userId');
-            const response = await fetch(`/userchallenges/${userId}`);
+            const response = await fetch(`/userchallenges/${userId}`, {
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("jwt")
+                }
+            });
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
@@ -197,10 +198,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     async function fetchAndDisplayWeeklyPoints() {
         try {
             const userId = localStorage.getItem('userId');
-            if (!userId) {
-                throw new Error("No userId found in localStorage");
-            }
-            const response = await fetch(`/userweeklypoints/${userId}`);
+            const response = await fetch(`/userweeklypoints/${userId}`, {
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("jwt")
+                }
+            });
             const points = await response.json();
 
             const userPoints = document.getElementById("weeklyPoints");
@@ -214,7 +216,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     async function fetchAndDisplayMonthlyPoints() {
         try {
             const userId = localStorage.getItem('userId');
-            const response = await fetch(`/usermonthlypoints/${userId}`);
+            const response = await fetch(`/usermonthlypoints/${userId}`, {
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("jwt")
+                }
+            });
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
