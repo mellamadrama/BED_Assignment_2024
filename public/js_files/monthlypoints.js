@@ -1,7 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
     async function fetchUsername(accId) {
         try {
-            const response = await fetch(`/getuser/${accId}`);
+        const response = await fetch(`/getuser/${accId}`, {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("jwt")
+            }
+        });
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
@@ -15,7 +19,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function fetchAndDisplayMonthlyPoints() {
         try {
-            const response = await fetch("/monthlypoints");
+            const response = await fetch("/monthlypoints", {
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("jwt")
+                }
+            });
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }

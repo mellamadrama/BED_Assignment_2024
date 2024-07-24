@@ -1,12 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
     async function fetchUsername(accId) {
         try {
-            const response = await fetch(`/getuser/${accId}`);
+            const response = await fetch(`/getuser`, {
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("jwt")
+                }
+            });
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
             const user = await response.json();
-            return { [user.accId]: user.username }; 
+            console.log(user.userId);
+            return { [accId]: user.username }; 
         } catch (error) {
             console.error("Error fetching user:", error);
             throw error;
@@ -15,15 +20,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function fetchAndDisplayWeeklyPoints() {
         try {
-            const response = await fetch("/weeklypoints");
+            const response = await fetch(`/weeklypoints`, {
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("jwt")
+                }
+            });
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
             const weeklypoints = await response.json();
 
             const accIds = [...new Set(weeklypoints.map(point => point.userId))];
+            console.log(accIds)
 
-            const userMaps = await Promise.all(accIds.map(accId => fetchUsername(accId)));
+            const userMapsArray = await Promise.all(accIds.map(accId => fetchUsername(accId)));
+
+            const userMaps = userMapsArray.reduce((acc, obj) => {
+                return { ...acc, ...obj };
+            }, {});
 
             const leaderboardBody = document.querySelector(".leaderboard-body");
             leaderboardBody.innerHTML = "";
@@ -36,8 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 rankCell.textContent = index + 1;
 
                 const userCell = document.createElement("td");
-                const userMap = userMaps.find(map => map[point.userId]);
-                const username = userMap ? userMap[point.userId] : "Unknown";
+                const username = userMaps[point.userId] || "Unknown";
                 userCell.textContent = username;
 
                 const pointsCell = document.createElement("td");

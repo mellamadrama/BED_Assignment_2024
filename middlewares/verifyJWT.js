@@ -51,7 +51,7 @@ function verifyJWT(req, res, next) {
 
             //challenges
             "/challenges": ["User", "Admin"],
-            "/challenges/:id": ["User", "Admin"],
+            "/challenges/:id": ["User"],
             "/createchallenges": ["Admin"],
             //"/challenges/:id": ["Admin"],
 

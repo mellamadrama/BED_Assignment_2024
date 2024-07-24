@@ -2,7 +2,7 @@ const UserWeeklyChallenge = require('../models/userChallenge');
 
 const getAllChallengesByUserID = async (req, res) => {
     try {
-        const challenges = await UserWeeklyChallenge.getAllChallengesByUserID(req.params.userId);
+        const challenges = await UserWeeklyChallenge.getAllChallengesByUserID(req.user.id);
         res.json(challenges);
     } catch (error) {
         res.status(500).send(error.message);
@@ -10,7 +10,7 @@ const getAllChallengesByUserID = async (req, res) => {
 };
 
 const updateChallengeCompleted = async (req, res) => {
-    const { challengeId} = req.params;
+    const { challengeId } = req.params;
     const userId = req.user.id;
     const { challengeCompleted } = req.body;
 

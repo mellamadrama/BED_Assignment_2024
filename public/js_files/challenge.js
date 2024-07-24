@@ -52,14 +52,18 @@ document.addEventListener("DOMContentLoaded", async () => {
                 throw new Error(`HTTP error! Status: ${updateResponse.status}`);
             }
 
-            const challengeResponse = await fetch(`/challenges/${challengeID}`);
+            const challengeResponse = await fetch(`/challenges/${challengeID}`, {
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("jwt")
+                }
+            });
             if (!challengeResponse.ok) {
                 throw new Error(`HTTP error! Status: ${challengeResponse.status}`);
             }
             const challenges = await challengeResponse.json();
 
             for (const challenge of challenges) {
-                const { ChallengeID, ChallengeDesc, Points } = challenge;
+                const { ChallengeID, Points } = challenge;
 
                 const pointsChange = (newCompletedStatus === 'Y') ? parseInt(Points) : -parseInt(Points);
 
@@ -91,8 +95,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     async function getAllChallengesByChallengeID(challengeID, completed) {
         try {
-            const userId = localStorage.getItem('userId');
-            const response = await fetch(`/challenges/${challengeID}`);
+            const response = await fetch(`/challenges/${challengeID}`, {
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("jwt")
+                }
+            });
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
@@ -239,6 +246,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     fetchAndDisplayChallenges();
-    await fetchAndDisplayWeeklyPoints();
-    await fetchAndDisplayMonthlyPoints();
+    fetchAndDisplayWeeklyPoints();
+    fetchAndDisplayMonthlyPoints();
 });
