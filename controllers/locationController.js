@@ -58,6 +58,8 @@ const createLocation = async (req, res) => {
 const updateLocation = async (req, res) => {
     const locationReqId = req.params.locationReqId;
     const newLocationReqData = req.body;
+    const adminId = req.user.id;
+    newLocationReqData.adminId = adminId;
 
     console.log('Received Data for Update:', newLocationReqData); // Logging the received data
 

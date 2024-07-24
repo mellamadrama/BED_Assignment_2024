@@ -19,7 +19,12 @@ document.addEventListener("DOMContentLoaded", async () => {
             document.getElementById("event-name").value = event.name;
             document.getElementById("event-description").value = event.description;
             document.getElementById("event-address").value = event.address; // Ensure address is included
-            document.getElementById("event-date").value = new Date(event.date).toISOString();
+            
+            // Format the date correctly for an HTML datetime-local input
+            const eventDate = new Date(event.date);
+            const localDateTime = eventDate.toLocaleString('sv-SE', { dateStyle: 'short', timeStyle: 'short' }).replace(' ', 'T');
+            document.getElementById("event-date").value = localDateTime;
+
             document.getElementById("event-price").value = event.price;
         } catch (error) {
             console.error('Error fetching event details:', error);
@@ -32,7 +37,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const updatedEvent = {
             name: document.getElementById("event-name").value,
             description: document.getElementById("event-description").value,
-            date: document.getElementById("event-date").value,
+            date: new Date(document.getElementById("event-date").value).toISOString(),
             price: document.getElementById("event-price").value,
             address: document.getElementById("event-address").value,
             adminId: admin
@@ -74,7 +79,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                     headers: {
                         "Authorization": "Bearer " + localStorage.getItem("jwt")
                     }
-
                 });
 
                 if (!response.ok) {

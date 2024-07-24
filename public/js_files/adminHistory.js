@@ -1,58 +1,72 @@
-document.addEventListener("DOMContentLoaded", async function() {
-    // retrieve adminId from localStorage
+document.addEventListener("DOMContentLoaded", async function(event) {
+    // Retrieve adminId from localStorage
     const adminId = localStorage.getItem('adminId');
     if (!adminId) {
-        console.error('No userId found in localStorage');
+        console.error('No adminId found in localStorage');
         return;
     }
 
     try {
-        const adminId = localStorage.getItem('adminId');
         const response = await fetch(`/getadmin/${adminId}`, {
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem("jwt")
             }
         });
+
         if (!response.ok) {
             throw new Error('Failed to fetch admin data');
         }
-  
+
         const getAdmin = await response.json();
-        console.log(getAdmin)
-  
-        document.getElementById('viewusername').textContent = `@${getAdmin.username}`;
-        document.getElementById('viewfirstname').textContent = `${getAdmin.firstName}`;
-        document.getElementById('viewlastname').textContent = `${getAdmin.lastName}`;
-        document.getElementById('viewemail').textContent = `${getAdmin.email}`;
-  
-        document.getElementById('inputusername').value = getAdmin.username;
-        document.getElementById('inputfirstName').value = getAdmin.firstName;
-        document.getElementById('inputlastName').value = getAdmin.lastName;
-        document.getElementById('inputemail').value = getAdmin.email;
-        document.getElementById('inputpassword').value = getAdmin.password;
+        console.log(getAdmin);
+
+        const viewusername = document.getElementById('viewusername');
+        const viewfirstname = document.getElementById('viewfirstname');
+        const viewlastname = document.getElementById('viewlastname');
+        const viewemail = document.getElementById('viewemail');
+        const inputusername = document.getElementById('inputusername');
+        const inputfirstName = document.getElementById('inputfirstName');
+        const inputlastName = document.getElementById('inputlastName');
+        const inputemail = document.getElementById('inputemail');
+        const inputpassword = document.getElementById('inputpassword');
+
+        if (viewusername) viewusername.textContent = `@${getAdmin.username}`;
+        if (viewfirstname) viewfirstname.textContent = `${getAdmin.firstName}`;
+        if (viewlastname) viewlastname.textContent = `${getAdmin.lastName}`;
+        if (viewemail) viewemail.textContent = `${getAdmin.email}`;
+
+        if (inputusername) inputusername.value = getAdmin.username;
+        if (inputfirstName) inputfirstName.value = getAdmin.firstName;
+        if (inputlastName) inputlastName.value = getAdmin.lastName;
+        if (inputemail) inputemail.value = getAdmin.email;
+        if (inputpassword) inputpassword.value = getAdmin.password;
     } catch (error) {
         console.error('Error fetching admin data:', error);
     }
 
     const fetchApprovedLocations = async () => {
         try {
-            const adminId = localStorage.getItem('adminId');
-            const response = await fetch(`/adminhistory/${adminId}`); 
+            const response = await fetch(`/adminhistory/${adminId}`, {
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("jwt")
+                }
+            });
+
             if (!response.ok) {
                 throw new Error('Failed to fetch locations');
             }
+
             const locations = await response.json();
-    
             const locationContainer = document.querySelector('.overflow-x-auto');
-    
+
             // Clear existing content
             locationContainer.innerHTML = '';
-    
+
             // Loop through each location
             locations.forEach(location => {
                 const locationDiv = document.createElement('div');
                 locationDiv.className = 'inline-block rounded-lg border border-gray-200 p-4 mr-4 bg-white';
-    
+
                 // Populate data into the created elements
                 locationDiv.innerHTML = `
                     <h5 class="font-bold mb-2">${location.name}</h5>
@@ -61,7 +75,7 @@ document.addEventListener("DOMContentLoaded", async function() {
                     <p class="mb-2">Address: ${location.address}</p>
                     <p class="mb-2">Status: ${location.status}</p>
                 `;
-    
+
                 // Append each location div to the container
                 locationContainer.appendChild(locationDiv);
             });
@@ -72,14 +86,13 @@ document.addEventListener("DOMContentLoaded", async function() {
     };
     fetchApprovedLocations();
 
-    // add event listeners for log out
+    // Add event listeners for log out
     const logoutBtn = document.getElementById('logoutBtn');
     if (logoutBtn) {
         logoutBtn.addEventListener('click', function() {
-        alert('Logging out')
-        localStorage.removeItem('adminId');
-        window.location.href = 'index.html';
+            alert('Logging out');
+            localStorage.removeItem('jwt');
+            window.location.href = 'index.html';
         });
     }
-      
 });

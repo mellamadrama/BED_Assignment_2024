@@ -260,7 +260,7 @@ VALUES
 
 CREATE TABLE ChatHistory (
   chatId INT PRIMARY KEY IDENTITY(1,1),
-  userId CHAR(10) NOT NUL,
+  userId CHAR(10) NOT NULL,
   sender VARCHAR(10) NOT NULL CHECK (sender IN ('user', 'model')),
   message TEXT NOT NULL,
   timestamp DATETIME DEFAULT GETDATE(),

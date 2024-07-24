@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             date: new Date(document.getElementById("event-date").value).toISOString(),
             price: document.getElementById("event-price").value.trim(), // Remove any extra spaces
             adminId: admin
-        };        
+        };
 
         console.log('Sending new event data:', JSON.stringify(newEvent));
 

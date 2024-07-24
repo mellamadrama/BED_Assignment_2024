@@ -28,7 +28,8 @@ const getEventById = async(req, res) => {
 
 
 const createEvent = async (req, res) => {
-    const { name, description, address, date, price, adminId } = req.body;
+    const { name, description, address, date, price} = req.body;
+    const adminId = req.user.id;
     console.log("Received event:", req.body); // Debugging
 
     try {
@@ -44,7 +45,9 @@ const createEvent = async (req, res) => {
 
 const updateEvent = async (req, res) => {
     const eventId = req.params.eventId;
+    const adminId = req.user.id;
     const newEventData = req.body;
+    newEventData.adminId = adminId;
 
     console.log('Received Data for Update:', newEventData); // Logging the received data
 

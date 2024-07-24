@@ -45,7 +45,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const createChallenge = await fetch(`/createchallenges`, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        "Authorization": "Bearer " + localStorage.getItem("jwt")
                     },
                     body: JSON.stringify(newChallenge)
                 });
@@ -60,7 +61,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const createUserChallenge = await fetch(`/createuserchallenges`, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        "Authorization": "Bearer " + localStorage.getItem("jwt")
                     },
                     body: JSON.stringify(newUserChallenge)
                 });
@@ -69,6 +71,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
 
                 alert('Challenge added successfully!');
+                document.getElementById('ChallengeDesc').value = '';
+                document.getElementById('ChallengePoints').value = '';
             } catch (error) {
                 console.error('Error adding challenge:', error);
                 alert('Failed to add challenge. Please try again.');

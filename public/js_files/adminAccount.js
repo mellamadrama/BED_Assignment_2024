@@ -2,10 +2,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     // retrieve userId from localStorage
     const adminId = localStorage.getItem('adminId');
-    if (!adminId) {
-        console.error('No adminId found in localStorage');
-        return;
-    }
+
     try {
         const response = await fetch(`/getadmin/${adminId}`, {
           headers: {
@@ -62,13 +59,9 @@ document.addEventListener('DOMContentLoaded', async function () {
   
     const updateAccount = document.getElementById('profileForm');
     if (updateAccount) {
-      updateAccount.addEventListener('submit', async function() {
-        const adminId = localStorage.getItem('adminId');
-  
-        if (!adminId) {
-          console.error('No adminId found in localStorage');
-          return;
-        }
+      updateAccount.addEventListener('submit', async function(event) {
+        event.preventDefault();
+
         const username = document.getElementById('inputusername').value;
         const firstName = document.getElementById('inputfirstName').value;
         const lastName = document.getElementById('inputlastName').value;
@@ -109,7 +102,8 @@ document.addEventListener('DOMContentLoaded', async function () {
   
     const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
     if (confirmDeleteBtn) {
-      confirmDeleteBtn.addEventListener('click', async function() {
+      confirmDeleteBtn.addEventListener('click', async function(event) {
+        event.preventDefault();
         const adminId = localStorage.getItem('adminId');
         if (!adminId) {
           alert('adminId not found');

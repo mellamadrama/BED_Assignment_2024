@@ -136,7 +136,7 @@ app.get("/getadmin", verifyJWT, adminAccountController.getAllAdmins);
 app.get("/getadmin/:adminId", verifyJWT, adminAccountController.getAllAdminsById);
 app.put("/updateadmin/:adminId", verifyJWT, adminAccountController.updateAdminAccount);
 app.delete("/deleteadmin/:adminId", verifyJWT, adminAccountController.deleteAdminAccount);
-app.get("/adminhistory/:adminId", verifyJWT, validateAdminHistory, adminHistoryController.getApprovedLocationsByAdminId);
+app.get("/adminhistory/:adminId", verifyJWT, adminHistoryController.getApprovedLocationsByAdminId);
 
 app.listen(port, async () => {
   try {
