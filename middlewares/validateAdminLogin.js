@@ -14,9 +14,7 @@ const validateAdminLogin = (req, res, next) => {
       const errors = validation.error.details.map((error) => error.message);
       res.status(400).json({ message: "Validation error", errors });
       return;
-    } else {
-      //return res.status(200).json({ token });
-    }
+    } 
 
     next();
 };
