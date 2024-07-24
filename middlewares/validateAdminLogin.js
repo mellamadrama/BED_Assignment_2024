@@ -14,14 +14,11 @@ const validateAdminLogin = (req, res, next) => {
       const errors = validation.error.details.map((error) => error.message);
       res.status(400).json({ message: "Validation error", errors });
       return;
+    } else {
+      //return res.status(200).json({ token });
     }
-    const payload = {
-      id: user.id,
-      role: "Admin",
-    };
-    const token = jwt.sign(payload, "your_secret_key", { expiresIn: 3600 });
 
-    return res.status(200).json({ token });
+    next();
 };
 
 module.exports = validateAdminLogin;

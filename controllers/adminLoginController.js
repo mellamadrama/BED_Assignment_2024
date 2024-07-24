@@ -5,27 +5,28 @@ const loginAdmin = async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    console.log("bleh")
     const account = await Account.getAdminByUsernameAndPassword(username, password);
     //const isMatch = bcrypt.compare(password, account.password);
     
-    if (account) {
-      console.log(req.user.id, account)
-      if (req.user.id === account.adminId) {
-        res.json({ adminId: account.adminId, message: 'Login successful!' });
-      } else {
-        res.status(403).send("Forbidden")
-      }
+    if (account != null) {
+      //console.log(req.user.adminId, account);
+      res.json({ adminId: account.adminId, message: 'Login successful!' });
+      const payload = {
+        id: user.id,
+        role: "Admin",
+      };
+      const token = jwt.sign(payload, "your_secret_key", { expiresIn: 3600 });
+      console.log(token);
+      res.status(200).json({ token });
+      //  else {
+      //   res.status(403).send("Forbidden")
+      // }
       //if (isMatch) {
       //} else {
         //return res.status(401).json({ message: 'Invalid username or password' });
       //}
     } else {
-      return res.status(401).json({ message: 'Invalid username or password' });
-    }
-
-    const payload = {
-      adminId: account.adminId, 
+      return res.status(401).json({ message: 'Invalid username or password or not a valid admin account' });
     }
     
   } catch (error) {
