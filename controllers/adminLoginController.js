@@ -18,6 +18,7 @@ const loginAdmin = async (req, res) => {
       const token = jwt.sign(payload, "your_secret_key", { expiresIn: 3600 });
       console.log(token);
       res.status(200).json({ token });
+      return;
       //  else {
       //   res.status(403).send("Forbidden")
       // }
@@ -32,6 +33,7 @@ const loginAdmin = async (req, res) => {
   } catch (error) {
     console.error("Error logging in: ", error);
     res.status(500).send("Internal Server Error");
+    return;
   }
 };
 
