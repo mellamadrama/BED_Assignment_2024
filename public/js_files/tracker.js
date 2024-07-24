@@ -115,7 +115,8 @@ async function updateDataInput(info, amount, dateInput) {
         const res = await fetch(`/datainput/${weekName}/${catId}/${userId}/${dataId}`, {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                "Authorization": "Bearer " + localStorage.getItem("jwt")
             },
             body: JSON.stringify({
                 weekName, catId, userId, dataId, info, amount, dateInput

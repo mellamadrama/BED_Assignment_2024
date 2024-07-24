@@ -14,7 +14,7 @@ const getAllWeeks = async (req, res) => {
 
 const getWeekByUserCatId = async (req, res) => {
     const catId = req.params.catId;
-    const userId = req.params.userId;
+    const userId = req.user.id;
     try {
       const week = await Week.getWeekByUserCatId(catId, userId);
       if (!week) {
@@ -31,7 +31,7 @@ const createWeek = async (req, res) => {
     const newWeekData = {
         weekName: req.body.weekName,
         catId: req.body.catId,
-        userId: req.body.userId
+        userId: req.user.id
     };
     try {
         const createdWeek = await Week.createWeek(newWeekData);
@@ -48,7 +48,7 @@ const createWeek = async (req, res) => {
 const updateWeekName = async (req, res) => {
   const weekName = req.body.weekName;
   const catId = req.body.catId;
-  const userId = req.body.userId;
+  const userId = req.user.id;
   const newWeekName = req.body.newWeekName;
 
   try {
@@ -66,7 +66,7 @@ const updateWeekName = async (req, res) => {
 const updateWeekAndData = async (req, res) => {
     const weekName = req.body.weekName;
     const catId = req.body.catId;
-    const userId = req.body.userId;
+    const userId = req.user.id;
     const newWeekName = req.body.newWeekName;
 
     try {
@@ -99,7 +99,7 @@ const updateWeekAndData = async (req, res) => {
 const deleteWeek = async (req, res) => {
     const weekName = req.params.weekName;
     const catId = req.params.catId;
-    const userId = req.params.userId;
+    const userId = req.user.id;
   
     try {
       const success = await Week.deleteWeek(weekName, catId, userId);
@@ -119,7 +119,7 @@ const deleteWeek = async (req, res) => {
 const deleteWeekAndData = async (req, res) => {
   const weekName = req.params.weekName;
   const catId = req.params.catId;
-  const userId = req.params.userId;
+  const userId = req.user.id;
 
   try {
       // Check if there are data inputs for the week

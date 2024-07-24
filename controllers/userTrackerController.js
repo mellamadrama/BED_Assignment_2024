@@ -11,7 +11,7 @@ const getAllCategories = async (req, res) => {
 };
 
 const getCatDataInputByUserId = async (req, res) => {
-  const userId = req.params.userId;
+  const userId = req.user.id;
   try {
       const category = await Category.getCatDataInputByUserId(userId);
       if (!category) {

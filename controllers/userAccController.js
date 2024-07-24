@@ -14,7 +14,7 @@ const getAllUsers = async (req, res) => {
 };
 
 const getAllUsersById = async (req, res) => {
-    const userId = req.params.userId;
+    const userId = req.user.id;
 
     try {
         const user = await User.getAllUsersById(userId);
@@ -31,7 +31,7 @@ const getAllUsersById = async (req, res) => {
 
 
 const updateUserAccount = async (req, res) => {
-    const userId = req.params.userId;
+    const userId = req.user.id;
     const { username, firstName, lastName, email, password } = req.body.newUserData;
 
     try {
@@ -47,7 +47,7 @@ const updateUserAccount = async (req, res) => {
 };
 
 const deleteUserAccount = async (req, res) => {
-    const userId = req.params.userId;
+    const userId = req.user.id;
 
     try {
         await User.deleteUserAccount(userId);

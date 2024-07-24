@@ -40,7 +40,10 @@ const createLocation = async (req, res) => {
             });
         }
 
-        const newLocation = await Location.createLocation(req.body);
+        const newLocationReqData = req.body;
+        const userId = req.user.id;
+        newLocationReqData.userId = userId;
+        const newLocation = await Location.createLocation(newLocationReqData);
         res.status(201).json({
             status: 'success',
             data: newLocation

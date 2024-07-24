@@ -11,7 +11,7 @@ const getAllLocations = async (req, res) => {
 };
 
 const getLocationByUserId = async(req, res) => {
-    const userId = req.params.userId;
+    const userId = req.user.id;
     if (!userId) {
         console.log('Error getting userId')
     }

@@ -53,7 +53,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const response = await fetch('/generate-text', {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("jwt")
                 },
                 body: JSON.stringify({ prompt: message, history })
             });
@@ -110,7 +111,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const response = await fetch("/chathistory", {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("jwt")
                 },
                 body: JSON.stringify({ userId, chatMessages: messages })
             });

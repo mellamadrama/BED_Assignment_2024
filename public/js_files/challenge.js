@@ -5,7 +5,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             const addPointsResponse = await fetch(`/addweekly/${userId}`, {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    "Authorization": "Bearer " + localStorage.getItem("jwt")
                 },
                 body: JSON.stringify({ points: pointsChange })
             });
@@ -23,7 +24,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             const addMonthlyPointsResponse = await fetch(`/addmonthly/${userId}`, {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    "Authorization": "Bearer " + localStorage.getItem("jwt")
                 },
                 body: JSON.stringify({ points: pointsChange })
             });
@@ -41,7 +43,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             const updateResponse = await fetch(`/updateuserchallenges/${challengeID}/${userId}`, {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    "Authorization": "Bearer " + localStorage.getItem("jwt")
                 },
                 body: JSON.stringify({ challengeCompleted: newCompletedStatus })
             });
@@ -89,9 +92,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     async function getAllChallengesByChallengeID(challengeID, completed) {
         try {
             const userId = localStorage.getItem('userId');
-            if (!userId) {
-                throw new Error("No userId found in localStorage");
-            }
             const response = await fetch(`/challenges/${challengeID}`);
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
@@ -171,9 +171,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     async function fetchAndDisplayChallenges() {
         try {
             const userId = localStorage.getItem('userId');
-            if (!userId) {
-                throw new Error("No userId found in localStorage");
-            }
             const response = await fetch(`/userchallenges/${userId}`);
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
@@ -204,9 +201,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                 throw new Error("No userId found in localStorage");
             }
             const response = await fetch(`/userweeklypoints/${userId}`);
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
             const points = await response.json();
 
             const userPoints = document.getElementById("weeklyPoints");
@@ -220,9 +214,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     async function fetchAndDisplayMonthlyPoints() {
         try {
             const userId = localStorage.getItem('userId');
-            if (!userId) {
-                throw new Error("No userId found in localStorage");
-            }
             const response = await fetch(`/usermonthlypoints/${userId}`);
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);

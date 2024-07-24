@@ -25,7 +25,7 @@ const resetMonthlyPoints = async (req, res) => {
 
 const getUserMonthlyPoints = async (req, res) => {
     try {
-        const userId = req.params.userId;
+        const userId = req.user.id;
         const user = await MonthlyPoints.getUserMonthlyPoints(userId);
         if (!user) {
             return res.status(404).json({ message: "Unable to get user's monthly points" });
@@ -40,7 +40,7 @@ const getUserMonthlyPoints = async (req, res) => {
 const addPointsToMonthly = async (req, res) => {
     try {
         const { points } = req.body;
-        const userId = req.params.userId;
+        const userId = req.user.id;
 
         if (!points || isNaN(points)) {
             return res.status(400).json({ message: "Invalid points value" });

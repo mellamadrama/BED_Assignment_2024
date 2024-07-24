@@ -8,7 +8,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
       const response = await fetch('/login', {
           method: 'POST',
           headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
           },
           body: JSON.stringify({ username, password })
       });
@@ -16,8 +16,9 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
       const result = await response.json();
 
       if (response.ok) {
-          // Save userId to local storage
-          localStorage.setItem('userId', result.userId);
+          // Save token to local storage
+          localStorage.clear();
+          localStorage.setItem("jwt", result.token);
           alert('Login Successful!');
           
           window.location.href = 'home.html';

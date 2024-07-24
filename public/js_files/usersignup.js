@@ -35,7 +35,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 const response = await fetch('/signup', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        "Authorization": "Bearer " + localStorage.getItem("jwt")
                     },
                     body: JSON.stringify(userDetails)
                 });

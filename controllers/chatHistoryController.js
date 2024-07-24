@@ -16,7 +16,7 @@ Do not include asterisks in your answers.
 
 // Get chat history by userId
 const getChatByUserId = async (req, res) => {
-    const userId = req.params.userId;
+    const userId = req.user.id;
     try {
         const chatHistory = await ChatHistory.getChatByUserId(userId);
         if (!chatHistory.length) {
@@ -32,7 +32,8 @@ const getChatByUserId = async (req, res) => {
 
 // Save chat
 const saveChat = async (req, res) => {
-    const { userId, chatMessages } = req.body;
+    const {chatMessages } = req.body;
+    const userId = req.user.id;
 
     try {
         await ChatHistory.saveChat(userId, chatMessages);

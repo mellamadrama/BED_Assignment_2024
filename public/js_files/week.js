@@ -63,7 +63,8 @@ async function handleUpdateWeek() {
         const response = await fetch(`/weeks/${weekName}/${catId}/${userId}`, {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                "Authorization": "Bearer " + localStorage.getItem("jwt")
             },
             body: JSON.stringify({
                 weekName, catId, userId, newWeekName

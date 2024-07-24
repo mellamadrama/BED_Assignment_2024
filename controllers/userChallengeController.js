@@ -10,7 +10,8 @@ const getAllChallengesByUserID = async (req, res) => {
 };
 
 const updateChallengeCompleted = async (req, res) => {
-    const { challengeId, userId } = req.params;
+    const { challengeId} = req.params;
+    const userId = req.user.id;
     const { challengeCompleted } = req.body;
 
     try {

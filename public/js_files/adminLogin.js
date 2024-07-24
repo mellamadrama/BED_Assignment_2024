@@ -15,7 +15,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
   
         const result = await response.json();
         if (response.ok) {
-            // Save adminId to local storage
+            // Save token to local storage
             localStorage.setItem("jwt", result.token);
             alert('Login Successful');
             

@@ -2,12 +2,13 @@ document.addEventListener('DOMContentLoaded', async function () {
 
   // retrieve userId from localStorage
   const userId = localStorage.getItem('userId');
-  if (!userId) {
-      console.error('No userId found in localStorage');
-      return;
-  }
+  
   try {
-      const response = await fetch(`/getuser/${userId}`);
+      const response = await fetch(`/getuser/${userId}`, {
+        headers: {
+          "Authorization": "Bearer " + localStorage.getItem("jwt")
+      }
+      });
       if (!response.ok) {
           throw new Error('Failed to fetch user data');
       }
@@ -57,13 +58,10 @@ document.addEventListener('DOMContentLoaded', async function () {
 
   const updateAccount = document.getElementById('profileForm');
   if (updateAccount) {
-    updateAccount.addEventListener('submit', async function() {
+    updateAccount.addEventListener('submit', async function(e) {
+      e.preventDefault();
       const userId = localStorage.getItem('userId');
 
-      if (!userId) {
-        console.error('No userId found in localStorage');
-        return;
-      }
       const username = document.getElementById('inputusername').value;
       const firstName = document.getElementById('inputfirstName').value;
       const lastName = document.getElementById('inputlastName').value;
@@ -76,6 +74,7 @@ document.addEventListener('DOMContentLoaded', async function () {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
+            "Authorization": "Bearer " + localStorage.getItem("jwt")
           },
           body: JSON.stringify({ newUserData }),
         });
@@ -106,14 +105,13 @@ document.addEventListener('DOMContentLoaded', async function () {
   if (confirmDeleteBtn) {
     confirmDeleteBtn.addEventListener('click', async function() {
       const userId = localStorage.getItem('userId');
-      if (!userId) {
-        alert('UserID not found');
-        return;
-      }
       
       try {
         const response = await fetch(`deleteuser/${userId}`, {
           method: 'DELETE',
+          headers: {
+            "Authorization": "Bearer " + localStorage.getItem("jwt")
+          }
         });
 
         if (response.ok) {

@@ -33,7 +33,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 const res = await fetch('/weeks', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        "Authorization": "Bearer " + localStorage.getItem("jwt")
                     },
                     body: JSON.stringify({ weekName, catId, userId })
                 });

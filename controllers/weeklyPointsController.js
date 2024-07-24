@@ -25,7 +25,7 @@ const resetWeeklyPoints = async (req, res) => {
 
 const getUserWeeklyPoints = async (req, res) => {
     try {
-        const user = await WeeklyPoints.getUserWeeklyPoints(req.params.userId);
+        const user = await WeeklyPoints.getUserWeeklyPoints(req.user.id);
         if (!user) {
             return res.status(404).json({ message: "Unable to get user points" });
         }
@@ -39,7 +39,7 @@ const getUserWeeklyPoints = async (req, res) => {
 const addPointsToWeekly = async (req, res) => {
     try {
         const { points } = req.body; 
-        const userId = req.params.userId; 
+        const userId = req.user.id; 
         
         const success = await WeeklyPoints.addPointsToWeekly(points, userId);
         if (!success) {

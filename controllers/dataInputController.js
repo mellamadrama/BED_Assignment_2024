@@ -13,7 +13,7 @@ const getAllCatDataInput = async (req, res) => {
   const getCatDataInputByIds = async (req, res) => {
     const weekName = req.params.weekName;
     const catId = req.params.catId;
-    const userId = req.params.userId;
+    const userId = req.user.id;
     const dataId = req.params.dataId;
     try {
       const catDataInput = await DataInput.getCatDataInputByIds(weekName, catId, userId, dataId);
@@ -30,7 +30,7 @@ const getAllCatDataInput = async (req, res) => {
   const getCatDataInputById = async (req, res) => {
     const weekName = req.params.weekName;
     const catId = req.params.catId;
-    const userId = req.params.userId;
+    const userId = req.user.id;
 
     try {
       const catDataInput = await DataInput.getCatDataInputById(weekName, catId, userId);
@@ -48,7 +48,7 @@ const getAllCatDataInput = async (req, res) => {
     const newCatDataInput = {
         weekName: req.body.weekName,
         catId: req.body.catId,
-        userId: req.body.userId,
+        userId: req.user.id,
         info: req.body.info,
         amount: req.body.amount,
         dateInput: req.body.dateInput
@@ -68,7 +68,7 @@ const getAllCatDataInput = async (req, res) => {
   const updateCatDataInput = async (req, res) => {
     const weekName = req.params.weekName;
     const catId = req.params.catId;
-    const userId = req.params.userId;
+    const userId = req.user.id;
     const dataId = req.params.dataId;
     const updatedData = req.body;
   
@@ -87,7 +87,7 @@ const getAllCatDataInput = async (req, res) => {
   const updateAllCatDataInput = async (req, res) => {
     const weekName = req.params.weekName;
     const catId = req.params.catId;
-    const userId = req.params.userId;
+    const userId = req.user.id;
     const newWeekName = req.params.newWeekName;
   
     try {
@@ -103,7 +103,7 @@ const getAllCatDataInput = async (req, res) => {
   }
   
   const deleteCatDataInput = async (req, res) => {
-    const userId = req.params.userId;
+    const userId = req.user.id;
     const catId = req.params.catId;
     const dataId = req.params.dataId;
     const weekName = req.params.weekName;
@@ -125,7 +125,7 @@ const getAllCatDataInput = async (req, res) => {
   const deleteCatDataInputs = async (req, res) => {
     const weekName = req.params.weekName;
     const catId = req.params.catId;
-    const userId = req.params.userId;
+    const userId = req.user.id;
   
     try {
       const success = await DataInput.deleteCatDataInputs(weekName, catId, userId);
