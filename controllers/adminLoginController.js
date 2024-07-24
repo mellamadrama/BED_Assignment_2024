@@ -1,4 +1,5 @@
 const Account = require('../models/adminLogin');
+const jwt = require("jsonwebtoken");
 //const bcrypt = require("bcryptjs");
 
 const loginAdmin = async (req, res) => {
@@ -10,9 +11,8 @@ const loginAdmin = async (req, res) => {
     
     if (account != null) {
       //console.log(req.user.adminId, account);
-      res.json({ adminId: account.adminId, message: 'Login successful!' });
       const payload = {
-        id: user.id,
+        id: account.adminId,
         role: "Admin",
       };
       const token = jwt.sign(payload, "your_secret_key", { expiresIn: 3600 });
