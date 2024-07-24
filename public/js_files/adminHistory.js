@@ -8,7 +8,11 @@ document.addEventListener("DOMContentLoaded", async function() {
 
     try {
         const adminId = localStorage.getItem('adminId');
-        const response = await fetch(`/getadmin/${adminId}`);
+        const response = await fetch(`/getadmin/${adminId}`, {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("jwt")
+            }
+        });
         if (!response.ok) {
             throw new Error('Failed to fetch admin data');
         }

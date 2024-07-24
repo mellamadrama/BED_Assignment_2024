@@ -14,10 +14,9 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         });
   
         const result = await response.json();
-        console.log(result);
         if (response.ok) {
             // Save adminId to local storage
-            localStorage.setItem('adminId', result.adminId);
+            localStorage.setItem("jwt", result.token);
             alert('Login Successful');
             
             window.location.href = 'homeAdmin.html';

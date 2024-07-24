@@ -7,7 +7,10 @@ function verifyJWT(req, res, next) {
       return res.status(401).json({ message: "Unauthorized" });
     }
   
+    console.log("1", token);
     jwt.verify(token, "your_secret_key", (err, decoded) => {
+        console.log("2", decoded);
+        console.log("3", err);
         if (err) {
             return res.status(403).json({ message: "Forbidden" });
         }
@@ -47,8 +50,8 @@ function verifyJWT(req, res, next) {
             "/deleteevents/:eventId": ["Admin"],
 
             //challenges
-            "/challenges: ": ["User"],
-            "/challenges/:id": ["User"],
+            "/challenges": ["User", "Admin"],
+            "/challenges/:id": ["User", "Admin"],
             "/createchallenges": ["Admin"],
             //"/challenges/:id": ["Admin"],
 
@@ -93,8 +96,9 @@ function verifyJWT(req, res, next) {
     
         const authorizedRole = Object.entries(authorizedRoles).find(
             ([endpoint, roles]) => {
-            const regex = new RegExp(`^${endpoint}$`); 
-            return regex.test(requestedEndpoint) && roles.includes(userRole);
+                const regexPattern = endpoint.replace(/:\w+/g, '[^/]+');
+                const regex = new RegExp(`^${regexPattern}$`); 
+                return regex.test(requestedEndpoint) && roles.includes(userRole);
             }
         );
     

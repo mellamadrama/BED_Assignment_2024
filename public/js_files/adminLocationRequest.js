@@ -1,6 +1,10 @@
 async function fetchLocationRequests() {
     try {
-        const response = await fetch("/locations");
+        const response = await fetch("/locations", {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("jwt")
+            }
+        });
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }

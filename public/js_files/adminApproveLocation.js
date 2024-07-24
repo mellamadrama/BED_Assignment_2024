@@ -9,7 +9,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     async function fetchLocationRequest(locationReqId) {
         try {
-            const response = await fetch(`/locations/${locationReqId}`);
+            const response = await fetch(`/locations/${locationReqId}`, {
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("jwt")
+                }
+            });
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -53,6 +57,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
+                        "Authorization": "Bearer " + localStorage.getItem("jwt")
                     },
                     body: JSON.stringify(updatedLocation),
                 });

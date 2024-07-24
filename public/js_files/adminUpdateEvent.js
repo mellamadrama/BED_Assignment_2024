@@ -5,7 +5,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (eventId) {
         try {
-            const response = await fetch(`/events/${eventId}`);
+            const response = await fetch(`/events/${eventId}`, {
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("jwt")
+                }
+            });
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -40,7 +44,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             const response = await fetch(`/updateevents/${eventId}`, {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    "Authorization": "Bearer " + localStorage.getItem("jwt")
                 },
                 body: JSON.stringify(updatedEvent)
             });
@@ -65,7 +70,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (confirm("Are you sure you want to delete this event?")) {
             try {
                 const response = await fetch(`/deleteevents/${eventId}`, {
-                    method: 'DELETE'
+                    method: 'DELETE',
+                    headers: {
+                        "Authorization": "Bearer " + localStorage.getItem("jwt")
+                    }
+
                 });
 
                 if (!response.ok) {

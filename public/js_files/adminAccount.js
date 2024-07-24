@@ -7,13 +7,17 @@ document.addEventListener('DOMContentLoaded', async function () {
         return;
     }
     try {
-        const response = await fetch(`/getadmin/${adminId}`);
+        const response = await fetch(`/getadmin/${adminId}`, {
+          headers: {
+            "Authorization": "Bearer " + localStorage.getItem("jwt"),
+        }
+        });
         if (!response.ok) {
             throw new Error('Failed to fetch admin data');
         }
   
         const getAdmin = await response.json();
-        console.log(getAdmin)
+        console.log(getAdmin);
   
         document.getElementById('viewusername').textContent = `@${getAdmin.username}`;
         document.getElementById('viewfirstname').textContent = `${getAdmin.firstName}`;
@@ -51,6 +55,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       logoutBtn.addEventListener('click', function() {
         alert('Logging out')
         localStorage.removeItem('adminId');
+        localStorage.removeItem('jwt');
         window.location.href = 'index.html';
       });
     }
@@ -76,6 +81,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
+              "Authorization": "Bearer " + localStorage.getItem("jwt")
             },
             body: JSON.stringify({ newAdminData }),
           });
@@ -113,6 +119,9 @@ document.addEventListener('DOMContentLoaded', async function () {
         try {
           const response = await fetch(`deleteadmin/${adminId}`, {
             method: 'DELETE',
+            headers: {
+              "Authorization": "Bearer " + localStorage.getItem("jwt")
+          }
           });
   
           if (response.ok) {

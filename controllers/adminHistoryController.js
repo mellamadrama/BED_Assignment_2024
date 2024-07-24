@@ -1,7 +1,7 @@
 const Location = require("../models/adminHistory"); 
 
 const getApprovedLocationsByAdminId = async (req, res) => {
-    const adminId = req.params.adminId;
+    const adminId = req.user.id;
 
     try {
         const locations = await Location.getApprovedLocationsByAdminId(adminId);

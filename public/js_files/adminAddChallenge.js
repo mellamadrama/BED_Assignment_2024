@@ -1,7 +1,11 @@
 document.addEventListener('DOMContentLoaded', async () => {
     async function fetchLastChallenge() {
         try {
-            const response = await fetch(`/challenges`);
+            const response = await fetch(`/challenges`, {
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("jwt")
+                }
+            });
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }

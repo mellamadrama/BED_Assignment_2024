@@ -14,7 +14,7 @@ const getAllAdmins = async (req, res) => {
 };
 
 const getAllAdminsById = async (req, res) => {
-    const adminId = req.params.adminId;
+    const adminId = req.user.id;
 
     try {
         const admin = await Admin.getAllAdminsById(adminId);
@@ -31,7 +31,7 @@ const getAllAdminsById = async (req, res) => {
 
 
 const updateAdminAccount = async (req, res) => {
-    const adminId = req.params.adminId;
+    const adminId = req.user.id;
     const { username, firstName, lastName, email, password } = req.body.newAdminData;
 
     try {
@@ -47,7 +47,7 @@ const updateAdminAccount = async (req, res) => {
 };
 
 const deleteAdminAccount = async (req, res) => {
-    const adminId = req.params.adminId;
+    const adminId = req.user.id;
 
     try {
         await Admin.deleteAdminAccount(adminId);
