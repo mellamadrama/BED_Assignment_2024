@@ -16,13 +16,7 @@ const validateLogin = (req, res, next) => {
       return;
     }
 
-    const payload = {
-      id: user.id,
-      role: "User",
-    };
-    const token = jwt.sign(payload, "your_secret_key", { expiresIn: "3600s" });
-
-    return res.status(200).json({ token });
+    next();
 };
 
 module.exports = validateLogin;
