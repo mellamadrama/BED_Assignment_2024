@@ -1,5 +1,9 @@
 async function displayLocations() {
-    const response = await fetch(`/locations`);
+    const response = await fetch(`/locations`, {
+        headers: {
+            "Authorization": "Bearer " + localStorage.getItem("jwt")
+        }
+    });
     const data = await response.json();
 
     const locationList = document.getElementById("location-list");

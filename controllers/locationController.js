@@ -29,6 +29,7 @@ const getLocationById = async(req, res) => {
 
 const createLocation = async (req, res) => {
     const locationName = req.body.name;
+    console.log(req.body);
     try {
         // Check if location with the same name already exists
         const existingLocation = await Location.getLocationByName(locationName);

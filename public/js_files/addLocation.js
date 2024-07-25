@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById("requestLocationForm").addEventListener("submit", async function (e) {
         e.preventDefault();
     
+        console.log(localStorage.getItem('jwt'));
         let locationName = document.getElementById('locationName').value;
         let locationAddress = document.getElementById('locationAddress').value;
         let user = localStorage.getItem('userId');
@@ -15,7 +16,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 userId: user,
                 adminId: null
             };
-    
+            console.log(locationDetails)
             try {
                 const response = await fetch('/createLocations', {
                     method: 'POST',

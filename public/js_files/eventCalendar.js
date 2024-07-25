@@ -8,7 +8,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 const fetchEvents = async () => {
     try {
-        const response = await fetch('/events');
+        const response = await fetch('/events', {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("jwt")
+            }
+        });
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }

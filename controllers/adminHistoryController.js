@@ -2,9 +2,11 @@ const Location = require("../models/adminHistory");
 
 const getApprovedLocationsByAdminId = async (req, res) => {
     const adminId = req.user.id;
+    console.log(adminId);
 
     try {
         const locations = await Location.getApprovedLocationsByAdminId(adminId);
+        console.log(locations);
         if (!locations || locations.length === 0) {
             return res.status(404).send("No approved locations found");
         }

@@ -1,10 +1,6 @@
 document.addEventListener("DOMContentLoaded", async function(event) {
     // Retrieve adminId from localStorage
     const adminId = localStorage.getItem('adminId');
-    if (!adminId) {
-        console.error('No adminId found in localStorage');
-        return;
-    }
 
     try {
         const response = await fetch(`/getadmin/${adminId}`, {

@@ -35,9 +35,11 @@ class Location {
             `;
 
             const request = connection.request();
-            request.input("adminId", sql.Char, adminId);
+            request.input("adminId", adminId);
+            console.log(request);
 
             const result = await request.query(sqlQuery);
+            console.log(result);
 
             return result.recordset;
         } catch (error) {
