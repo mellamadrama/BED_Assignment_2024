@@ -12,10 +12,6 @@ const getAllLocations = async (req, res) => {
 
 const getLocationByUserId = async(req, res) => {
     const userId = req.user.id;
-    if (!userId) {
-        console.log('Error getting userId')
-    }
-
     try {
         const location = await Location.getLocationByUserId(userId);
         if (!location) {
@@ -30,5 +26,5 @@ const getLocationByUserId = async(req, res) => {
 
 module.exports = {
     getAllLocations,
-    getLocationByUserId
+    getLocationByUserId,
 }

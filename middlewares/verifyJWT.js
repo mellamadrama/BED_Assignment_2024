@@ -79,7 +79,7 @@ function verifyJWT(req, res, next) {
 
             //user history
             "/userlocations": ["User"],
-            "/userlocations/:userId": ["User"],
+            "/userlocation/:userId": ["User"],
             "/usertracker": ["User"],
             "/usertracker/:userId": ["User"],
 

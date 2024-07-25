@@ -42,6 +42,51 @@ document.addEventListener("DOMContentLoaded", () => {
             throw error;
         }
     }
-    
+
+    async function resetMonthlyPoints() {
+        try {
+            const response = await fetch("/resetmonthly",  {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Authorization": "Bearer " + localStorage.getItem("jwt")
+                },
+            });
+            if (response.ok) {
+                alert("Points reset successfully.");
+            } else {
+                const errorData = await response.json();
+                alert("Error resetting points:", errorData);
+            }
+        } catch (error) {
+            console.error("Error resetting points:", error);
+        }
+    }
+
+    document.getElementById("resetMonthlyPointsButton").addEventListener("click", resetMonthlyPoints);
+
+    async function resetWeeklyPoints() {
+        try {
+            const response = await fetch("/resetweekly", {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Authorization": "Bearer " + localStorage.getItem("jwt")
+                },
+            });
+            if (response.ok) {
+                alert("Points reset successfully.");
+            } else {
+                const errorData = await response.json();
+                alert("Error resetting points:", errorData);
+            }
+        } catch (error) {
+            console.error("Error resetting points:", error);
+        }
+    }
+
+    document.getElementById("resetWeeklyPointsButton").addEventListener("click", resetWeeklyPoints);
+
+
     fetchChallenges();
 });

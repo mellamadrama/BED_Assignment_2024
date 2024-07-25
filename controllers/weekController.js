@@ -31,8 +31,10 @@ const createWeek = async (req, res) => {
     const newWeekData = {
         weekName: req.body.weekName,
         catId: req.body.catId,
-        userId: req.user.id
+        userId: req.body.userId,
     };
+    const userId = req.user.id;
+    newWeekData.userId = userId;
     try {
         const createdWeek = await Week.createWeek(newWeekData);
         if (!createdWeek) {

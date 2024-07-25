@@ -93,7 +93,10 @@ async function handleDeleteWeek() {
     if (confirm('Are you sure you want to delete this week and all related data?')) {
         try {
             const response = await fetch(`/weeks/${weekName}/${catId}/${userId}`, {
-                method: 'DELETE'
+                method: 'DELETE',
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("jwt")
+                }
             });
 
             if (response.ok) {
@@ -114,9 +117,13 @@ async function handleDeleteWeek() {
 // Fetch week data input by weekName, catId, and userId
 async function fetchCatDataInputById(weekName, catId, userId) {
     try {
-        const response = await fetch(`/datainput/${weekName}/${catId}/${userId}`);
+        const response = await fetch(`/datainput/${weekName}/${catId}/${userId}`, {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("jwt")
+            }
+        });
         const data = await response.json();
-        if (data && data.length > 0) {
+        if (data) {
             console.log(data);
             displayDataInputs(data);
         } else {

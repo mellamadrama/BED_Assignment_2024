@@ -20,7 +20,11 @@ document.addEventListener("DOMContentLoaded", async function() {
 //get category by id
 async function fetchCategoryById(catId) {
     try {
-        const res = await fetch(`/categories/${catId}`);
+        const res = await fetch(`/categories/${catId}`, {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("jwt")
+            }
+        });
         const data = await res.json();
         if (data) {
             console.log(data)
@@ -46,7 +50,11 @@ function updateCategoryName(catName) {
 //getting the week by catId, userId
 async function fetchWeekByCatId(catId, userId) {
     try {
-        const res = await fetch(`/weeks/${catId}/${userId}`);
+        const res = await fetch(`/weeks/${catId}/${userId}`, {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("jwt")
+            }
+        });
         const data = await res.json();
         if (data) {
             console.log(data)

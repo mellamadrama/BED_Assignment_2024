@@ -79,7 +79,11 @@ function updateTitleName(weekName) {
 // get data input by id
 async function fetchCatDataInputByIds(weekName, catId, userId, dataId) {
     try {
-        const res = await fetch(`/datainput/${weekName}/${catId}/${userId}/${dataId}`);
+        const res = await fetch(`/datainput/${weekName}/${catId}/${userId}/${dataId}`, {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("jwt")
+            }
+        });
         const data = await res.json();
         if (data && data.length > 0) {
             displayDataInput(data[0]);
@@ -145,7 +149,10 @@ async function handleDeleteDataInput() {
 
     try {
         const res = await fetch(`/datainput/${weekName}/${catId}/${userId}/${dataId}`, {
-            method: 'DELETE'
+            method: 'DELETE', 
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("jwt")
+            }
         });
         if (res.ok) {
             alert('Data input deleted successfully');

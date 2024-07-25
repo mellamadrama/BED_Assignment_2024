@@ -4,7 +4,7 @@ const validateWeek = (req, res, next) => {
     const schema = Joi.object({
       weekName: Joi.string().min(1).max(100).required(),
       catId: Joi.string().length(1).required(),
-      userId: Joi.string().length(10).required(),
+      userId: Joi.string().length(10).allow(null, ''),
     });
   
     const validation = schema.validate(req.body, { abortEarly: false }); 

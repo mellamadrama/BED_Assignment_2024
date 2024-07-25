@@ -1,30 +1,30 @@
 document.addEventListener('DOMContentLoaded', async function () {
     // retrieve userId from localStorage
     const userId = localStorage.getItem('userId');
-    if (!userId) {
-        console.error('No userId found in localStorage');
-        return;
-    }
+
     try {
         const userId = localStorage.getItem('userId');
-        const response = await fetch(`/getuser/${userId}`);
+        const response = await fetch(`/getuser/${userId}`, {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("jwt")
+            }
+        });
         if (!response.ok) {
             throw new Error('Failed to fetch user data');
         }
   
         const getUser = await response.json();
-        console.log(getUser)
   
         document.getElementById('viewusername').textContent = `@${getUser.username}`;
-        document.getElementById('viewfirstname').textContent = `${getUser.firstName}`;
-        document.getElementById('viewlastname').textContent = `${getUser.lastName}`;
-        document.getElementById('viewemail').textContent = `${getUser.email}`;
+        // document.getElementById('viewfirstname').textContent = `${getUser.firstName}`;
+        // document.getElementById('viewlastname').textContent = `${getUser.lastName}`;
+        // document.getElementById('viewemail').textContent = `${getUser.email}`;
   
-        document.getElementById('inputusername').value = getUser.username;
-        document.getElementById('inputfirstName').value = getUser.firstName;
-        document.getElementById('inputlastName').value = getUser.lastName;
-        document.getElementById('inputemail').value = getUser.email;
-        document.getElementById('inputpassword').value = getUser.password;
+        // document.getElementById('inputusername').value = getUser.username;
+        // document.getElementById('inputfirstName').value = getUser.firstName;
+        // document.getElementById('inputlastName').value = getUser.lastName;
+        // document.getElementById('inputemail').value = getUser.email;
+        // document.getElementById('inputpassword').value = getUser.password;
     } catch (error) {
         console.error('Error fetching user data:', error);
     }
@@ -34,30 +34,24 @@ document.addEventListener('DOMContentLoaded', async function () {
   if (logoutBtn) {
     logoutBtn.addEventListener('click', function() {
       alert('Logging out')
-      localStorage.removeItem('userId');
+      localStorage.clear();
       window.location.href = 'index.html';
     });
   }
 
   const sustainableShoppingList = document.getElementById("sustainable-shopping-list");
-    if (!sustainableShoppingList) {
-        console.error("Element with ID 'sustainable-shopping-list' not found.");
-        return;
-    }
     try {
         const userId = localStorage.getItem('userId');
-        if (!userId) {
-            console.error("User ID not found in localStorage");
-            return;
-        }
-        console.log(`Fetching locations for userId: ${userId}`);
 
-        const response = await fetch(`/userlocation/${userId}`);
+        const response = await fetch(`/userlocation/${userId}`, {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem('jwt')
+            }
+        });
         if (!response.ok) {
             throw new Error("Network response was not ok");
         }
         const location = await response.json();
-        console.log("Fetched locations:", location);
 
         if (!location || location.length === 0) {
             sustainableShoppingList.innerHTML = "<p>No sustainable shopping locations found.</p>";
@@ -85,12 +79,12 @@ document.addEventListener('DOMContentLoaded', async function () {
     const trackerContainer = document.querySelector('.overflow-x-auto');
     try {
         const userId = localStorage.getItem('userId');
-        if (!userId) {
-            console.error("User ID not found in localStorage");
-            return;
-        }
 
-        const response = await fetch(`/usertracker/${userId}`);
+        const response = await fetch(`/usertracker/${userId}`, {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("jwt")
+            }
+        });
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }

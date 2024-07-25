@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   if (logoutBtn) {
     logoutBtn.addEventListener('click', function() {
       alert('Logging out')
-      localStorage.removeItem('userId');
+      localStorage.clear();
       window.location.href = 'index.html';
     });
   }

@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    async function fetchUsername(accId) {
+    async function fetchUsernames(accIds) {
         try {
             const response = await fetch(`/getuser`, {
                 headers: {
@@ -9,11 +9,10 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
-            const user = await response.json();
-            console.log(user);
-            return { [accId]: user.username }; 
+            const usernames = await response.json();
+            return usernames; 
         } catch (error) {
-            console.error("Error fetching user:", error);
+            console.error("Error fetching usernames:", error);
             throw error;
         }
     }
@@ -31,12 +30,12 @@ document.addEventListener("DOMContentLoaded", () => {
             const weeklypoints = await response.json();
 
             const accIds = [...new Set(weeklypoints.map(point => point.userId))];
-            console.log(accIds)
 
-            const userMapsArray = await Promise.all(accIds.map(accId => fetchUsername(accId)));
+            const userMapsArray = await fetchUsernames(accIds);
 
             const userMaps = userMapsArray.reduce((acc, obj) => {
-                return { ...acc, ...obj };
+                acc[obj.userId] = obj.username;
+                return acc;
             }, {});
 
             const leaderboardBody = document.querySelector(".leaderboard-body");
@@ -66,23 +65,6 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error("Error fetching and displaying weekly points:", error);
         }
     }
-
-    async function resetPoints() {
-        try {
-            const response = await fetch("/resetweekly", { method: "PUT" });
-            if (response.ok) {
-                alert("Points reset successfully.");
-                fetchAndDisplayWeeklyPoints(); 
-            } else {
-                const errorData = await response.json();
-                alert("Error resetting points:", errorData);
-            }
-        } catch (error) {
-            console.error("Error resetting points:", error);
-        }
-    }
-
-    document.getElementById("resetPointsButton").addEventListener("click", resetPoints);
 
     fetchAndDisplayWeeklyPoints();
 });

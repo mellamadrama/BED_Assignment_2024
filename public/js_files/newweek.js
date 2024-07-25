@@ -24,13 +24,14 @@ document.addEventListener("DOMContentLoaded", function() {
     //create new week
     const createWeekBtn = document.getElementById('create-week-btn');
     if (createWeekBtn) {
-        createWeekBtn.addEventListener('click', async function() {
+        createWeekBtn.addEventListener('click', async function(e) {
+            e.preventDefault();
             const weekName = document.getElementById('weekName').value;
             const catId = localStorage.getItem('catId');
             const userId = localStorage.getItem('userId');
 
             try {
-                const res = await fetch('/weeks', {
+                const res = await fetch(`/weeks`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
