@@ -1,14 +1,19 @@
 const Account = require('../models/login');
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 
 const loginUser = async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    const account = await Account.getUserByUsernameAndPassword(username, password);
+    const account = await Account.getUserByUsername(username);
+    const isMatch = await bcrypt.compare(password, account.password);
+    
+    if (!isMatch) {
+      return res.status(401).json({message: "Invalid credentials"})
+    };
     
     if (account != null) {
-      //console.log(req.user.adminId, account);
       const payload = {
         id: account.userId,
         role: "User",
@@ -17,13 +22,7 @@ const loginUser = async (req, res) => {
       console.log(token);
       res.status(200).json({ token });
       return;
-      //  else {
-      //   res.status(403).send("Forbidden")
-      // }
-      //if (isMatch) {
-      //} else {
-        //return res.status(401).json({ message: 'Invalid username or password' });
-      //}
+
     } else {
       res.status(401).json({ message: 'Invalid username or password or invalid user account' });
     }

@@ -1,4 +1,5 @@
 const Admin = require("../models/adminSignup");
+const bcrypt = require("bcryptjs");
 
 const createAdminAccount = async (req, res) => {
     const adminDetails = {
@@ -8,6 +9,10 @@ const createAdminAccount = async (req, res) => {
         email: req.body.email,
         password: req.body.password
     };
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(adminDetails.password, salt);
+    adminDetails.password = hashedPassword;
 
     try {
         const newAdmin = await Admin.createAdminAccount(adminDetails);
@@ -19,5 +24,5 @@ const createAdminAccount = async (req, res) => {
 };
 
 module.exports = {
-    createAdminAccount
+    createAdminAccount,
 }

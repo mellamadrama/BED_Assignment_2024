@@ -1,4 +1,5 @@
 const User = require("../models/usersignup");
+const bcrypt = require("bcryptjs");
 
 const createUserAccount = async (req, res) => {
     const userDetails = {
@@ -8,6 +9,10 @@ const createUserAccount = async (req, res) => {
         email: req.body.email,
         password: req.body.password
     };
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(userDetails.password, salt);
+    userDetails.password = hashedPassword;
 
     try {
         const newUser = await User.createUserAccount(userDetails);

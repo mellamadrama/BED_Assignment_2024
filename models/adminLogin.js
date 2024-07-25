@@ -8,7 +8,7 @@ class Account {
     this.password = password;
   }
 
-  static async getAdminByUsernameAndPassword(username, password) {
+  static async getAdminByUsername(username) {
     const connection = await sql.connect(dbConfig);
 
     const sqlQuery = `
@@ -16,12 +16,11 @@ class Account {
     FROM Account a
     JOIN Admin ad
     ON a.accId = ad.adminId
-    WHERE a.username = @username AND a.password = @password
+    WHERE a.username = @username
   `;
 
     const request = connection.request();
     request.input("username", sql.NVarChar, username);
-    request.input("password", sql.NVarChar, password);
     const result = await request.query(sqlQuery);
 
     connection.close();

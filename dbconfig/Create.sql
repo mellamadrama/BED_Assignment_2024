@@ -11,16 +11,16 @@ CREATE TABLE Account (
 
 INSERT INTO Account (accId, username, firstName, lastName, email, password)
 VALUES
-  ('Acc0000001', 'janetest', 'Jane', 'Test', 'janetest@email.com', 'test123456'),
-  ('Acc0000002', 'dobbyfree', 'Dobby', 'Free', 'dobbyfree@email.com', 'test789123'),
-  ('Acc0000003', 'junkaismith', 'Jun Kai', 'Smith', 'junkaismith@email.com', 'test789123'),
-  ('Acc0000004', 'ethanchew', 'Ethan', 'Chew', 'ethanchew@email.com', 'test789123'),
-  ('Acc0000005', 'renasoong', 'Rena', 'Soong', 'renasoong@email.com', 'test789123'),
-  ('Acc0000006', 'jefflow', 'Jeff', 'Low', 'jefflow@email.com', 'test789123'),
-  ('Acc0000007', 'emmanuelstone', 'Emmanuel', 'Stone', 'emmanuelstone@email.com', 'test789123'),
-  ('Acc0000008', 'hervinsie', 'Hervin', 'Sie', 'hervinsie@email.com', 'test789123'),
-  ('Acc0000009', 'rithikajames', 'Rithika', 'James', 'rithikajames@email.com', 'test789123'),
-  ('Acc0000010', 'isabelletan', 'Isabelle', 'Tan', 'isabelletan@email.com', 'test789123');
+  ('Acc0000001', 'janetest', 'Jane', 'Test', 'janetest@email.com', '$2a$10$AuTQAWhTOGR9RXLGM2e8M.N.XguEZX91kyhCkujT/eEmQarlfTunG'),
+  ('Acc0000002', 'dobbyfree', 'Dobby', 'Free', 'dobbyfree@email.com', '$2a$10$GqOxltML3.VhQY1btu2URecoVgrgVMGH9EtTYGzxVdaV0ynD43NfO'),
+  ('Acc0000003', 'junkaismith', 'Jun Kai', 'Smith', 'junkaismith@email.com', '$2a$10$5AjJ/P4GqedxLfLQ6sjWUuyDlnm/oDGIiFE97mYrlYNa3CoXmdmDS'),
+  ('Acc0000004', 'ethanchew', 'Ethan', 'Chew', 'ethanchew@email.com', '$2a$10$CmiaFQTA/9W1xiN.D/2Qb.8po21AlW94KIe9/BWZGzTSLakhsEC6S'),
+  ('Acc0000005', 'renasoong', 'Rena', 'Soong', 'renasoong@email.com', '$2a$10$n8EvKzYekF.5ayoplWjTS.dpX6BlVvVaDyLnNFVbk9H2zLuVls6SK'),
+  ('Acc0000006', 'jefflow', 'Jeff', 'Low', 'jefflow@email.com', '$2a$10$k9eGhARsIxcHODoLSF2tH.HtO6Wn6/6GpMQC9qEIxFHbk.yqC8gLy'),
+  ('Acc0000007', 'emmanuelstone', 'Emmanuel', 'Stone', 'emmanuelstone@email.com', '$2a$10$cgbYmvvaR8Bj8v9JznTGvOYlF7iICk5eqDo9B6rqhxrDIhvKhJ40i'),
+  ('Acc0000008', 'hervinsie', 'Hervin', 'Sie', 'hervinsie@email.com', '$2a$10$5XKzhC1EsbRXplS8rkAsJ.VbyjcrEi9azzqA0/u7XNlrlVyyXJ8jS'),
+  ('Acc0000009', 'rithikajames', 'Rithika', 'James', 'rithikajames@email.com', '$2a$10$75JkvikrAdZMqvNf1y.UoOwKr/pkewg6/E89O4cr.PbXvGoHCyjLe'),
+  ('Acc0000010', 'isabelletan', 'Isabelle', 'Tan', 'isabelletan@email.com', '$2a$10$q9GbgdnNzhqXXIS/WwsSAehbaDe0vrikJkzLde.qChjLgHSiaaV42');
 
 CREATE TABLE Admin (
   adminId char(10),

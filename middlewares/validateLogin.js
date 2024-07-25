@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const validateLogin = (req, res, next) => {
     const schema = Joi.object({
         username: Joi.string().max(100).required(),
-        password: Joi.string().max(250).required()
+        password: Joi.string().max(250).required(),
     });
 
     const validation = schema.validate(req.body, { abortEarly: false});
