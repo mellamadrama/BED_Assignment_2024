@@ -105,6 +105,7 @@ class User {
                 DELETE FROM CatDataInput WHERE userId = @userId;
                 DELETE FROM CatWeek WHERE userId = @userId;
                 DELETE FROM UserAcc WHERE userId = @userId;
+                DELETE FROM ChatHistory WHERE userId = @userId;
                 DELETE FROM Account WHERE accId = @userId;
             `;
    
