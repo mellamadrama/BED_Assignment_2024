@@ -105,11 +105,6 @@ document.addEventListener('DOMContentLoaded', async function () {
       confirmDeleteBtn.addEventListener('click', async function(event) {
         event.preventDefault();
         const adminId = localStorage.getItem('adminId');
-        if (!adminId) {
-          alert('adminId not found');
-          return;
-        }
-        
         try {
           const response = await fetch(`deleteadmin/${adminId}`, {
             method: 'DELETE',
