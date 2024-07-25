@@ -6,11 +6,12 @@ const genAI = new GoogleGenerativeAI(process.env.API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
 
 const initialpmt = `
-Your task is to ansewer the user and summarise it.
-Avoid technical jargon and explain it in the simplest of words and grammar.
-Your task is to Format the answer given to \n for every sentence.
+Your task is to answer the user and summarize the response.
+Avoid using any technical jargon and explain it in simple words and grammar.
+Format the answer by starting each new sentence on a new line.
 Do not format your answers in markdown.
-Do not include asterisks in your answers.
+Do not use asterisks or any special characters in your answers.
+Your goal is to make the response as clear and easy to understand as possible.
 `;
 
 
@@ -33,6 +34,7 @@ const getChatByUserId = async (req, res) => {
 // Save chat
 const saveChat = async (req, res) => {
     const {chatMessages } = req.body;
+    console.log(chatMessages);
     const userId = req.user.id;
 
     try {

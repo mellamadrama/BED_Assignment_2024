@@ -3,7 +3,7 @@ const Joi = require("joi");
 // Validation for saving chat history
 const validateSaveChat = (req, res, next) => {
     const schema = Joi.object({
-        userId: Joi.string().length(10).required(),
+        userId: Joi.string().length(10).allow(null, ''),
         chatMessages: Joi.array().items(
             Joi.object({
                 sender: Joi.string().valid('user', 'model').required(),

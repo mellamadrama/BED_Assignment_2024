@@ -79,9 +79,9 @@ app.put("/datainput/:weekName/:catId/:userId/:dataId", verifyJWT, validateDataIn
 app.delete('/datainput/:weekName/:catId/:userId/:dataId', verifyJWT, dataInputController.deleteCatDataInput);
 
 //chat bot
-app.get("/chathistory/:userId", chatHistoryController.getChatByUserId);
-app.post("/chathistory", validateSaveChat, chatHistoryController.saveChat);
-app.post('/generate-text', chatHistoryController.generateGeminiResponse);
+app.get("/chathistory/:userId", verifyJWT, chatHistoryController.getChatByUserId);
+app.post("/chathistory", verifyJWT, validateSaveChat, chatHistoryController.saveChat);
+app.post('/generate-text', verifyJWT, chatHistoryController.generateGeminiResponse);
 
 // locations
 app.get("/locations", verifyJWT, locationController.getAllLocations);

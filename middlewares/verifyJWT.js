@@ -89,6 +89,11 @@ function verifyJWT(req, res, next) {
             "/updateadmin/:adminId": ["Admin"],
             "/deleteadmin/:adminId": ["Admin"],
             "/adminhistory/:adminId": ["Admin"],
+
+            //chatbot
+            "/chathistory/:userId": ["User"],
+            "/chathistory": ["User"],
+            "/generate-text": ["User"],
         };
     
         const requestedEndpoint = req.url;

@@ -109,9 +109,9 @@ document.addEventListener("DOMContentLoaded", () => {
     
         try {
             const response = await fetch("/chathistory", {
-                method: "POST",
+                method: 'POST',
                 headers: {
-                    "Content-Type": "application/json",
+                    'Content-Type': 'application/json',
                     "Authorization": "Bearer " + localStorage.getItem("jwt")
                 },
                 body: JSON.stringify({ userId, chatMessages: messages })
@@ -147,7 +147,11 @@ document.addEventListener("DOMContentLoaded", () => {
     // load chat
     loadChatButton.addEventListener("click", async () => {
         try {
-            const response = await fetch(`/chathistory/${userId}`);
+            const response = await fetch(`/chathistory/${userId}`, {
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("jwt")
+                }
+            });
     
             if (response.ok) {
                 const data = await response.json();
