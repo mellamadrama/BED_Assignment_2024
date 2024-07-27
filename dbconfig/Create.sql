@@ -53,7 +53,7 @@ VALUES
   ('Acc0000009');
 
 CREATE TABLE Category (
-  catId char(1),
+  catId CHAR(1),
   catName VARCHAR(50) NOT NULL,
   CONSTRAINT PK_Category PRIMARY KEY (catId),
 );
@@ -66,9 +66,9 @@ VALUES
   ('4', 'Recyclables');
 
 CREATE TABLE CatWeek (
-  weekName VARCHAR(100) NOT NULL,
-  catId char(1) NOT NULL,
-  userId char(10) NOT NULL,
+  weekName VARCHAR(100) COLLATE Latin1_General_BIN NOT NULL,
+  catId CHAR(1) NOT NULL,
+  userId CHAR(10) NOT NULL,
   CONSTRAINT PK_CatWeek PRIMARY KEY (weekName, catId, userId),
   CONSTRAINT FK_CatWeek_catId
   FOREIGN KEY (catId) REFERENCES Category(catId),
@@ -100,10 +100,10 @@ VALUES
   ('Week-1', '4', 'Acc0000009');
 
 CREATE TABLE CatDataInput (
-  weekName VARCHAR(100),
-  catId char(1),
-  userId char(10),
-  dataId char(10),
+  weekName VARCHAR(100) COLLATE Latin1_General_BIN NOT NULL,
+  catId CHAR(1),
+  userId CHAR(10),
+  dataId CHAR(10),
   info VARCHAR(200) NOT NULL,
   amount VARCHAR(200) NOT NULL,
   dateInput VARCHAR(100) NOT NULL,
