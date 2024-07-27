@@ -59,18 +59,18 @@ app.post('/loginAdmin', validateAdminLogin, adminLoginController.loginAdmin);
 app.post('/signup', validateUserSignup, userSignupController.createUserAccount);
 app.post('/adminsignup', validateAdminSignup, adminSignupController.createAdminAccount);
 
-// categories
+// categories done by charlotte (S10258027)
 app.get("/categories", verifyJWT, categoryController.getAllCategories);
 app.get('/categories/:catId', verifyJWT, categoryController.getCategoryById);
 
-// weeks
+// weeks done by charlotte (S10258027)
 app.get("/weeks", verifyJWT, weekController.getAllWeeks);
 app.get("/weeks/:catId/:userId", verifyJWT, weekController.getWeekByUserCatId);
 app.post("/weeks", verifyJWT, validateWeek, weekController.createWeek);
 app.put("/weeks/:weekName/:catId/:userId", verifyJWT, validateUpdateWeekName, weekController.updateWeekAndData);
 app.delete('/weeks/:weekName/:catId/:userId', verifyJWT, weekController.deleteWeekAndData);
 
-// datainput
+// datainput done by charlotte (S10258027)
 app.get("/datainput", verifyJWT, dataInputController.getAllCatDataInput);
 app.get("/datainput/:weekName/:catId/:userId/:dataId", verifyJWT, dataInputController.getCatDataInputByIds);
 app.get("/datainput/:weekName/:catId/:userId", verifyJWT, dataInputController.getCatDataInputById);
@@ -78,7 +78,7 @@ app.post("/datainput", verifyJWT, validateDataInput, dataInputController.createD
 app.put("/datainput/:weekName/:catId/:userId/:dataId", verifyJWT, validateDataInputs, dataInputController.updateCatDataInput);
 app.delete('/datainput/:weekName/:catId/:userId/:dataId', verifyJWT, dataInputController.deleteCatDataInput);
 
-//chat bot
+//chat bot done by charlotte (S10258027)
 app.get("/chathistory/:userId", verifyJWT, chatHistoryController.getChatByUserId);
 app.post("/chathistory", verifyJWT, validateSaveChat, chatHistoryController.saveChat);
 app.post('/generate-text', verifyJWT, chatHistoryController.generateGeminiResponse);
