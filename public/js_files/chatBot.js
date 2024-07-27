@@ -7,11 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const loadChatButton = document.getElementById("loadChat");
     const userId = localStorage.getItem('userId');
 
-    const keywords = [
-        "sustainable", "greener", "environment", "green", "reuse", "reduce", "recycle",
-        "carbon emission", "plastic waste", "waste", "food waste", "shopping sustainably", "shop more sustainably"
-    ];
-
     // Function to append a message to the chatbox
     const appendMessage = (sender, message) => {
         const messageWrapper = document.createElement("div");
@@ -40,11 +35,6 @@ document.addEventListener("DOMContentLoaded", () => {
         messageWrapper.appendChild(messageDiv);
         chatbox.appendChild(messageWrapper);
         chatbox.scrollTop = chatbox.scrollHeight; // Scroll to the bottom
-    };
-
-    // Function to check if the message contains any of the keywords
-    const containsKeyword = (message) => {
-        return keywords.some(keyword => message.toLowerCase().includes(keyword));
     };
 
     // Function to get response from Gemini API
@@ -83,16 +73,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 return { role: sender === "you" ? "user" : "user", parts: [{ text: messageText }] };
             });
 
-            if (containsKeyword(message)) {
-                appendMessage("user", message);
-                userInput.value = "";
+            appendMessage("user", message);
+            userInput.value = "";
 
-                // Get model response from Gemini API
-                const modelResponse = await getGeminiResponse(message, history);
-                appendMessage("model", modelResponse);
-            } else {
-                appendMessage("model", "I'm sorry, I can only respond to queries related to sustainability topics such as sustainable living, recycling, reusing, reducing waste, and other environmental concerns.");
-            }
+            // Get model response from Gemini API
+            const modelResponse = await getGeminiResponse(message, history);
+            appendMessage("model", modelResponse);
         }
     });
 
@@ -171,5 +157,4 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error("Error:", error);
         }
     });
-    
 });

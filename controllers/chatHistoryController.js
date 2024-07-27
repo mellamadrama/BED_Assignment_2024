@@ -1,9 +1,29 @@
 const ChatHistory = require("../models/ChatHistory");
 require("dotenv").config();
 
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+const { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } = require("@google/generative-ai");
+
+const safetySetting = [
+    {
+      category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+      threshold: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
+    },
+    {
+      category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+      threshold: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
+    },
+    {
+        category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+        threshold: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
+    },
+    {
+        category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+        threshold: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
+    },
+  ];
+
 const genAI = new GoogleGenerativeAI(process.env.API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash", safetySettings: safetySetting });
 
 const initialpmt = `
 Your task is to answer the user and summarize the response.
@@ -12,6 +32,8 @@ Format the answer by starting each new sentence on a new line.
 Do not format your answers in markdown.
 Do not use asterisks or any special characters in your answers.
 Your goal is to make the response as clear and easy to understand as possible.
+The user can only send messages about sustainability or related topics.
+If the user's message is not about sustainability, inform them that they can only send messages about sustainability or related topics.
 `;
 
 
