@@ -1,5 +1,5 @@
 function logout() {
-    localStorage.removeItem('userId');
+    localStorage.clear();
     window.location.href = 'index.html'; 
 }
 

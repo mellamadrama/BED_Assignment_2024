@@ -1,6 +1,5 @@
 function logout() {
-    localStorage.removeItem('adminId');
-    localStorage.removeItem('jwt');
+    localStorage.clear();
     window.location.href = 'index.html';
 }
 
