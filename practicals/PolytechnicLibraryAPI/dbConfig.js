@@ -1,6 +1,6 @@
 module.exports = {
-    user: "bedpractical_user", 
-    password: "bedbedbed", 
+    user: "booksapi_user", 
+    password: "AapeLight37",
     server: "localhost",
     database: "polytechnic_library",
     trustServerCertificate: true,
