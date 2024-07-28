@@ -19,6 +19,9 @@ const userTrackerController = require("./controllers/userTrackerController");
 const adminHistoryController = require("./controllers/adminHistoryController");
 const chatHistoryController = require("./controllers/chatHistoryController");
 
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger-output.json"); // Import generated spec
+
 const sql = require("mssql");
 const dbConfig = require("./dbConfig");
 const bodyParser = require("body-parser");
@@ -82,6 +85,9 @@ app.delete('/datainput/:weekName/:catId/:userId/:dataId', verifyJWT, dataInputCo
 app.get("/chathistory/:userId", verifyJWT, chatHistoryController.getChatByUserId);
 app.post("/chathistory", verifyJWT, validateSaveChat, chatHistoryController.saveChat);
 app.post('/generate-text', verifyJWT, chatHistoryController.generateGeminiResponse);
+
+// Serve the Swagger UI at a specific route
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // locations
 app.get("/locations", verifyJWT, locationController.getAllLocations);
