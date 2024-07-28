@@ -141,7 +141,6 @@ document.addEventListener("DOMContentLoaded", () => {
     
             if (response.ok) {
                 const data = await response.json();
-                console.log("Server response:", data);
                 const { chatMessages } = data;
                 if (!Array.isArray(chatMessages)) {
                     throw new Error("chatMessages is not an array");

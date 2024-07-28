@@ -14,7 +14,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             adminId: admin
         };
 
-        console.log('Sending new event data:', JSON.stringify(newEvent));
 
         try {
             const response = await fetch(`/createevents`, {

@@ -62,7 +62,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                     body: JSON.stringify(updatedLocation),
                 });
 
-                console.log('Updating location with:', updatedLocation);
 
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -86,7 +85,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     
         async function deleteLocation(locationReqId) {
             try {
-                console.log(`Attempting to delete location with ID: ${locationReqId}`); // Add logging
                 const response = await fetch(`/dellocations/${locationReqId}`, {
                     method: 'DELETE',
                     headers: {

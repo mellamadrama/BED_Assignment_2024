@@ -73,7 +73,6 @@ const updateWeekAndData = async (req, res) => {
 
     try {
       // Check if there are data inputs for the week
-      console.log(`Checking data inputs for weekName: ${weekName}, catId: ${catId}, userId: ${userId}`);
       const hasDataInputs = await DataInput.hasDataInputs(weekName, catId, userId);
 
       if (hasDataInputs) {
@@ -125,7 +124,6 @@ const deleteWeekAndData = async (req, res) => {
 
   try {
       // Check if there are data inputs for the week
-      console.log(`Checking data inputs for weekName: ${weekName}, catId: ${catId}, userId: ${userId}`);
       const hasDataInputs = await DataInput.hasDataInputs(weekName, catId, userId);
       
       if (hasDataInputs) {

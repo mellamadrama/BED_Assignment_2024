@@ -128,7 +128,6 @@ async function updateDataInput(info, amount, dateInput) {
         });
         if (res.ok) {
             const data = await res.json();
-            console.log('Data updated successfully:', data);
             displayDataInput(data[0]);
             alert('Data updated successfully');
             document.getElementById('updatedata').classList.add('hidden');

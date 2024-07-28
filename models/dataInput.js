@@ -148,7 +148,6 @@ class DataInputs {
         const sqlQueryDataInput = `UPDATE CatDataInput SET weekName = @newWeekName WHERE weekName = @weekName AND catId = @catId AND userId = @userId`;
                 
         const requestDataInput = connection.request();
-        console.log(weekName, catId, userId, newWeekName);
         requestDataInput.input("weekName", weekName);
         requestDataInput.input("catId", catId);
         requestDataInput.input("userId", userId);

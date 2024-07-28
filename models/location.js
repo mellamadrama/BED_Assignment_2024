@@ -20,7 +20,6 @@ class Location {
         const request = connection.request();
         const result = await request.query(sqlQuery);
 
-        console.log(result.recordset); // Debugging: Print raw SQL results
 
         connection.close();
 
@@ -38,7 +37,6 @@ class Location {
         request.input("locationReqId", id);
         const result = await request.query(sqlQuery);
 
-        console.log(result.recordset); // Debugging: Print raw SQL results
 
         connection.close();
 

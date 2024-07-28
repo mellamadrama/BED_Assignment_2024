@@ -27,7 +27,6 @@ async function fetchCategoryById(catId) {
         });
         const data = await res.json();
         if (data) {
-            console.log(data)
             if (data && data.catName) {
                 updateCategoryName(data.catName);
             } else {
@@ -57,7 +56,6 @@ async function fetchWeekByCatId(catId, userId) {
         });
         const data = await res.json();
         if (data) {
-            console.log(data)
             if (data) {
                 displayWeeks(data);
             } else {

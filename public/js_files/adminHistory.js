@@ -14,7 +14,6 @@ document.addEventListener("DOMContentLoaded", async function(event) {
         }
 
         const getAdmin = await response.json();
-        console.log(getAdmin);
 
         const viewusername = document.getElementById('viewusername');
         const viewfirstname = document.getElementById('viewfirstname');

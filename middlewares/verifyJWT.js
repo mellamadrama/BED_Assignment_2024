@@ -7,10 +7,7 @@ function verifyJWT(req, res, next) {
       return res.status(401).json({ message: "Unauthorized" });
     }
   
-    console.log("1", token);
     jwt.verify(token, "your_secret_key", (err, decoded) => {
-        console.log("2", decoded);
-        console.log("3", err);
         if (err) {
             return res.status(403).json({ message: "Forbidden" });
         }

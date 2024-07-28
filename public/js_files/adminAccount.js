@@ -14,7 +14,6 @@ document.addEventListener('DOMContentLoaded', async function () {
         }
   
         const getAdmin = await response.json();
-        console.log(getAdmin);
   
         document.getElementById('viewusername').textContent = `@${getAdmin.username}`;
         document.getElementById('viewfirstname').textContent = `${getAdmin.firstName}`;
@@ -81,7 +80,6 @@ document.addEventListener('DOMContentLoaded', async function () {
   
           if (response.ok) {
             alert('Details Updated');
-            console.log('Details updated');
    
             const updatedAdmin = await response.json();
             localStorage.setItem('inputusername', newAdminData.username);
@@ -92,7 +90,6 @@ document.addEventListener('DOMContentLoaded', async function () {
             location.reload();
           } else {
             alert('Failed to update details');
-            console.log('Failed to update details');
           }
         } catch (error) {
           console.error('Error:', error);
@@ -118,7 +115,6 @@ document.addEventListener('DOMContentLoaded', async function () {
             window.location.href = 'index.html';
           } else {
             alert('Failed to delete account');
-            console.log("Failed to delete account");
           }
         } catch (error) {
           console.error('Error: ', error);

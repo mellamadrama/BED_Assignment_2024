@@ -12,7 +12,6 @@ const getAllEvents = async (req, res) => {
 
 const getEventById = async(req, res) => {
     const eventId = req.params.eventId;
-    console.log("Received eventId:", eventId); // Debugging
 
     try {
         const event = await Event.getEventById(eventId);
@@ -30,14 +29,12 @@ const getEventById = async(req, res) => {
 const createEvent = async (req, res) => {
     const { name, description, address, date, price} = req.body;
     const adminId = req.user.id;
-    console.log("Received event:", req.body); // Debugging
 
     try {
         const newEventData = { name, description, address, date, price, adminId };
         const event = await Event.createEvent(newEventData);
         res.status(201).json(event);
     } catch (error) {
-        console.error("Error creating event:", error); // Debugging
         res.status(500).send("Error creating event");
     }
 };

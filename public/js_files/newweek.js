@@ -45,7 +45,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
 
                 const data = await res.json();
-                console.log('Week created:', data);
 
                 // Redirect back to the previous page after creation
                 if (previousPage) {

@@ -14,7 +14,6 @@ document.addEventListener('DOMContentLoaded', async function () {
       }
 
       const getUser = await response.json();
-      console.log(getUser)
 
       document.getElementById('viewusername').textContent = `@${getUser.username}`;
       document.getElementById('viewfirstname').textContent = `${getUser.firstName}`;
@@ -81,7 +80,6 @@ document.addEventListener('DOMContentLoaded', async function () {
 
         if (response.ok) {
           alert('Details Updated');
-          console.log('Details updated');
  
           const updatedUser = await response.json();
           localStorage.setItem('inputusername', newUserData.username);
@@ -119,7 +117,6 @@ document.addEventListener('DOMContentLoaded', async function () {
           window.location.href = 'index.html';
         } else {
           alert('Failed to delete account');
-          console.log("Failed to delete account");
         }
       } catch (error) {
         console.error('Error: ', error);

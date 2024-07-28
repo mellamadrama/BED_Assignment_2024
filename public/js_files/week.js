@@ -124,7 +124,6 @@ async function fetchCatDataInputById(weekName, catId, userId) {
         });
         const data = await response.json();
         if (data) {
-            console.log(data);
             displayDataInputs(data);
         } else {
             console.error("Data input not found.");

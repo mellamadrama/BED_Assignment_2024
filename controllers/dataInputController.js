@@ -5,7 +5,6 @@ const getAllCatDataInput = async (req, res) => {
       const catDataInputs = await DataInput.getAllCatDataInput();
       res.json(catDataInputs);
     } catch (error) { 
-      console.error(error);
       res.status(500).send("Error retrieving catDataInput");
     }
   };

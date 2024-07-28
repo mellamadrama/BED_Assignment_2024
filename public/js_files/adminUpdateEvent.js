@@ -43,7 +43,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             adminId: admin
         };
 
-        console.log('Sending updated event data:', JSON.stringify(updatedEvent));
 
         try {
             const response = await fetch(`/updateevents/${eventId}`, {

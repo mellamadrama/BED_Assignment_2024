@@ -56,7 +56,6 @@ const getChatByUserId = async (req, res) => {
 // Save chat
 const saveChat = async (req, res) => {
     const {chatMessages } = req.body;
-    console.log(chatMessages);
     const userId = req.user.id;
 
     try {
@@ -73,7 +72,6 @@ const generateGeminiResponse = async (req, res) => {
     const message = req.body.prompt;
     const history = req.body.history || [];
 
-    console.log(history)
     try {
         const chat = model.startChat({
             history: [

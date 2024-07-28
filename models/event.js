@@ -20,7 +20,6 @@ class Event {
         const request = connection.request();
         const result = await request.query(sqlQuery);
 
-        console.log(result.recordset); // Debugging: Print raw SQL results
 
         connection.close();
 
@@ -38,7 +37,6 @@ class Event {
         request.input("eventId", id);
         const result = await request.query(sqlQuery);
 
-        console.log(result.recordset); // Debugging: Print raw SQL results
 
         connection.close();
 

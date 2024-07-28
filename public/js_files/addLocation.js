@@ -27,7 +27,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 if (response.ok) { // Check if the response status is in the range of 200-299
                     const result = await response.json();
-                    console.log(result);  // Log the server response for debugging
 
                     if (result.status === 'success') { // Check if the result status is 'success'
                         alert('Location Request submitted!');

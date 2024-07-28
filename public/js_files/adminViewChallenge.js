@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
             const challenges = await response.json();
-            console.log(challenges);
     
             const leaderboardBody = document.getElementById('challenge-list'); 
             leaderboardBody.innerHTML = '';

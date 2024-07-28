@@ -5,8 +5,8 @@ const routes = ["./app.js"]; // Path to your API route files
 
 const doc = {
   info: {
-    title: "My API",
-    description: "Description of your API",
+    title: "SustainableMe",
+    description: "The API Endpoints for the SustainableMe website",
   },
   host: "localhost:3000",
 };

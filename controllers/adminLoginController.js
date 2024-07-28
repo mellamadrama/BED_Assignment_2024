@@ -19,7 +19,6 @@ const loginAdmin = async (req, res) => {
         role: "Admin",
       };
       const token = jwt.sign(payload, "your_secret_key", { expiresIn: 3600 });
-      console.log(token);
       return res.status(200).json({ token });
     } else {
       return res.status(401).json({ message: 'Invalid username or password or not a valid admin account' });
