@@ -1,8 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "My API",
-    "description": "Description of your API",
+    "title": "SustainableMe",
+    "description": "The API Endpoints for the SustainableMe website",
     "version": "1.0.0"
   },
   "host": "localhost:3000",
